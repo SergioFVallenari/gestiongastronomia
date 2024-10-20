@@ -1,0 +1,59 @@
+.list-left-flexit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 80px;
+    overflow: auto;
+}
+
+.background-container-acordiones-flexit {
+    background-color: var(--cardBG);
+}
+
+.gilroy-regular {
+    font-family: "Gilroy", sans-serif;
+}
+
+.gilroy-light {
+    font-family: "Gilroy-light", sans-serif;
+}
+
+.gilroy-medium {
+    font-family: "Gilroy-medium", sans-serif;
+}
+
+.gilroy-bold {
+    font-family: "Gilroy-bold", sans-serif;
+}
+
+.raleway-regular {
+    font-family: "Raleway", sans-serif;
+}
+
+.raleway-light {
+    font-family: "Raleway-light", sans-serif;
+}
+
+.raleway-medium {
+    font-family: "Raleway-medium", sans-serif;
+}
+
+.raleway-bold {
+    font-family: "Raleway-bold", sans-serif;
+}
+
+.color-pendiente-flexit {
+    color: #383d41;
+}
+
+.color-encamino-flexit {
+    color: #856404;
+}
+
+.color-confirmado-flexit {
+    color: #155724;
+}
+
+.color-rechazado-flexit {
+    color: #721c24;
+}

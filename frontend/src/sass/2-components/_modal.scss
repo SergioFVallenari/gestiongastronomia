@@ -1,0 +1,460 @@
+.modal {
+    background-color: rgba(var(--blackRGB), 50%);
+}
+
+.modal-close {
+    position: absolute;
+    top: -12px;
+    #{$end-direction}: -12px;
+
+    i {
+        @include content-center(35px, 35px, 50%);
+        font-size: 20px;
+        color: var(--textColor);
+        background-color: var(--thinGray);
+        @include transition-linear;
+
+        &:hover {
+            color: var(--lightColor);
+            background: $red-600;
+        }
+    }
+}
+
+.modal-dialog-flexit {
+    margin: 100px auto;
+    max-width: fit-content;
+}
+
+.modal-content-flexit {
+    border-radius: 8px;
+}
+
+.modal-header-flexit {
+    padding: 0px;
+    border: none;
+    margin-bottom: 30px;
+}
+
+.modal-title {
+    @include text-font(20px, 600);
+    text-transform: capitalize;
+    color: var(--headingColor);
+}
+
+.modal-footer-flexit {
+    padding: 0px;
+    border: none;
+    margin-top: 35px;
+    justify-content: center;
+    gap: 15px;
+
+    >* {
+        margin: 0px;
+    }
+}
+
+// user modal
+.mc-user-modal {
+    width: 450px;
+    padding: 0px 40px 40px;
+
+    img {
+        @include content-center(100px, 0, 50%);
+        border: 12px solid var(--lightColor);
+        margin: -45px auto 0px;
+        display: block;
+    }
+
+    h4 {
+        font-weight: 700;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    p {
+        font-size: 15px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+}
+
+// alert modal
+.mc-alert-modal {
+    width: 450px;
+    padding: 0px 35px 35px;
+    text-align: center;
+
+    i {
+        font-size: 45px;
+        margin-top: -35px;
+        @include content-center(80px, 80px, 50%);
+        text-shadow: 0px 7px 10px rgba(0, 0, 0, 0.120);
+        color: $red-700;
+        background-color: var(--lightBG);
+    }
+
+    h3 {
+        @include text-font(24px, 800);
+        text-transform: capitalize;
+        margin-bottom: 5px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+}
+
+.contenedorModal {
+    display: flex;
+    flex-direction: column;
+
+    h6 {
+        color: var(--colorSetting)
+    }
+}
+
+.containerImgCombos {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .imgModal {
+        height: 350px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .anchoTabla {
+        margin-top: 20px;
+        width: 80%;
+
+        .btnOrden {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            button {
+                background-color: var(--primaryHEX);
+                color: var(--colorSetting);
+                padding: 20px 170px;
+                margin-top: 10px;
+            }
+        }
+
+        .tituloTabla {
+            font-size: 22px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .lineaTabla {
+            width: 100%;
+            height: 2px;
+            background-color: var(--colorSetting);
+            margin: 20px 0px;
+        }
+
+        .tablaReact {
+            thead {
+                tr {
+                    .colorLetra {
+                        color: var(--colorSetting);
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    td {
+                        .colorLetra {
+                            color: var(--colorSetting);
+                        }
+
+                        &::before {
+                            color: var(--colorSetting);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .containerSelects {
+        display: flex;
+        flex-direction: column;
+
+
+        div {
+            width: 400px;
+        }
+
+        select {
+            border: 1px solid #666;
+            width: 300px;
+            margin-bottom: 25px;
+            min-width: 300px;
+        }
+
+        .divFil {
+            display: flex;
+            flex-direction: column;
+            margin: 0px 20px;
+
+            .formConsulta {
+                color: var(--colorSetting);
+            }
+        }
+    }
+}
+
+@keyframes entrada {
+    0% {
+        left: -50%;
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
+.modal-lateral-flexit {
+    max-width: 100%;
+    height: 100% !important;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    position: relative;
+    left: 0;
+
+    .entrada-izq-der-flexit {
+        left: 0;
+        animation: entrada .5s ease;
+    }
+
+    .tamano-modal-flexit {
+        max-width: 600px;
+        min-height: 100%;
+        height: auto !important;
+        width: 600px !important;
+
+        .modal-body {
+            .container-venta-flexit {
+                padding: 5px;
+                border-bottom: 2px solid var(--primaryGreen);
+                overflow-y: auto;
+                height: 20rem;
+
+                .container-producto-flexit {
+                    border-top: 2px solid var(--primaryGreen);
+
+                    .menos {
+                        font-size: 18px;
+                    }
+
+                    .mas {
+                        font-size: 18px;
+                    }
+
+                    .boton-eliminar-flexit {
+                        background-color: #f8d7da;
+                        color: #721c24;
+                    }
+                }
+            }
+        }
+
+        .modal-body div #tabla_wrapper .row .col-sm-12 #tabla_filter label {
+            font-size: 12px;
+        }
+
+        .modal-body div #tabla_wrapper .row .col-sm-12 #tabla_paginate {
+            font-size: 12px;
+        }
+
+        .containerImgCombos {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .anchoTabla {
+                margin-top: 20px;
+                width: 80%;
+
+                .btnOrden {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+
+                    button {
+                        background-color: var(--primaryHEX);
+                        color: var(--colorSetting);
+                        padding: 20px 170px;
+                        margin-top: 10px;
+                    }
+                }
+
+                .tituloTabla {
+                    font-size: 22px;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .lineaTabla {
+                    width: 100%;
+                    height: 2px;
+                    background-color: var(--colorSetting);
+                    margin: 20px 0px;
+                }
+
+                .tablaReact {
+                    thead {
+                        tr {
+                            .colorLetra {
+                                color: var(--colorSetting);
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                .colorLetra {
+                                    color: var(--colorSetting);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .containerSelects {
+                display: flex;
+                flex-direction: column;
+
+
+                div {
+                    width: 400px;
+                }
+
+                select {
+                    border: 1px solid #666;
+                    width: 300px;
+                    margin-bottom: 25px;
+                    min-width: 300px;
+                }
+
+                .divFil {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0px 20px;
+
+                    .formConsulta {
+                        color: var(--colorSetting);
+                        width: 300px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:495px) {
+    .containerImgCombos {
+        .anchoTabla {
+            margin-top: 20px;
+            width: 80%;
+
+            .btnOrden {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                button {
+                    padding: 20px 90px;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:713px) {
+    .containerImgCombos {
+        .containerSelects {
+            justify-content: center;
+        }
+    }
+}
+
+.btnCerrarModal {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.backgroundModal {
+    background-color: var(--bodyBG);
+}
+
+
+.modal-lateral-flexit {
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    position: relative;
+    left: 0;
+
+    .tamano-modal-flexit {
+        max-width: 450px;
+        height: 100%;
+        width: auto;
+
+        .containerImgCombos2 {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            flex-wrap: wrap;
+
+            input {
+                color: var(--colorSetting);
+            }
+
+            input:focus {
+                color: var(--colorSetting);
+            }
+
+            .containerSelects2 {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                width: 100%;
+                height: 100%;
+                flex-wrap: wrap;
+
+                select {
+                    border: 1px solid #666;
+                    width: 400px;
+                    margin-bottom: 25px;
+                    min-width: 300px;
+                }
+
+                .divFil {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}

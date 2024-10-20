@@ -1,0 +1,30 @@
+.card {
+  border: 1px solid var(--hardBorder);
+  .background-card {
+    background-color: var(--cardBG);
+    border: 1px solid var(--hardBorder);
+    ul {
+      border-bottom: 1px solid var(--hardBorder);
+      li {
+        .active {
+          background-color: var(--cardBG);
+          border: 1px solid var(--hardBorder);
+          color: var(--primaryHEX);
+        }
+      }
+      li button:hover {
+        border: 1px solid var(--hardBorder);
+      }
+    }
+    .background-tab {
+      background-color: var(--lightBG);
+      border: 1px solid var(--hardBorder);
+      .card-body {
+        background-color: var(--paperBG);
+      }
+      .border-conector {
+        border: 1px solid var(--hardBorder);
+      }
+    }
+  }
+}

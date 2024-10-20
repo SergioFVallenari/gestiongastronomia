@@ -1,0 +1,29 @@
+{
+  "navs": [
+    {
+      "title": "modulos",
+      "menu": [
+        {
+          "href": "/",
+          "icon": "leaderboard",
+          "text": "dashboard"
+        },
+        {
+          "href": "/Articulos",
+          "icon": "inventory_2",
+          "text": "articulos"
+        },
+        {
+          "href": "/Ingresos",
+          "icon": "receipt_long",
+          "text": "ingresos"
+        }
+      ]
+    }
+  ],
+  "button": {
+    "icon": "lock",
+    "path": "/login",
+    "text": "cerrar sesión"
+  }
+}

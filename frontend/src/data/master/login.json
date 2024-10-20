@@ -1,0 +1,76 @@
+{
+  "logo": {
+    "path": "/ecommerce",
+    "src": "../../images/logo/logo/72/Logo_72_original.png",
+    "alt": "blue",
+    "name": "hotash"
+  },
+  "pattern": {
+    "src": "images/pattern.webp",
+    "alt": "line-pattern"
+  },
+  "title": "Inicio de sesion",
+  "input": [
+    {
+      "icon": "person",
+      "type": "text",
+      "placeholder": "Ingrese su usuario",
+      "fieldSize": "w-100 h-sm",
+      "objeto": "username",
+      "passwordVisible": false,
+      "option": [
+        { "value": "option1", "dias": "30" },
+        { "value": "option2", "dias": "60" }
+      ]
+    },
+    {
+      "icon": "lock",
+      "type": "password",
+      "placeholder": "Ingrese su contraseña",
+      "fieldSize": "w-100 h-sm",
+      "passwordVisible": true,
+      "objeto": "clave",
+      "option": [
+        { "value": "option1", "dias": "30" },
+        { "value": "option2", "dias": "60" }
+      ]
+    }
+  ],
+  "button": {
+    "type": "submit",
+    "text": "Iniciar sesion",
+    "fieldSize": "h-sm"
+  },
+  "forgot": {
+    "path": "/forgot-password",
+    "text": "forgot password?"
+  },
+  "divide": {
+    "text": "o"
+  },
+  "connect": [
+    {
+      "path": "google",
+      "classes": "google h-sm",
+      "icon": "icofont-google-plus",
+      "text": "Continuar con Google"
+    },
+    {
+      "path": "facebook",
+      "classes": "facebook h-sm",
+      "icon": "icofont-facebook",
+      "text": "Continuar con Facebook"
+    },
+    {
+      "path": "apple",
+      "classes": "apple h-sm",
+      "icon": "icofont-apple",
+      "text": "Continuar con Apple"
+    }
+  ],
+  "navigate": {
+    "title": "Don't have an account?",
+    "path": "/register",
+    "text": "register"
+  }
+}

@@ -1,0 +1,47 @@
+/*Gilroy*/
+@font-face {
+  font-family: Gilroy;
+  src: url(../fonts-local/Gilroy-Regular.ttf);
+}
+
+/*Gilroy*/
+@font-face {
+  font-family: Gilroy-bold;
+  src: url(../fonts-local/Gilroy-Bold.ttf);
+}
+
+/*Gilroy*/
+@font-face {
+  font-family: Gilroy-light;
+  src: url(../fonts-local/Gilroy-Light.otf);
+}
+
+/*Gilroy*/
+@font-face {
+  font-family: Giltoy-medium;
+  src: url(../fonts-local/Gilroy-Medium.ttf);
+}
+
+/*Raleway*/
+@font-face {
+  font-family: Raleway;
+  src: url(../fonts-local/Raleway-Regular.ttf);
+}
+
+/*Raleway*/
+@font-face {
+  font-family: Raleway-light;
+  src: url(../fonts-local/Raleway-Light.ttf);
+}
+
+/*Raleway*/
+@font-face {
+  font-family: Raleway-medium;
+  src: url(../fonts-local/Raleway-Medium.ttf);
+}
+
+/*Raleway*/
+@font-face {
+  font-family: Raleway-bold;
+  src: url(../fonts-local/Raleway-Bold.ttf);
+}

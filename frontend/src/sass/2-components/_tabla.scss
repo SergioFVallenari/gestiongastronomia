@@ -1,0 +1,17 @@
+.tabla-generica{
+    font-size : 12px !important;
+}
+.tabla-generica tbody tr td{
+    padding: 0.2rem 0.2rem !important;
+    vertical-align: middle;
+}
+.tabla-generica thead tr th{
+    padding: 0.3rem 0.3rem !important;
+    padding: 3px !important;
+    background-color: #55DFB2;
+    text-align: center !important;
+}
+
+th.dtr-hidden {
+    display: table-cell !important;
+}

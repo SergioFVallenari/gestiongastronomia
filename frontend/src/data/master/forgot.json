@@ -1,0 +1,27 @@
+{
+  "logo": {
+    "path": "/inicio",
+    "src": "images/logo/logo/72/Logo_72_original.png",
+    "alt": "blue",
+    "name": "hotash"
+  },
+  "pattern": {
+    "src": "images/pattern.webp",
+    "alt": "line-pattern"
+  },
+  "title": "Cambio de contraseña",
+  "input": [
+    {
+      "icon": "lock_reset",
+      "type": "password",
+      "placeholder": "Nueva contraseña",
+      "fieldSize": "h-sm"
+    }
+  ],
+  "button": { "type": "button", "text": "Cambiar contraseña", "fieldSize": "h-sm" },
+  "navigate": {
+    "title": "Remember the password?",
+    "path": "/login",
+    "text": "login"
+  }
+}

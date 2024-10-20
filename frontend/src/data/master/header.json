@@ -1,0 +1,266 @@
+{
+  "logo": {
+    "src": "../../images/logo/logo/72/Logo_72_original.png",
+    "srcDark": "../../images/logo/logo/72/Logo_72 copia_recorte.png",
+    "alt": "blue"
+  },
+  "toggle": {
+    "open": "menu_open",
+    "close": "menu"
+  },
+  "search": {
+    "icon": "search",
+    "placeholder": "Buscar"
+  },
+  "theme": {
+    "icon": {
+      "light": "light_mode",
+      "dark": "dark_mode"
+    },
+    "title": "Theme Mode",
+    "addClass": "theme"
+  },
+  "language": {
+    "icon": "language",
+    "title": "Languages",
+    "addClass": "language",
+    "dropdown": [
+      {
+        "flag": "images/flag/bangladesh.webp",
+        "name": "bengali",
+        "check": "active"
+      },
+      {
+        "flag": "images/flag/germany.webp",
+        "name": "germany"
+      },
+      {
+        "flag": "images/flag/saudi.webp",
+        "name": "arabic"
+      },
+      {
+        "flag": "images/flag/usa.webp",
+        "name": "english"
+      },
+      {
+        "flag": "images/flag/sa.webp",
+        "name": "african"
+      }
+    ]
+  },
+  "notify": {
+    "icon": "notifications",
+    "title": "notification",
+    "addClass": "notify",
+    "badge": {
+      "text": "04",
+      "variant": "primary"
+    },
+    "dropdown": {
+      "title": "notifications",
+      "dotsMenu": {
+        "dots": "settings",
+        "dropdown": [
+          {
+            "icon": "delete",
+            "text": "eliminar notificaciones"
+          }
+        ]
+      },
+      "button": {
+        "path": "/notificaciones",
+        "label": "view all notification"
+      },
+      "items": [
+        {
+          "path": "#",
+          "addClass": "active",
+          "notify": {
+            "image": "images/avatar/01.webp",
+            "variant": "red",
+            "icon": "favorite"
+          },
+          "note": "<b>Mahmudul</b> added to his favorite list <b>Leather belt steve madden</b>",
+          "longMoment": "few seconds ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        },
+        {
+          "path": "#",
+          "addClass": "active",
+          "notify": {
+            "image": "images/avatar/02.webp",
+            "variant": "green",
+            "icon": "forum"
+          },
+          "note": "<b>labonno</b> leave her comment to <b>Dressni Breathable female Dress</b>",
+          "longMoment": "25 minutes ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        },
+        {
+          "path": "#",
+          "addClass": "active",
+          "notify": {
+            "image": "images/avatar/03.webp",
+            "variant": "blue",
+            "icon": "campaign"
+          },
+          "note": "<b>tahmina</b> announce to 50% discount <b>New Exclusive long kurti</b>",
+          "longMoment": "12 hours ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        },
+        {
+          "path": "#",
+          "addClass": "active",
+          "notify": {
+            "image": "images/avatar/04.webp",
+            "variant": "purple",
+            "icon": "edit"
+          },
+          "note": "<b>jubayer</b> write to his latest blog <b>Best fashion outfit this winter</b>",
+          "longMoment": "4 days ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        },
+        {
+          "path": "#",
+          "notify": {
+            "image": "images/avatar/05.webp",
+            "variant": "yellow",
+            "icon": "star"
+          },
+          "note": "<b>rebeka</b> give a review to <b>Exclusive Designed Multicolor long Kaptan</b>",
+          "longMoment": "1 weeks ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        },
+        {
+          "path": "#",
+          "notify": {
+            "image": "images/logo.webp",
+            "variant": "primary",
+            "icon": "shield"
+          },
+          "note": "<b>hotash</b> privacy updated and secure <b>all this multitask platform</b>",
+          "longMoment": "2 months ago!",
+          "more": {
+            "icon": "more_vert",
+            "menu": [
+              {
+                "icon": "mark_chat_read",
+                "text": "mark as unread"
+              },
+              {
+                "icon": "delete",
+                "text": "delete notification"
+              },
+              {
+                "icon": "remove_circle",
+                "text": "block notification"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "profile": {
+    "name": "miron mahmud",
+    "username": "@mironcoder",
+    "image": "images/avatar/default.jpg",
+    "dropdown": [
+      {
+        "path": "/MiPerfil",
+        "icon": "person",
+        "text": "mi cuenta"
+      },
+      {
+        "path": "/CambiarContraseña",
+        "icon": "privacy_tip",
+        "text": "cambiar contraseña"
+      },
+      {
+        "path": "/",
+        "icon": "lock",
+        "text": "cerrar sesión"
+      }
+    ]
+  }
+}
