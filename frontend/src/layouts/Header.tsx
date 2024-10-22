@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { WidgetDropdown, ProfileDropdown } from '../components/header/index.ts';
+import React, { useState } from 'react';
+// import { WidgetDropdown, ProfileDropdown } from '../components/header/index.ts';
 import useGetComplexObject from '../hooks/useGetComplexObject';
 import { Button, Section, Box } from '../components/elements/index.ts';
 import { DrawerContext } from '../context/Drawer.tsx';
@@ -8,17 +8,18 @@ import { ThemeContext } from '../context/Themes.tsx';
 import { Logo } from '../components/index.ts';
 import data from '../data/master/header.json';
 import src from '../images/logo-donFaustino/don-faustino.jpeg';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import TituloHeader from '../ComponentesPag/Header/TituloHeader.tsx';
+// import WidgetDropdown from '../components/header/WidgetDropdown.tsx';
 
 interface IHeader {
   label: string;
 }
-interface FlexitContextType {
-  datos: any;
-  setearDatos: (datos: any) => void;
-  tokenDecifrado: (token: string) => Promise<any>;
-}
+// interface FlexitContextType {
+//   datos: any;
+//   setearDatos: (datos: any) => void;
+//   tokenDecifrado: (token: string) => Promise<any>;
+// }
 
 interface ThemeContextType {
   theme: string;
@@ -31,7 +32,7 @@ interface IDrawerContextType {
 }
 
 const Header: React.FC<IHeader> = ({ label }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { drawer, toggleDrawer } = useGetComplexObject<IDrawerContextType>(DrawerContext);
   const { theme, toggleTheme } = useGetComplexObject<ThemeContextType>(ThemeContext);
   // const { datos, tokenDecifrado, setearDatos } = useGetComplexObject<FlexitContextType>(FlexitContext);
@@ -45,10 +46,10 @@ const Header: React.FC<IHeader> = ({ label }) => {
   //   [setearDatos, tokenDecifrado]
   // );
 
-  function cerrarSesion(): void {
-    localStorage.clear();
-    navigate('/');
-  }
+  // function cerrarSesion(): void {
+  //   localStorage.clear();
+  //   navigate('/');
+  // }
 
   // useEffect(() => {
   //   let token: string = localStorage.getItem('token') ?? '';
@@ -76,22 +77,15 @@ const Header: React.FC<IHeader> = ({ label }) => {
 
   return (
     <Section as='header' className={`mc-header ${scroll}`}>
-      <Logo src={src} alt={data?.logo.alt} id={'image-flexit'} name={''} href={'/'} />
+      <Logo src={src} alt={data?.logo.alt} name={''} href={'/'} />
       <Box className='mc-header-group'>
         <Box className='mc-header-left'>
-          {/* <Button
+          <Button
             icon={data?.search.icon}
             className="mc-header-icon search col-2"
-            onClick={() => setSearch("show")}
-          /> */}
+          // onClick={() => setSearch("show")}
+          />
           <Button icon={drawer ? 'menu_open' : 'menu'} className='mc-header-icon toggle col-2' onClick={toggleDrawer} />
-          {/*                     <Box className={`mc-header-search-group ${search}`}>
-                        <form className="mc-header-search" ref={searchRef}>
-                            <Button className="material-icons">{data?.search.icon}</Button>
-                            <Input type="search" placeholder={data?.search.placeholder} />
-                        </form>
-                    </Box> 
-                        */}
         </Box>
         <Box className='w-100 d-sm-none d-md-block d-none d-sm-block'>
           <TituloHeader titulo={label} />

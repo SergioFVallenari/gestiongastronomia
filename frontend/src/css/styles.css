@@ -7,92 +7,92 @@
 *   All copyrights reserved by Mironcoder
 */
 .light_mode {
-  --primaryHEX: #0858f7;
-  --primaryGreen: #55DFB2;
-  --lightColor: #ffffff;
-  --textColor: #5e5d72;
-  --activeColor: #0858f7;
-  --placeholderColor: #9a9a9a;
-  --headingColor: #403e57;
-  --colorSetting: #000;
-  --bodyBG: #ffffff;
-  --cardBG: #ffffff;
-  --paperBG: #ffffff;
-  --lightBG: #ffffff;
-  --thinBorder: #f8f8f8;
-  --lightBorder: #f0f0f0;
-  --deepBorder: #e4e4e4;
-  --hardBorder: #d1d1d1;
-  --thinGray: #f8f8f8;
-  --lightGray: #f0f0f0;
-  --grayDropdown: #a2a2a2;
-  --deepGray: #e4e4e4;
-  --hardGray: #d1d1d1;
-  --hoverBG: #f1f1f1;
-  --activeBG: #ebf6ff;
-  --facebook: #3b5998;
-  --linkedin: #0e76a8;
-  --twitter: #00acee;
-  --google: #E60023;
-  --apple: #555555;
-  --instagram: #F77737;
-  --whatsapp: #25D366;
-  --pinterest: #f0002a;
-  --youtube: #FF0000;
-  --primaryRGB: 8, 88, 247;
-  --lightRGB: 255, 255, 255;
-  --blackRGB: 0, 0, 0;
-  --redRGB: 241, 17, 51;
-  --darkRGB: 1, 12, 44;
-  --grayRGB: 129, 129, 129;
-  --blueRGB: 43, 119, 229;
-  --greenRGB: 26, 159, 83;
-  --purpleRGB: 190, 14, 225;
-  --orangeRGB: 255, 115, 0;
-  --yellowRGB: 225, 148, 14;
+  --primaryHEX: #b7410e; /* Rojo Teja */
+  --primaryGreen: #d96e26; /* Un tono complementario naranja */
+  --lightColor: #ffffff; /* Mantiene el blanco */
+  --textColor: #5e5d72; /* Tono gris claro */
+  --activeColor: #b7410e; /* Rojo teja */
+  --placeholderColor: #9a9a9a; /* Gris para los placeholders */
+  --headingColor: #403e57; /* Un gris oscuro */
+  --colorSetting: #000; /* Negro para configuraciones */
+  --bodyBG: #ffffff; /* Fondo blanco */
+  --cardBG: #ffffff; /* Fondo de tarjeta blanco */
+  --paperBG: #ffffff; /* Fondo de papel blanco */
+  --lightBG: #f5f5f5; /* Un gris muy claro para el fondo */
+  --thinBorder: #d1d1d1; /* Bordes delgados en gris claro */
+  --lightBorder: #e4e4e4; /* Bordes ligeros */
+  --deepBorder: #c0c0c0; /* Bordes más profundos */
+  --hardBorder: #b0b0b0; /* Bordes más duros */
+  --thinGray: #f8f8f8; /* Gris claro para líneas finas */
+  --lightGray: #f0f0f0; /* Gris muy claro */
+  --grayDropdown: #a2a2a2; /* Color de dropdown */
+  --deepGray: #b0b0b0; /* Gris más profundo */
+  --hardGray: #d1d1d1; /* Gris duro */
+  --hoverBG: #f1f1f1; /* Fondo de hover en gris claro */
+  --activeBG: rgba(183, 65, 14, 0.1); /* Fondo activo con transparencia del rojo teja */
+  --facebook: #3b5998; /* Sin cambios */
+  --linkedin: #0e76a8; /* Sin cambios */
+  --twitter: #00acee; /* Sin cambios */
+  --google: #E60023; /* Sin cambios */
+  --apple: #555555; /* Sin cambios */
+  --instagram: #F77737; /* Sin cambios */
+  --whatsapp: #25D366; /* Sin cambios */
+  --pinterest: #f0002a; /* Sin cambios */
+  --youtube: #FF0000; /* Sin cambios */
+  --primaryRGB: 183, 65, 14; /* Rojo teja en formato RGB */
+  --lightRGB: 255, 255, 255; /* Blanco */
+  --blackRGB: 0, 0, 0; /* Negro puro */
+  --redRGB: 241, 17, 51; /* Rojo puro */
+  --darkRGB: 1, 12, 44; /* Un negro azabache */
+  --grayRGB: 129, 129, 129; /* Gris */
+  --blueRGB: 43, 119, 229; /* Azul */
+  --greenRGB: 26, 159, 83; /* Verde */
+  --purpleRGB: 190, 14, 225; /* Púrpura */
+  --orangeRGB: 255, 115, 0; /* Naranja */
+  --yellowRGB: 225, 148, 14; /* Amarillo */
   --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 12%);
   --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 6%);
   --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 10%);
 }
 
 .dark_mode {
-  --primaryHEX: #1e66ff;
-  --primaryGreen: #27CCCA;
-  --lightColor: #ffffff;
+  --primaryHEX: #b7410e; /* Rojo Teja */
+  --primaryGreen: #d96e26; /* Un tono complementario naranja */
+  --lightColor: #ffffff; /* Mantiene el blanco */
   --textColor: #b4b4b4;
-  --activeColor: #94b7ff;
+  --activeColor: #e77a4d; /* Un tono más claro de rojo teja */
   --placeholderColor: #acacac;
-  --headingColor: #e4e4e4;
+  --headingColor: #f0f0f0;
   --colorSetting: #fff;
-  --bodyBG: #112143;
-  --cardBG: #112143;
-  --paperBG: #132140;
-  --grayDropdown: #071739;
-  --lightBG: #071739;
-  --thinBorder: #253557;
-  --lightBorder: #1b2b4d;
-  --deepBorder: #253557;
-  --hardBorder: #31436a;
-  --thinGray: #071739;
-  --lightGray: #1b2b4d;
-  --deepGray: #00031f;
-  --hardGray: #000015;
-  --hoverBG: #253557;
-  --activeBG: rgba(40, 129, 227, 0.100);
-  --facebook: #3b5998;
-  --linkedin: #0e76a8;
-  --twitter: #00acee;
-  --google: #E60023;
-  --instagram: #F77737;
-  --whatsapp: #25D366;
-  --pinterest: #f0002a;
-  --youtube: #FF0000;
-  --apple: #555555;
-  --primaryRGB: 35, 108, 255;
-  --lightRGB: 17, 33, 67;
-  --blackRGB: 0, 0, 0;
+  --bodyBG: #0d0d0d; /* Negro Azabache */
+  --cardBG: #1a1a1a; /* Un negro más claro para los fondos de las tarjetas */
+  --paperBG: #1c1c1c; /* Fondo de papel ligeramente gris oscuro */
+  --grayDropdown: #111111;
+  --lightBG: #1a1a1a;
+  --thinBorder: #332620; /* Tono marrón oscuro para los bordes delgados */
+  --lightBorder: #2e1912; /* Bordes claros, pero en marrón oscuro */
+  --deepBorder: #4d2a1e; /* Bordes más profundos, tono marrón rojizo */
+  --hardBorder: #602b1a; /* Un tono marrón más duro */
+  --thinGray: #1a1a1a; /* Mantiene un gris muy oscuro para las líneas finas */
+  --lightGray: #2e1912;
+  --deepGray: #140a07; /* Negro con un toque de marrón oscuro */
+  --hardGray: #0a0403;
+  --hoverBG: #4d2a1e; /* Fondo de hover con tono marrón rojizo */
+  --activeBG: rgba(183, 65, 14, 0.100); /* Rojo teja claro con transparencia */
+  --facebook: #3b5998; /* Sin cambios */
+  --linkedin: #0e76a8; /* Sin cambios */
+  --twitter: #00acee; /* Sin cambios */
+  --google: #E60023; /* Sin cambios */
+  --instagram: #F77737; /* Sin cambios */
+  --whatsapp: #25D366; /* Sin cambios */
+  --pinterest: #f0002a; /* Sin cambios */
+  --youtube: #FF0000; /* Sin cambios */
+  --apple: #555555; /* Sin cambios */
+  --primaryRGB: 183, 65, 14; /* Rojo teja en formato RGB */
+  --lightRGB: 26, 26, 26; /* Negro más claro */
+  --blackRGB: 0, 0, 0; /* Negro puro */
   --redRGB: 241, 17, 51;
-  --darkRGB: 1, 12, 44;
+  --darkRGB: 13, 13, 13; /* Negro azabache */
   --grayRGB: 129, 129, 129;
   --blueRGB: 43, 119, 229;
   --greenRGB: 26, 159, 83;
@@ -1945,7 +1945,8 @@ textarea.form-control {
 .tabla-generica thead tr th {
   padding: 0.3rem 0.3rem !important;
   padding: 3px !important;
-  background-color: #55DFB2;
+  color:#fff;
+  background-color: #af2b2b;
   text-align: center !important;
 }
 
@@ -3142,7 +3143,7 @@ th.dtr-hidden {
   }
 }
 .mc-header-icon i:hover {
-  color: #55DFB2;
+  color: #9e0000;
   background-color: rgba(var(--primaryRGB), 10%);
 }
 .mc-header-icon sup {
@@ -3580,7 +3581,7 @@ th.dtr-hidden {
 .mc-sidebar-menu h4 {
   width: 100%;
   padding: 10px 4px;
-  background-color: #27CCCA;
+  background-color: #cc2c27;
   margin-bottom: 10px;
   border-radius: 5px;
   color: white;
@@ -3599,11 +3600,11 @@ th.dtr-hidden {
   margin-bottom: 3px;
 }
 .mc-sidebar-menu-item.focused .mc-sidebar-menu-btn {
-  color: #55DFB2;
+  color: #916464;
   background-color: var(--activeBG);
 }
 .mc-sidebar-menu-item.active .mc-sidebar-menu-btn {
-  color: #55DFB2;
+  color: #df5555;
   background-color: var(--activeBG);
 }
 .mc-sidebar-menu-item.active .mc-sidebar-menu-btn small {

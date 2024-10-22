@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import useGetComplexObject from '../../hooks/useGetComplexObject';
-import { CardHeader } from '../cards';
+import React from 'react';
+// import useGetComplexObject from '../../hooks/useGetComplexObject';
+// import { CardHeader } from '../cards';
 import { Dropdown } from 'react-bootstrap';
-import { Icon, Text, Box, Anchor, List, Item, Heading } from '../elements';
+import { Icon, Box, Anchor} from '../elements';
 // import { PostEureka, DeleteEureka } from '../../components-new/estructura/EurekaGeneral/EurekaGeneral';
 // import { FlexitContext } from '../../context/Flexit';
 
@@ -18,22 +18,22 @@ interface IWidgetDropdown {
   menu?: boolean;
 }
 
-interface INotificaciones {
-  subject: string;
-  mensaje: string;
-  diferencia: string;
-  idnotificacion: number;
-}
+// interface INotificaciones {
+//   subject: string;
+//   mensaje: string;
+//   diferencia: string;
+//   idnotificacion: number;
+// }
 
-interface FlexitContextType {
-  datos: any;
-  setearDatos: (datos: any) => void;
-  tokenDecifrado: (token: string) => Promise<any>;
-}
+// interface FlexitContextType {
+//   datos: any;
+//   setearDatos: (datos: any) => void;
+//   tokenDecifrado: (token: string) => Promise<any>;
+// }
 
 const WidgetDropdown: React.FC<IWidgetDropdown> = ({ title, icon, addClass, badge, dropdown, menu = true }) => {
   // const { datos } = useGetComplexObject<FlexitContextType>(FlexitContext);
-  const [notificaciones, setNotificaciones] = useState<INotificaciones[]>([]);
+  // const [notificaciones, setNotificaciones] = useState<INotificaciones[]>([]);
 
   // async function getNotificaciones() {
   //   const notificaciones = await PostEureka('/Notificaciones', {});
@@ -56,15 +56,15 @@ const WidgetDropdown: React.FC<IWidgetDropdown> = ({ title, icon, addClass, badg
     <Dropdown className={addClass}>
       <Dropdown.Toggle className='mc-dropdown-toggle mc-header-icon ' title={title}>
         <Icon type={icon} />
-        <Text as='sup' className={badge?.variant}>
+        {/* <Text as='sup' className={badge?.variant}>
           {notificaciones?.length}
-        </Text>
+        </Text> */}
       </Dropdown.Toggle>
       {menu === true ? (
         <Dropdown.Menu align='end' className='mc-dropdown-paper'>
           <Box className='mc-header-dropdown-group'>
             {/* <CardHeader onClick={() => deleteNotificacion(undefined, datos.usuario.idusuario)} title={`${'Notificaciones'} (${notificaciones?.length})`} dotsMenu={dropdown?.dotsMenu} /> */}
-            <List className='mc-header-dropdown-list thin-scrolling'>
+            {/* <List className='mc-header-dropdown-list thin-scrolling'>
               {notificaciones?.length ? (
                 notificaciones?.map((item, index) => (
                   <Item key={index} className={`mc-header-dropdown-item`}>
@@ -82,7 +82,7 @@ const WidgetDropdown: React.FC<IWidgetDropdown> = ({ title, icon, addClass, badg
               ) : (
                 <div className='sinOrdenes colorLetra'>Sin notificaciones</div>
               )}
-            </List>
+            </List> */}
             <Anchor href={dropdown?.button?.path} className='mc-btn primary mc-header-dropdown-button'>
               {'Ver todas las notificaciones'}
             </Anchor>
