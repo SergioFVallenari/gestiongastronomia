@@ -10,7 +10,7 @@
   --primaryHEX: #b7410e; /* Rojo Teja */
   --primaryGreen: #d96e26; /* Un tono complementario naranja */
   --lightColor: #ffffff; /* Mantiene el blanco */
-  --textColor: #5e5d72; /* Tono gris claro */
+  --textColor: #2b2b2b; /* Tono gris claro */
   --activeColor: #b7410e; /* Rojo teja */
   --placeholderColor: #9a9a9a; /* Gris para los placeholders */
   --headingColor: #403e57; /* Un gris oscuro */
@@ -59,13 +59,13 @@
   --primaryHEX: #b7410e; /* Rojo Teja */
   --primaryGreen: #d96e26; /* Un tono complementario naranja */
   --lightColor: #ffffff; /* Mantiene el blanco */
-  --textColor: #b4b4b4;
+  --textColor: #ffffff;
   --activeColor: #e77a4d; /* Un tono más claro de rojo teja */
   --placeholderColor: #acacac;
   --headingColor: #f0f0f0;
   --colorSetting: #fff;
-  --bodyBG: #0d0d0d; /* Negro Azabache */
-  --cardBG: #1a1a1a; /* Un negro más claro para los fondos de las tarjetas */
+  --bodyBG: #050202; /* Negro Azabache */
+  --cardBG: #5a5a5a; /* Un negro más claro para los fondos de las tarjetas */
   --paperBG: #1c1c1c; /* Fondo de papel ligeramente gris oscuro */
   --grayDropdown: #111111;
   --lightBG: #1a1a1a;
@@ -453,8 +453,8 @@ p {
 }
 .mc-tabs .nav-link.active {
   border: none;
-  color: var(--lightColor);
-  background-color: var(--primaryHEX);
+  color: var(--textColor);
+  background-color: var(--bodyBG);
 }
 
 .mc-tabpane {
@@ -846,6 +846,31 @@ textarea.form-control {
 .modal-dialog-flexit {
   margin: 100px auto;
   max-width: fit-content;
+}
+.modal-content {
+  background-color: var(--cardBG);
+  border: 1px solid var(--deepBorder);
+  input{
+    background-color: var(--cardBG);
+    color: var(--textColor);
+  }
+  input:focus {
+    background-color: var(--selectedBG); /* Cambia este valor según el color deseado */
+    color: var(--selectedTextColor); /* Cambia el color del texto si también lo deseas */
+    border-color: var(--focusBorderColor); /* Opcional: cambia el borde si lo necesitas */
+    outline: none; /* Elimina el contorno predeterminado del navegador, si lo deseas */
+  }
+  input:disabled{
+    background-color: var(--disabledBG);
+    color: var(--disabledTextColor);
+    cursor:not-allowed
+  }
+  ::before {
+    input {
+      background-color: var(--cardBG);
+      color: var(--textColor);
+    }
+  }
 }
 
 .modal-content-flexit {
@@ -1403,6 +1428,18 @@ textarea.form-control {
   background-color: var(--grayDropdown);
 }
 
+.btn{
+  --bs-btn-color: var(--lightColor);
+}
+button.dt-button, div.dt-button, a.dt-button, input.dt-button{
+  color: var(--colorSetting);
+}
+table.dataTable thead th, table.dataTable thead td{
+  border-bottom: 1px solid var(--colorSetting);
+}
+.btn-grid{
+  color: var(--colorSetting) !important;
+}
 .mc-dropdown-toggle.btn {
   border: inherit;
   padding: inherit;
@@ -1945,7 +1982,7 @@ textarea.form-control {
 .tabla-generica thead tr th {
   padding: 0.3rem 0.3rem !important;
   padding: 3px !important;
-  color:#fff;
+  color: var(--colorSetting);
   background-color: #af2b2b;
   text-align: center !important;
 }
@@ -1956,6 +1993,7 @@ th.dtr-hidden {
 
 .card {
   border: 1px solid var(--hardBorder);
+  --bs-card-bg: var(--cardBG);
 }
 .card .background-card {
   background-color: var(--cardBG);
@@ -3557,6 +3595,8 @@ th.dtr-hidden {
   -moz-transition: all linear 0.3s;
   -ms-transition: all linear 0.3s;
   -o-transition: all linear 0.3s;
+  border: 1px solid var(--lightGray);
+  border-radius: 8px;
 }
 @media (max-width: 991px) {
   .mc-sidebar {
@@ -3600,7 +3640,7 @@ th.dtr-hidden {
   margin-bottom: 3px;
 }
 .mc-sidebar-menu-item.focused .mc-sidebar-menu-btn {
-  color: #916464;
+  color: #ffffff;
   background-color: var(--activeBG);
 }
 .mc-sidebar-menu-item.active .mc-sidebar-menu-btn {
@@ -6136,8 +6176,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
 }
 
 .page-item.active .page-link {
-  color: black !important;
-  background: var(--primaryGreen) !important;
+  color: var(--cardBG) !important;
+  background: var(--primaryHEX) !important;
 }
 
 .pagination .page-link {
@@ -6440,6 +6480,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
 
 .table {
   font-size: clamp(8px, 1.5vw, 14px);
+  --bs-table-accent-bg: var(--lightBG);
+  --bs-table-color: var(--colorSetting);
 }
 
 .valor-cotizacion {

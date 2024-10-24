@@ -8,48 +8,44 @@ interface FormArticulosProps {
     idArticulo: number | null; // Si es null, significa que es una alta
     onSubmitSuccess: () => void; // Callback para manejar éxito después de la operación
     formDisabled?: boolean; // Deshabilitar formulario
-    setRecargaGridArticulos: any; // Callback para recargar el grid de artículos
+    setRecargaGridMateriaPrima: any; // Callback para recargar el grid de artículos
 }
 
-const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridArticulos }) => {
+const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
+    const [categorias, setCategorias] = useState<any[]>([]);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
             nombre: '',
             sku: '',
             precio_costo: 0,
-            precio_venta: 0,
             cantidad: 0,
-            categoria_articulo:''
+            categoria_materia_prima:0
         }
     });
-    const [categorias, setCategorias] = useState<any[]>([]);
 
     useEffect(() => {
-        axios.post('http://localhost:3001/articulos/lista_modulos',{modulo:'categorias_articulos'})
+        axios.post('http://localhost:3001/ingresos/lista_modulos',{modulo:'categorias_materia_prima'})
         .then(res => {
             setCategorias(res.data.content);
         })
         if (accion !== 'a' && idArticulo) {
             // Si es modificación o visualización, cargamos los datos del artículo
-            axios.get(`http://localhost:3001/articulos/get_articulo/${idArticulo}`)
+            axios.get(`http://localhost:3001/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
                     // Prellenamos el formulario con los datos del artículo
                     setValue('nombre', articulo.nombre);
                     setValue('sku', articulo.sku);
                     setValue('precio_costo', articulo.precio_costo);
-                    setValue('precio_venta', articulo.precio_venta);
                     setValue('cantidad', articulo.stock);
-                    setValue('categoria_articulo', articulo.categoria_articulo);
+                    setValue('categoria_materia_prima', articulo.categoria_materia_prima);
                 });
         }
-    }, [accion, idArticulo, setValue]);
+    }, []);
     const onSubmit = async (data:any) => {
         if (accion === 'a') {
             // Alta de un nuevo artículo
-            console.log(data);
-            
-            await axios.post('http://localhost:3001/articulos/alta_articulos', data)
+            await axios.post('http://localhost:3001/materia_prima/alta_materia_prima', data)
                 .then(res => {
                     DonFaustinoLoad.DonFaustinoLoad(true);
                     if (res.status === 200) {
@@ -66,7 +62,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                     if (res.status === 200) {
                         EnviarMensaje('success', res.data.content[0].msg);
                         onSubmitSuccess(); // Callback para recargar o cerrar modal
-                        setRecargaGridArticulos(new Date().toString());
+                        setRecargaGridMateriaPrima(new Date().toString());
                     }
                 });
         }
@@ -97,14 +93,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Precio Venta</label>
-                        <input type='text' className='form-control' {...register('precio_venta', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
-                        {errors.precio_venta && <span className='text-danger'>{errors.precio_venta.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Cantidad</label>
+                        <label className='form-label'>Cantidad (kg) </label>
                         <input type='text' className='form-control' {...register('cantidad', {required:'Obligatorio'})} disabled={ accion !== 'a' && formDisabled}/>
                         {errors.cantidad && <span className='text-danger'>{errors.cantidad.message}</span>}
                     </div>
@@ -112,13 +101,13 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Categoría</label>
-                        <select className='form-control' {...register('categoria_articulo', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}>
-                            <option value=''>Selecciona una categoría</option>
-                            {categorias.map(categoria => (
-                                <option key={categoria.id_valor_modulo} value={categoria.id_valor_modulo}>{categoria.valor_modulo.toUpperCase()}</option>
+                        <select className='form-control' {...register('categoria_materia_prima', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}>
+                            <option value="">Seleccione una categoría</option>
+                            {categorias.map((categoria, index) => (
+                                <option key={index} value={categoria.id_valor_modulo}>{categoria.valor_modulo.toUpperCase()}</option>
                             ))}
                         </select>
-                        {errors.categoria_articulo && <span className='text-danger'>{errors.categoria_articulo.message}</span>}
+                        {errors.categoria_materia_prima && <span className='text-danger'>{errors.categoria_materia_prima.message}</span>}
                     </div>
                 </div>
                 <hr></hr>
@@ -135,4 +124,4 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
     );
 }
 
-export default FormArticulos;
+export default FormMateriaPrima;

@@ -13,8 +13,8 @@ import { Order } from 'datatables.net';
 interface IFiltro {
     id?: number;
     idarticulo?: number;
-  }
-  
+}
+
 
 const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recargaGrid: Function, _filtro?: IFiltro): JSX.Element => {
     const groupColumn = 2;
@@ -28,10 +28,16 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'articulos':
                 btn = btnConsulta + btnModificar + btnBaja
                 break;
+            case 'ingresos':
+                btn = btnConsulta;
+                break;
+            case 'materia_prima':
+                btn = btnConsulta + btnModificar + btnBaja;
+                break;
             default:
                 btn = '';
         }
-        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" + "<button title='" + data + "' class='btn btn-default p-0 btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>" + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
+        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" + "<button title='" + data + "' class='btn btn-default p-0 btn-sm dropdown-toggle btn-grid' type='button' data-bs-toggle='dropdown' aria-expanded='false'>" + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
     }
     const getColumnsByOrigen = (origen: string) => {
         let columns: any = [];
@@ -39,12 +45,34 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'articulos': {
                 columns = [
                     { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
-                    { data: 'nombre', title: 'Nombre' },
-                    { data: 'sku', title: 'SKU' },
-                    { data: 'precio_costo', title: 'Precio Costo' },
-                    { data: 'precio_venta', title: 'Precio Venta' }
+                    { data: 'nombre', title: 'Nombre', class: 'text-center' },
+                    { data: 'sku', title: 'SKU', class: 'text-center' },
+                    { data: 'precio_costo', title: 'Precio Costo', class: 'text-center' },
+                    { data: 'precio_venta', title: 'Precio Venta', class: 'text-center' },
+                    { data: 'stock', title: 'Disponibles', class: 'text-center' },
+                    { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
                 ];
                 break;
+            }
+            case 'ingresos': {
+                columns = [
+                    { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
+                    { data: 'fecha', title: 'Fecha de Ingreso', class: 'text-center' },
+                    { data: 'importe_total', title: 'Importe Total', class: 'text-center' },
+                    { data: 'info', title: 'Información', class: 'text-center' },
+                ]
+                break;
+            }
+            case 'materia_prima': {
+                columns=[
+                    { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
+                    { data: 'nombre', title: 'Nombre', class: 'text-center' },
+                    { data: 'sku', title: 'SKU', class: 'text-center' },
+                    { data: 'precio_costo', title: 'Precio Costo', class: 'text-center' },
+                    { data: 'stock', title: 'Disponibles', class: 'text-center' },
+                    { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
+                ]
+            break;
             }
             default:
                 columns = [];
@@ -60,6 +88,51 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                         targets: [0],
                         render: function (data: any, _type: any, full: any) {
                             return getButtonOpciones(data, origen, full);
+                        },
+                    },
+                ];
+            case 'ingresos':
+                return [
+                    {
+                        targets: [0],
+                        render: function (data: any, _type: any, full: any) {
+                            return getButtonOpciones(data, origen, full);
+                        },
+                    },
+                    {
+                        targets: [3],
+                        render: function (data: any, _type: any, _full: any) {
+                            if (typeof data === 'string') {
+                                try {
+                                    data = JSON.parse(data);
+                                } catch (error) {
+                                    console.error('Error parsing JSON:', error);
+                                    return ''; 
+                                }
+                            }
+            
+
+                            if (!Array.isArray(data)) {
+                                console.warn('Expected an array but got:', data);
+                                return '';
+                            }
+                            const formateo = data.map((articulo: any) => {
+                                return {
+                                    sku: articulo.sku,
+                                    nombre: articulo.articulo,
+                                    cantidad: articulo.cantidad,
+                                };
+                            });
+            
+                            const jsonString = JSON.stringify(formateo);
+                            
+                            const maxLength = 50
+            
+                            const formattedString = jsonString.replace(/\\/g, '').replace(/\"/g, '');
+            
+                            return formattedString.length > maxLength 
+                                ? formattedString.substring(0, maxLength) + '...' 
+                                : formattedString;
                         },
                     },
                 ];
@@ -80,6 +153,12 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'articulos':
                 url = 'http://localhost:3001/articulos/get_articulos';
                 break;
+            case 'ingresos':
+                url = 'http://localhost:3001/ingresos/get_ingresos';
+                break;
+            case 'materia_prima':
+                url = 'http://localhost:3001/materia_prima/get_materia_prima';
+                break;    
             default:
                 return '';
         }
@@ -89,9 +168,13 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
     const getMetodoOrigen = (origen: string) => {
         switch (origen) {
             case 'articulos':
-                return 'GET';
+                return 'POST';
+            case 'ingresos':
+                return 'POST';
+            case 'materia_prima':
+                return 'POST';    
             default:
-                return '';
+                return 'POST';
         }
     }
     const getTipoTable = (origen: string) => {
@@ -173,11 +256,11 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     data['precio_venta'] = 0;
                 }
                 break;
-          default:
-            data = [];
+            default:
+                data = [];
         }
         return JSON.stringify(data);
-      };
+    };
 
 
     const tableOp: React.RefObject<HTMLTableElement> = useRef(null);
@@ -245,7 +328,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     processing: 'Espere, por favor...',
                     search: 'Buscar: ',
                 },
-            }as any);
+            } as any);
         }
     }, [origen, gridCarga /*, ManejoOrigenAcciones, getButtonsGrids, getDataOrigen, getRenderColumns, getUrlOrigen */]);
     return <Table responsive='xl' id={'tabla_' + origen} className={getTipoTable(origen)} bordered hover ref={tableOp}></Table>;

@@ -7,7 +7,7 @@ import { ThemeContext } from '../context/Themes.tsx';
 // import { FlexitContext } from '../context/Flexit.tsx';
 import { Logo } from '../components/index.ts';
 import data from '../data/master/header.json';
-import src from '../images/logo-donFaustino/don-faustino.jpeg';
+import src from '../images/logo-donFaustino/don-faustino2.png';
 // import { useNavigate } from 'react-router-dom';
 import TituloHeader from '../ComponentesPag/Header/TituloHeader.tsx';
 // import WidgetDropdown from '../components/header/WidgetDropdown.tsx';

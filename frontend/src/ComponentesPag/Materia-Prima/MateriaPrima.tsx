@@ -1,57 +1,57 @@
-import { Card } from "react-bootstrap"
-import PageLayout from "../../layouts/PageLayout"
-import { useState } from "react";
+import { Card } from "react-bootstrap";
+import PageLayout from "../../layouts/PageLayout";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
-import FormArticulos from "./FormArticulos";
 import axios from "axios";
+import { useState } from "react";
+import FormMateriaPrima from "./FormMateriaPrima";
 
-const Articulos: React.FC = (): JSX.Element => {
-  //Estados
-  const [modalArticulos, setmodalArticulos] = useState({
+const MateriaPrima: React.FC = () :JSX.Element => {
+     //Estados
+  const [modalMateriaPrima, setmodalMateriaPrima] = useState({
     show: false,
     id: 0,
     accion: 'a',
   });
   const [formDisabled, setFormDisabled] = useState(false);
   const [modalBaja, setmodalBaja] = useState({ show: false, id: 0, accion: 'b' });
-  // const [offcanvasArticulos, setoffcanvasArticulos] = useState({
+  // const [offcanvasMateriaPrima, setoffcanvasMateriaPrima] = useState({
   //   show: false,
   //   id: 0,
   //   accion: 'a',
   // });
-  const [recargaGridArticulos, setRecargaGridArticulos] = useState<string>('');
-  const [titulo,setTitulo] = useState<string>('Articulos');
+  const [recargaGridMateriaPrima, setRecargaGridMateriaPrima] = useState<string>('');
+  const [titulo,setTitulo] = useState<string>('MateriaPrima');
 
   //Funciones
-  // const offCanvasClose = () => setoffcanvasArticulos({ show: false, id: 0, accion: 'a' });
-  // const offCanvasShow = (id: number, accion: string) => setoffcanvasArticulos({ show: true, id: id, accion: accion });
-  const SetRefresh = (date: string) => setRecargaGridArticulos(date);
+  // const offCanvasClose = () => setoffcanvasMateriaPrima({ show: false, id: 0, accion: 'a' });
+  // const offCanvasShow = (id: number, accion: string) => setoffcanvasMateriaPrima({ show: true, id: id, accion: accion });
+  const SetRefresh = (date: string) => setRecargaGridMateriaPrima(date);
   const ModalBajaClose = () => setmodalBaja({ show: false, id: 0, accion: 'b' });
   const ModalBajaShow = (id: number, accion: string) => setmodalBaja({ show: true, id: id, accion: accion });
-  const ModalClose = () => setmodalArticulos({ show: false, id: 0, accion: 'a' });
-  const ModalShow = (id: number, accion: string) => setmodalArticulos({ show: true, id: id, accion: accion });
+  const ModalClose = () => setmodalMateriaPrima({ show: false, id: 0, accion: 'a' });
+  const ModalShow = (id: number, accion: string) => setmodalMateriaPrima({ show: true, id: id, accion: accion });
   const manejo_acciones = (_origen: string,registro: number, accion: string) => {
     switch (accion) {
       case 'a':{
         ModalShow(registro, accion);
-        setTitulo('Alta Articulos');
+        setTitulo('Alta Materia Prima');
         break;
       }
       case 'b':{
         ModalBajaShow(registro, accion);
-        setTitulo('Eliminar Articulos');
+        setTitulo('Eliminar Materia Prima');
         break;
       }
       case 'm':{
         ModalShow(registro, accion);
         setFormDisabled(true);
-        setTitulo('Modificar Articulos');
+        setTitulo('Modificar Materia Prima');
         break;
       }
       case 'c':{
         ModalShow(registro, accion);
-        setTitulo('Consultar Articulos');
+        setTitulo('Consultar Materia Prima');
         setFormDisabled(true);
         break;
       }
@@ -60,25 +60,25 @@ const Articulos: React.FC = (): JSX.Element => {
     }
   }
   const handleDelete = (id: any) => {
-    axios.delete('http://localhost:3001/articulos/baja_articulos', { data: { id: id } })
+    axios.delete('http://localhost:3001/MateriaPrima/baja_MateriaPrima', { data: { id: id } })
   }
   
   //Render
   return (
-    <PageLayout label="Adm. Articulos">
+    <PageLayout label="Adm. MateriaPrima">
       <Card>
         <Card.Body>
           <div className="d-flex">
             <button className="btn btn-primary mb-3" onClick={() => manejo_acciones('',0, 'a')}>Agregar</button>
           </div>
-          {Grid(manejo_acciones, 'articulos', recargaGridArticulos, setRecargaGridArticulos)}
-          <ModalDinamico id="modal_articulos" manejador={modalArticulos} modalTitulo={titulo} handleClose={ModalClose} sizeModal="xl">
-            <FormArticulos
-             accion={modalArticulos.accion}
-             idArticulo={modalArticulos.id}
+          {Grid(manejo_acciones, 'materia_prima', recargaGridMateriaPrima, setRecargaGridMateriaPrima)}
+          <ModalDinamico id="modal_materia_prima" manejador={modalMateriaPrima} modalTitulo={titulo} handleClose={ModalClose} sizeModal="xl">
+            <FormMateriaPrima
+             accion={modalMateriaPrima.accion}
+             idArticulo={modalMateriaPrima.id}
              onSubmitSuccess={ModalClose}
               formDisabled={formDisabled}
-              setRecargaGridArticulos={SetRefresh}
+              setRecargaGridMateriaPrima={SetRefresh}
             />
           </ModalDinamico>
           <ModalDinamico id="modal_baja" manejador={modalBaja} modalTitulo={titulo} sizeModal="lg" handleClose={ModalBajaClose}>
@@ -111,5 +111,4 @@ const Articulos: React.FC = (): JSX.Element => {
     </PageLayout>
   )
 }
-
-export default Articulos
+export default MateriaPrima;
