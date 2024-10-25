@@ -22,6 +22,16 @@
           "href": "/Ingresos",
           "icon": "receipt_long",
           "text": "ingresos"
+        },
+        {
+          "href": "/Carta",
+          "icon": "restaurant_menu",
+          "text": "carta"
+        },
+        {
+          "href": "/Ventas",
+          "icon": "attach_money",
+          "text": "ventas"
         }
       ]
     }

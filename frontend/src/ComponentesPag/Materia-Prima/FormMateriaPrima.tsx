@@ -18,8 +18,9 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
             nombre: '',
             sku: '',
             precio_costo: 0,
-            cantidad: 0,
-            categoria_materia_prima:0
+            cantidad: 1,
+            categoria_materia_prima:0,
+            peso_gramos:0
         }
     });
 
@@ -39,6 +40,7 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                     setValue('precio_costo', articulo.precio_costo);
                     setValue('cantidad', articulo.stock);
                     setValue('categoria_materia_prima', articulo.categoria_materia_prima);
+                    setValue('peso_gramos', articulo.peso_gramos);
                 });
         }
     }, []);
@@ -56,7 +58,7 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                 });
         } else if (accion === 'm' && idArticulo) {
             // Modificación de un artículo existente
-            await axios.put(`http://localhost:3001/articulos/modificar_articulo/${idArticulo}`, data)
+            await axios.put(`http://localhost:3001/materia_prima/modificar_materia_prima/${idArticulo}`, data)
                 .then(res => {
                     console.log(res.data.content[0].msg)
                     if (res.status === 200) {
@@ -93,8 +95,8 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Cantidad (kg) </label>
-                        <input type='text' className='form-control' {...register('cantidad', {required:'Obligatorio'})} disabled={ accion !== 'a' && formDisabled}/>
+                        <label className='form-label'>Cantidad</label>
+                        <input type='text' className='form-control' {...register('cantidad', {required:'Obligatorio'})} disabled/>
                         {errors.cantidad && <span className='text-danger'>{errors.cantidad.message}</span>}
                     </div>
                 </div>
@@ -108,6 +110,13 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                             ))}
                         </select>
                         {errors.categoria_materia_prima && <span className='text-danger'>{errors.categoria_materia_prima.message}</span>}
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <label className='form-label'>Peso (gramos)</label>
+                        <input type='text' className='form-control' {...register('peso_gramos', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
+                        {errors.peso_gramos && <span className='text-danger'>{errors.peso_gramos.message}</span>}
                     </div>
                 </div>
                 <hr></hr>

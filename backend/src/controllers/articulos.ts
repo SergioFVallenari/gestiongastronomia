@@ -67,7 +67,8 @@ app.put('/modificar_articulo/:id', async (req: Request, res: Response) => {
             id: Number(id),
             nombre: req.body.nombre,
             precio_costo: Number(req.body.precio_costo),
-            precio_venta: Number(req.body.precio_venta)
+            precio_venta: Number(req.body.precio_venta),
+            categoria_articulo: Number(req.body.categoria_articulo)
         }
         const response = await modificarArticulo(cuerpoRequest)
         console.log(response[0]);

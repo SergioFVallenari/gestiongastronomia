@@ -10,6 +10,8 @@ import Articulos from './ComponentesPag/Articulos/Articulos'
 import Dashboard from './ComponentesPag/Dashboard/Dashboard';
 import Ingresos from './ComponentesPag/Ingresos/Ingresos';
 import MateriaPrima from './ComponentesPag/Materia-Prima/MateriaPrima';
+import Ventas from './ComponentesPag/Ventas/Ventas';
+import Carta from './ComponentesPag/Carta/Carta';
 
 const App: React.FC = (): JSX.Element => {
 
@@ -22,6 +24,8 @@ const App: React.FC = (): JSX.Element => {
             <Route path='/articulos' element={<Articulos></Articulos>} />
             <Route path='/materia-prima' element={<MateriaPrima></MateriaPrima>} />
             <Route path='/ingresos' element={<Ingresos></Ingresos>} />
+            <Route path='/ventas' element={<Ventas></Ventas>} />
+            <Route path='/carta' element={<Carta></Carta>} />
           </Routes>
         </HashRouter>
       </LoaderProvider>

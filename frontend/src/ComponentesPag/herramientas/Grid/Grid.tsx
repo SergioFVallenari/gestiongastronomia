@@ -70,6 +70,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     { data: 'sku', title: 'SKU', class: 'text-center' },
                     { data: 'precio_costo', title: 'Precio Costo', class: 'text-center' },
                     { data: 'stock', title: 'Disponibles', class: 'text-center' },
+                    { data: 'peso', title: 'Peso', class: 'text-center' },
                     { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
                 ]
             break;
@@ -192,7 +193,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
     const getColumnasExportar = (origen: string) => {
         switch (origen) {
             case 'articulos':
-                return [1, 2, 3, 4, 5, 6, 7];
+                return [1, 2, 3, 4, 5, 6];
+            case 'materia_prima':
+                return [1, 2, 3, 4, 5];    
             default:
                 return [];
         }
@@ -216,9 +219,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 extend: 'collection',
                 text: 'Exportar',
                 buttons: [
-                    { extend: 'excel', orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
-                    { extend: 'pdfHtml5', orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
-                    { extend: 'csv', orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
+                    { extend: 'excel', title:'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
+                    { extend: 'pdfHtml5',title:'DonFaustino ' + origen ,orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
+                    { extend: 'csv',title:'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
                     { extend: 'print', orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
                 ],
             },

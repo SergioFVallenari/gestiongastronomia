@@ -60,7 +60,8 @@ const MateriaPrima: React.FC = () :JSX.Element => {
     }
   }
   const handleDelete = (id: any) => {
-    axios.delete('http://localhost:3001/MateriaPrima/baja_MateriaPrima', { data: { id: id } })
+    console.log(id)
+    axios.put('http://localhost:3001/materia_prima/baja_materia_prima',  {id: id})
   }
   
   //Render

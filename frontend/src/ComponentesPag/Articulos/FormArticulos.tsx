@@ -60,6 +60,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         } else if (accion === 'm' && idArticulo) {
             // Modificación de un artículo existente
+            console.log(data);
             await axios.put(`http://localhost:3001/articulos/modificar_articulo/${idArticulo}`, data)
                 .then(res => {
                     console.log(res.data.content[0].msg)

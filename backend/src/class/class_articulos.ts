@@ -25,7 +25,7 @@ export default class Articulos{
     }
     async modificarArticulo(body:iModArticulos){
         const formateado = await masajeo(body);
-        const result = await spGeneral("donfaustino_update_articulos(:xid, :xnombre, :xprecio_costo, :xprecio_venta)",formateado);
+        const result = await spGeneral("donfaustino_update_articulos(:xid, :xnombre, :xprecio_costo, :xprecio_venta, :xcategoria_articulo)",formateado);
         return result;
     }
     async getListaByModulo(body:any){
