@@ -88,7 +88,7 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Precio Costo</label>
+                        <label className='form-label'>Precio Costo (por kg)</label>
                         <input type='text' className='form-control' {...register('precio_costo', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
                         {errors.precio_costo && <span className='text-danger'>{errors.precio_costo.message}</span>}
                     </div>

@@ -69,8 +69,8 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     { data: 'nombre', title: 'Nombre', class: 'text-center' },
                     { data: 'sku', title: 'SKU', class: 'text-center' },
                     { data: 'precio_costo', title: 'Precio Costo', class: 'text-center' },
-                    { data: 'stock', title: 'Disponibles', class: 'text-center' },
-                    { data: 'peso', title: 'Peso', class: 'text-center' },
+                    { data: 'stock', title: 'Unidades', class: 'text-center' },
+                    { data: 'peso', title: 'Cantidad Disponible', class: 'text-center' },
                     { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
                 ]
             break;
@@ -137,6 +137,16 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                         },
                     },
                 ];
+                case 'materia_prima':
+                   return [
+                        {
+                            targets: [0],
+                            render: function (data: any, _type: any, full: any) {
+                                return getButtonOpciones(data, origen, full);
+                            },
+                        },
+                        
+                    ]
             default:
                 return [
                     {
