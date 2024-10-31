@@ -2,39 +2,48 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import DonFaustinoLoad, { EnviarMensaje } from '../herramientas/General/General';
 import { useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 interface FormArticulosProps {
-    accion: string; // 'a' para alta, 'm' para modificar, 'v' para visualizar (consulta)
-    idArticulo: number | null; // Si es null, significa que es una alta
-    onSubmitSuccess: () => void; // Callback para manejar éxito después de la operación
-    formDisabled?: boolean; // Deshabilitar formulario
-    setRecargaGridMateriaPrima: any; // Callback para recargar el grid de artículos
+    accion: string;
+    idArticulo: number | null;
+    onSubmitSuccess: () => void;
+    formDisabled?: boolean;
+    setRecargaGridMateriaPrima: any;
 }
 
-const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
+const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
+    const matPrimData = useSelector((state: any) => state?.grid?.data.materia_prima);
     const [categorias, setCategorias] = useState<any[]>([]);
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    const [ingredientes, setIngredientes] = useState<any[]>([]);
+    const [ingredienteSeleccionado, setIngredienteSeleccionado] = useState<any | null>(null);
+    const [nuevaCategoria, setNuevaCategoria] = useState<string>('');
+
+    const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm({
         defaultValues: {
             nombre: '',
             sku: '',
             precio_costo: 0,
-            cantidad: 1,
-            categoria_materia_prima:0,
-            peso_gramos:0
+            cantidad: 0,
+            categoria_materia_prima: 0,
+            peso_gramos: 0,
+            chkArticuloCompuesto: false,
+            ingredientes: [] as any[],
+            cantidad_ingrediente: 0
         }
     });
 
+    const isArticuloCompuesto = watch('chkArticuloCompuesto');
+
     useEffect(() => {
-        axios.post('http://localhost:3001/ingresos/lista_modulos',{modulo:'categorias_materia_prima'})
-        .then(res => {
-            setCategorias(res.data.content);
-        })
+        axios.post('http://localhost:3001/ingresos/lista_modulos', { modulo: 'categorias_materia_prima' })
+            .then(res => setCategorias(res.data.content));
+
         if (accion !== 'a' && idArticulo) {
-            // Si es modificación o visualización, cargamos los datos del artículo
             axios.get(`http://localhost:3001/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
-                    // Prellenamos el formulario con los datos del artículo
                     setValue('nombre', articulo.nombre);
                     setValue('sku', articulo.sku);
                     setValue('precio_costo', articulo.precio_costo);
@@ -44,7 +53,8 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                 });
         }
     }, []);
-    const onSubmit = async (data:any) => {
+
+    const onSubmit = async (data: any) => {
         if (accion === 'a') {
             // Alta de un nuevo artículo
             await axios.post('http://localhost:3001/materia_prima/alta_materia_prima', data)
@@ -57,74 +67,166 @@ const FormMateriaPrima:  React.FC<FormArticulosProps> = ({ accion, idArticulo, o
                     }
                 });
         } else if (accion === 'm' && idArticulo) {
-            // Modificación de un artículo existente
             await axios.put(`http://localhost:3001/materia_prima/modificar_materia_prima/${idArticulo}`, data)
                 .then(res => {
-                    console.log(res.data.content[0].msg)
                     if (res.status === 200) {
                         EnviarMensaje('success', res.data.content[0].msg);
-                        onSubmitSuccess(); // Callback para recargar o cerrar modal
+                        onSubmitSuccess();
                         setRecargaGridMateriaPrima(new Date().toString());
                     }
                 });
         }
     }
+
+    const agregarIngredientes = () => {
+        if (ingredienteSeleccionado && watch('cantidad_ingrediente') > 0) {
+            const ingredienteExistente = matPrimData.find((item: any) => item.id === ingredienteSeleccionado);
+            const nuevoIngrediente = {
+                id: ingredienteSeleccionado,
+                nombre: ingredienteExistente?.nombre,
+                sku: ingredienteExistente?.sku,
+                precio_costo: ingredienteExistente?.precio_costo,
+                cantidad: watch('cantidad_ingrediente') // en gramos
+            };
+            console.log(nuevoIngrediente);
+
+            setIngredientes(prevIngredientes => {
+                const updatedIngredientes = [...prevIngredientes, nuevoIngrediente];
+                setValue('ingredientes', updatedIngredientes);
+
+                // Calcula el nuevo precio total de costo considerando el precio por kilo y cantidad en gramos
+                const nuevoPrecioCosto = updatedIngredientes.reduce((acc, item) =>
+                    acc + (Math.round(item.precio_costo * (item.cantidad / 1000) / 3)), 0 // convierte gramos a kilos
+                );
+                setValue('precio_costo', nuevoPrecioCosto);
+
+                return updatedIngredientes;
+            });
+        }
+    };
+
+    const addCategoria = () => {
+        console.log(nuevaCategoria);
+        categorias.push(nuevaCategoria);
+    }
+
     return (
         <>
             <form className='row' onSubmit={handleSubmit(onSubmit)}>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Artículo</label>
-                        <input type='text' className='form-control' {...register('nombre', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled} />
+                        <input type='text' className='form-control' {...register('nombre', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
                         {errors.nombre && <span className='text-danger'>{errors.nombre.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Sku</label>
-                        <input type='text' className='form-control' {...register('sku', {required:'Obligatorio'})} disabled={accion !== 'a' && formDisabled} />
+                        <input type='text' className='form-control' {...register('sku', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} />
                         {errors.sku && <span className='text-danger'>{errors.sku.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Precio Costo (por kg)</label>
-                        <input type='text' className='form-control' {...register('precio_costo', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
+                        <input type='text' className='form-control' {...register('precio_costo', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
                         {errors.precio_costo && <span className='text-danger'>{errors.precio_costo.message}</span>}
                     </div>
                 </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Cantidad</label>
-                        <input type='text' className='form-control' {...register('cantidad', {required:'Obligatorio'})} disabled/>
-                        {errors.cantidad && <span className='text-danger'>{errors.cantidad.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
+                <div className='col-md-6'>
                     <div className='mb-3'>
                         <label className='form-label'>Categoría</label>
-                        <select className='form-control' {...register('categoria_materia_prima', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}>
+                        <select className='form-control' {...register('categoria_materia_prima', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled}>
                             <option value="">Seleccione una categoría</option>
                             {categorias.map((categoria, index) => (
                                 <option key={index} value={categoria.id_valor_modulo}>{categoria.valor_modulo.toUpperCase()}</option>
                             ))}
                         </select>
                         {errors.categoria_materia_prima && <span className='text-danger'>{errors.categoria_materia_prima.message}</span>}
+                        <input
+                            type="text"
+                            className='form-control mt-2'
+                            placeholder='Agregar nueva categoría'
+                            value={nuevaCategoria}
+                            onChange={(e) => setNuevaCategoria(e.target.value)}
+                        />
+                        <button type="button" className='btn btn-warning mt-2' onClick={addCategoria} >Agregar</button>
                     </div>
                 </div>
-                <div className='col-md-4'>
+                <div className='col-md-6'>
                     <div className='mb-3'>
-                        <label className='form-label'>Peso (gramos)</label>
-                        <input type='text' className='form-control' {...register('peso_gramos', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
+                        <label className='form-label'>Disponible (kg)</label>
+                        <input type='text' className='form-control' {...register('peso_gramos', { required: 'Obligatorio' })} disabled />
                         {errors.peso_gramos && <span className='text-danger'>{errors.peso_gramos.message}</span>}
                     </div>
                 </div>
-                <hr></hr>
+                <div className='col-md-12'>
+                    <Form.Check
+                        type='switch'
+                        label='Artículo compuesto'
+                        {...register('chkArticuloCompuesto')}
+                        disabled={accion === 'c' && formDisabled}
+                    />
+                </div>
+                {
+                    isArticuloCompuesto && (
+                        <>
+                            <div className='col-md-4'>
+                                <div className='mb-3'>
+                                    <label className='form-label'>Seleccionar ingredientes</label>
+                                    <select className='form-control' onChange={(e) => setIngredienteSeleccionado(Number(e.target.value))}>
+                                        <option value='sel'>Seleccione un ingrediente</option>
+                                        {matPrimData?.map((matPrim: any, index: number) => (
+                                            <option key={index} value={matPrim.id}>{matPrim.nombre}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className='col-md-4'>
+                                <div className='mb-3'>
+                                    <label className='form-label'>Cantidad</label>
+                                    <input type='number'
+                                        className='form-control'
+                                        min='0'
+                                        max='9999999999.99'
+                                        step='0.01'
+                                        {...register('cantidad_ingrediente', { required: 'Obligatorio' })}
+                                        disabled={accion === 'c' && formDisabled} />
+                                    {errors.cantidad_ingrediente && <span className='text-danger'>{errors.cantidad_ingrediente.message}</span>}
+                                </div>
+                            </div>
+                            <div className='col-md-4'>
+                                <button className='btn btn-warning mt-4' type='button' onClick={agregarIngredientes}>
+                                    Agregar
+                                </button>
+                            </div>
+                            <div className='col-md-12'>
+                                <table className='table table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th>Ingrediente</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ingredientes.map((ingrediente, index) => (
+                                            <tr key={index}>
+                                                <td>{ingrediente.nombre}</td>
+                                                <td>{ingrediente.cantidad} g</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    )
+                }
                 <div className='col-md-6'>
                     <button className='btn btn-primary m-2' type='submit' disabled={accion === 'c' && formDisabled}>
                         Guardar
                     </button>
-                    <button className='btn btn-danger' type='button' onClick={()=>onSubmitSuccess()}>
+                    <button className='btn btn-secondary m-2' type='button'>
                         Cancelar
                     </button>
                 </div>

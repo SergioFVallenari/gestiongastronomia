@@ -16,12 +16,12 @@
         {
           "href": "/Materia-Prima",
           "icon": "category",
-          "text": "materia-prima"
+          "text": "Ingredientes"
         },
         {
           "href": "/Ingresos",
           "icon": "receipt_long",
-          "text": "ingresos"
+          "text": "compras"
         },
         {
           "href": "/Carta",

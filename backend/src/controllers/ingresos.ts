@@ -7,6 +7,7 @@ app.post('/alta_ingreso', async (req: Request, res: Response) => {
     const {body, costo_total} = req.body
     try {
         const ingresos = JSON.stringify(body)
+        console.log(ingresos)   
         const response = await altaIngreso(ingresos, costo_total)
         res.status(200).json(
             {

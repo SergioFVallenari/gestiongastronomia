@@ -2,22 +2,25 @@ import { useForm } from "react-hook-form";
 import PageLayout from "../../layouts/PageLayout";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Tab, Tabs } from "react-bootstrap";
+import { Card, Form, Tab, Tabs } from "react-bootstrap";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
 import FormIngresos from "./FormIngresos";
+import { EnviarMensaje } from "../herramientas/General/General";
 
 const Ingresos: React.FC = (): JSX.Element => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const [precioCosto, setPrecioCosto] = useState<number | null>(null); // Estado para almacenar el precio de costo
+    const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm({
         defaultValues: {
             cantidad: 0,
-            articulo: ''
+            articulo: '',
+            checkPrecio: false,
+            precio_modificado: 0
         }
     });
 
     const [articulos, setArticulos] = useState<any[]>([]);
-    // const [materiaPrima, setMateriaPrima] = useState<any[]>([]);
-    const [ingresos, setIngresos] = useState<any[]>([]); // Array para los ingresos
+    const [ingresos, setIngresos] = useState<any[]>([]);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [costoTotal, setCostoTotal] = useState(0);
     const [modalIngresos, setModalIngresos] = useState({
@@ -27,44 +30,70 @@ const Ingresos: React.FC = (): JSX.Element => {
     });
     const [formDisabled, setFormDisabled] = useState(false);
     const [recargaGridArticulos, setRecargaGridArticulos] = useState<string>('');
+    const [isPrecioModificadoEnabled, setIsPrecioModificadoEnabled] = useState(false);
 
     const SetRefresh = (date: string) => setRecargaGridArticulos(date);
     const ModalClose = () => setModalIngresos({ show: false, id: 0, accion: 'a' });
     const ModalShow = (id: number, accion: string) => setModalIngresos({ show: true, id: id, accion: accion });
 
     useEffect(() => {
-        // Cargar los datos de los artículos
         axios.post('http://localhost:3001/articulos/get_articulos')
             .then(res => {
-                setArticulos(res.data.content); // Aquí guardamos todos los artículos correctamente
-            })  
+                setArticulos(res.data.content);
+            })
             .catch(error => {
                 console.error("Error cargando artículos:", error);
             });
         axios.post('http://localhost:3001/materia_prima/get_materia_prima')
             .then(res => {
-                setArticulos(prevArticulos => [...prevArticulos, ...res.data.content]); // Aquí guardamos todos los artículos correctamente
-            })  
+                setArticulos(prevArticulos => [...prevArticulos, ...res.data.content]);
+                // setValue('precio_modificado', res.data.content[0].precio_costo);
+            })
             .catch(error => {
                 console.error("Error cargando materia prima:", error);
             })
     }, []);
-    
+    useEffect(() => {
+        const articuloSeleccionado = articulos.find(articulo => articulo.sku === getValues("articulo"));
+        if (articuloSeleccionado) {
+            setPrecioCosto(articuloSeleccionado.precio_costo);
+            setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
+        } else {
+            setPrecioCosto(null); // Restablecer si no hay selección
+            setValue("precio_modificado", 0); // Restablecer si no hay selección
+
+        }
+    }, [getValues("articulo"), articulos]);
+
     const onSubmit = (data: any) => {
         const articuloSeleccionado = articulos.find(articulo => articulo.sku === data.articulo);
         if (articuloSeleccionado) {
+            // Utiliza `precio_modificado` si está habilitado y es mayor que 0, de lo contrario usa `precio_costo`
+            const precioArticulo = isPrecioModificadoEnabled && data.precio_modificado > 0
+                ? data.precio_modificado
+                : articuloSeleccionado.precio_costo;
+
             const nuevoIngreso = {
                 sku: articuloSeleccionado.sku,
                 nombre: articuloSeleccionado.nombre,
                 cantidad: data.cantidad,
-                precioXarticulo: articuloSeleccionado.precio_costo * data.cantidad,
-                categoria: articuloSeleccionado.categoria
-            }
+                precioXarticulo: precioArticulo * data.cantidad, // Calcula el precio total usando `precioArticulo`
+                categoria: articuloSeleccionado.categoria,
+                chkPrecio: getValues('checkPrecio')
+            };
+
             setIngresos([...ingresos, nuevoIngreso]);
             setButtonDisabled(false);
             setCostoTotal(costoTotal + nuevoIngreso.precioXarticulo);
+
+            // Opcional: restablece `precio_modificado` después de agregar el ingreso si deseas limpiar el campo
+            setValue('articulo', '')
+            setValue('cantidad', 0)
+            setValue('checkPrecio', false)
+            setValue('precio_modificado', 0);
         }
     };
+
 
     const eliminarIngreso = (index: number) => {
         const nuevosIngresos = [...ingresos];
@@ -79,9 +108,22 @@ const Ingresos: React.FC = (): JSX.Element => {
             cantidad: ingreso.cantidad,
             articulo: ingreso.nombre,
             sku: ingreso.sku,
-            categoria: ingreso.categoria
+            categoria: ingreso.categoria,
+            chkPrecio: ingreso.chkPrecio ? 1 : 0,
+            precio_total: ingreso.precioXarticulo,
+            precio_modificado: ingreso.chkPrecio ? (ingreso.precioXarticulo / ingreso.cantidad) : 0
         }));
-        axios.post('http://localhost:3001/ingresos/alta_ingreso', {body:body, costo_total:costoTotal})
+
+        axios.post('http://localhost:3001/ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
+            .then(res => {
+                if (res.data.info)
+                {
+                    EnviarMensaje('success', 'Ingresos registrados correctamente');
+                    setIngresos([]);
+                    setButtonDisabled(true);
+                    setCostoTotal(0);
+                }
+            })
         SetRefresh(new Date().toString());
     }
 
@@ -95,6 +137,12 @@ const Ingresos: React.FC = (): JSX.Element => {
             default:
                 break;
         }
+    }
+
+    const handleCheckPrecio = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        setIsPrecioModificadoEnabled(isChecked);
+        setValue("checkPrecio", isChecked);
     }
 
     return (
@@ -117,14 +165,39 @@ const Ingresos: React.FC = (): JSX.Element => {
                                     {errors.articulo && <span className="text-danger">Debes seleccionar un artículo</span>}
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <label>Cantidad</label>
                                     <input
                                         type="number"
+                                        step="0.01"
+                                        min='0'
+                                        max='9999999999.99'
                                         {...register("cantidad", { required: true, min: 1 })}
                                         className="form-control"
                                     />
                                     {errors.cantidad && <span className="text-danger">Debes ingresar una cantidad válida</span>}
+                                </div>
+                                <div className="col-md-3">
+                                    <Form>
+                                        <Form.Check
+                                            id="checkPrecio"
+                                            type="switch"
+                                            label="Modificar Precio?"
+                                            {...register("checkPrecio")}
+                                            onChange={handleCheckPrecio}
+                                        />
+                                    </Form>
+                                    <div>
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            min='0'
+                                            max='9999999999.99'
+                                            {...register("precio_modificado")}
+                                            className="form-control"
+                                            disabled={!isPrecioModificadoEnabled}
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="col-md-12 mt-3">
@@ -153,7 +226,7 @@ const Ingresos: React.FC = (): JSX.Element => {
                                                 <td>${ingreso.precioXarticulo}</td>
                                                 <td>
                                                     <button
-                                                        onClick={() => eliminarIngreso(index)} // Función para eliminar un ingreso
+                                                        onClick={() => eliminarIngreso(index)}
                                                         className="btn btn-danger"
                                                     >
                                                         Eliminar

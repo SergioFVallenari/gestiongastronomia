@@ -10,6 +10,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment-timezone';
 import { Table } from 'react-bootstrap';
 import { Order } from 'datatables.net';
+import { useDispatch } from 'react-redux';
+import { setDataForGrid } from '../../../store/slices/DataGridSlice';
 interface IFiltro {
     id?: number;
     idarticulo?: number;
@@ -18,6 +20,7 @@ interface IFiltro {
 
 const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recargaGrid: Function, _filtro?: IFiltro): JSX.Element => {
     const groupColumn = 2;
+    const dispatch = useDispatch();
     const getButtonOpciones = (data: number, origen: string, _full: any) => {
         const newData = data;
         let btn = '';
@@ -69,8 +72,8 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     { data: 'nombre', title: 'Nombre', class: 'text-center' },
                     { data: 'sku', title: 'SKU', class: 'text-center' },
                     { data: 'precio_costo', title: 'Precio Costo', class: 'text-center' },
-                    { data: 'stock', title: 'Unidades', class: 'text-center' },
-                    { data: 'peso', title: 'Cantidad Disponible', class: 'text-center' },
+                    { data: 'stock', title: 'Cantidad disponible', class: 'text-center' },
+                    // { data: 'peso', title: 'Cantidad Disponible', class: 'text-center' },
                     { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
                 ]
             break;
@@ -143,8 +146,21 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                             targets: [0],
                             render: function (data: any, _type: any, full: any) {
                                 return getButtonOpciones(data, origen, full);
+
                             },
                         },
+                        {
+                            targets: [3],
+                            render: function(data:any, _type:any, _full:any){
+                                return '$ ' + data
+                            }
+                        },
+                        {
+                            targets:[4],
+                            render: function (data:any,_type:any,_full:any){
+                                return data + 'kg'
+                            }
+                        }
                         
                     ]
             default:
@@ -277,8 +293,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
 
 
     const tableOp: React.RefObject<HTMLTableElement> = useRef(null);
-    useEffect(() => {
+    useEffect(() => { 
         if (tableOp.current) {
+
             $(tableOp.current).DataTable({
                 colReorder: true,
                 destroy: true,
@@ -288,7 +305,13 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     contentType: 'application/json',
                     type: getMetodoOrigen(origen),
                     url: getUrlOrigen(origen),
-                    dataSrc: 'content',
+                    dataSrc: function (json: any) {
+                        if (json && json.content) {
+                            dispatch(setDataForGrid({ origen: origen, data: json.content }));
+                            return json.content; // Retorna los datos en el formato que DataTables espera
+                        }
+                        return []; // Si no hay datos, retornar un array vacío
+                    },
                     data: function () {
                         return getDataOrigen(origen);
                     },
