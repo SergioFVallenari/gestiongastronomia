@@ -28,9 +28,4 @@ export default class Articulos{
         const result = await spGeneral("donfaustino_update_articulos(:xid, :xnombre, :xprecio_costo, :xprecio_venta, :xcategoria_articulo)",formateado);
         return result;
     }
-    async getListaByModulo(body:any){
-        const formateado = await masajeo(body);
-        const result = await spGeneral("donfaustino_get_lista_by_modulo(:xmodulo)",formateado);
-        return result;
-    }
 }

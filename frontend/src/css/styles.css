@@ -7,102 +7,103 @@
 *   All copyrights reserved by Mironcoder
 */
 .light_mode {
-  --primaryHEX: #b7410e; /* Rojo Teja */
-  --primaryGreen: #d96e26; /* Un tono complementario naranja */
-  --lightColor: #ffffff; /* Mantiene el blanco */
-  --textColor: #2b2b2b; /* Tono gris claro */
-  --activeColor: #b7410e; /* Rojo teja */
-  --placeholderColor: #9a9a9a; /* Gris para los placeholders */
-  --headingColor: #403e57; /* Un gris oscuro */
-  --colorSetting: #000; /* Negro para configuraciones */
-  --bodyBG: #ffffff; /* Fondo blanco */
-  --cardBG: #ffffff; /* Fondo de tarjeta blanco */
-  --paperBG: #ffffff; /* Fondo de papel blanco */
-  --lightBG: #f5f5f5; /* Un gris muy claro para el fondo */
-  --thinBorder: #d1d1d1; /* Bordes delgados en gris claro */
-  --lightBorder: #e4e4e4; /* Bordes ligeros */
-  --deepBorder: #c0c0c0; /* Bordes más profundos */
-  --hardBorder: #b0b0b0; /* Bordes más duros */
-  --thinGray: #f8f8f8; /* Gris claro para líneas finas */
-  --lightGray: #f0f0f0; /* Gris muy claro */
-  --grayDropdown: #a2a2a2; /* Color de dropdown */
-  --deepGray: #b0b0b0; /* Gris más profundo */
-  --hardGray: #d1d1d1; /* Gris duro */
-  --hoverBG: #f1f1f1; /* Fondo de hover en gris claro */
-  --activeBG: rgba(183, 65, 14, 0.1); /* Fondo activo con transparencia del rojo teja */
-  --facebook: #3b5998; /* Sin cambios */
-  --linkedin: #0e76a8; /* Sin cambios */
-  --twitter: #00acee; /* Sin cambios */
-  --google: #E60023; /* Sin cambios */
-  --apple: #555555; /* Sin cambios */
-  --instagram: #F77737; /* Sin cambios */
-  --whatsapp: #25D366; /* Sin cambios */
-  --pinterest: #f0002a; /* Sin cambios */
-  --youtube: #FF0000; /* Sin cambios */
-  --primaryRGB: 183, 65, 14; /* Rojo teja en formato RGB */
-  --lightRGB: 255, 255, 255; /* Blanco */
-  --blackRGB: 0, 0, 0; /* Negro puro */
-  --redRGB: 241, 17, 51; /* Rojo puro */
-  --darkRGB: 1, 12, 44; /* Un negro azabache */
-  --grayRGB: 129, 129, 129; /* Gris */
-  --blueRGB: 43, 119, 229; /* Azul */
-  --greenRGB: 26, 159, 83; /* Verde */
-  --purpleRGB: 190, 14, 225; /* Púrpura */
-  --orangeRGB: 255, 115, 0; /* Naranja */
-  --yellowRGB: 225, 148, 14; /* Amarillo */
+  --primaryHEX: #8B4513; /* Marrón madera */
+  --primaryGreen: #D2691E; /* Naranja tierra */
+  --lightColor: #ffffff; /* Blanco */
+  --textColor: #4B2E2E; /* Marrón oscuro */
+  --activeColor: #8B4513; /* Marrón madera */
+  --placeholderColor: #A0522D; /* Marrón claro */
+  --headingColor: #6B4226; /* Marrón oscuro para encabezados */
+  --colorSetting: #4B2E2E; /* Marrón oscuro */
+  --bodyBG: #FAF3E0; /* Beige claro para el fondo */
+  --cardBG: #F5EFE4; /* Fondo de tarjeta, beige claro */
+  --paperBG: #F8F1E6; /* Fondo de papel, beige suave */
+  --lightBG: #EFE9DC; /* Fondo en gris claro, estilo madera */
+  --thinBorder: #D2B48C; /* Tonos de borde en beige claro */
+  --lightBorder: #C5A383; /* Bordes ligeros en beige cálido */
+  --deepBorder: #A67648; /* Bordes más profundos en marrón medio */
+  --hardBorder: #8B4513; /* Bordes duros en marrón madera */
+  --thinGray: #F4EDE4; /* Gris muy claro para líneas finas */
+  --lightGray: #F0E4D6; /* Gris muy claro */
+  --grayDropdown: #B87333; /* Tono cobre */
+  --deepGray: #A0522D; /* Marrón medio */
+  --hardGray: #8B5A2B; /* Marrón oscuro */
+  --hoverBG: #ECD9C6; /* Fondo de hover en beige claro */
+  --activeBG: rgba(139, 69, 19, 0.1); /* Fondo activo marrón madera con transparencia */
+  --facebook: #3b5998;
+  --linkedin: #0e76a8;
+  --twitter: #00acee;
+  --google: #E60023;
+  --apple: #555555;
+  --instagram: #F77737;
+  --whatsapp: #25D366;
+  --pinterest: #f0002a;
+  --youtube: #FF0000;
+  --primaryRGB: 139, 69, 19; /* Marrón en formato RGB */
+  --lightRGB: 255, 248, 240; /* Beige */
+  --blackRGB: 75, 46, 46; /* Marrón oscuro */
+  --redRGB: 205, 92, 92; /* Rojo teja */
+  --darkRGB: 54, 33, 18; /* Marrón oscuro */
+  --grayRGB: 139, 115, 85; /* Gris cálido */
+  --blueRGB: 43, 119, 229;
+  --greenRGB: 26, 159, 83;
+  --purpleRGB: 160, 82, 45; /* Marrón rojizo */
+  --orangeRGB: 255, 127, 80; /* Coral */
+  --yellowRGB: 238, 201, 0; /* Dorado */
   --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 12%);
   --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 6%);
   --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 10%);
 }
 
 .dark_mode {
-  --primaryHEX: #b7410e; /* Rojo Teja */
-  --primaryGreen: #d96e26; /* Un tono complementario naranja */
-  --lightColor: #ffffff; /* Mantiene el blanco */
-  --textColor: #ffffff;
-  --activeColor: #e77a4d; /* Un tono más claro de rojo teja */
-  --placeholderColor: #acacac;
-  --headingColor: #f0f0f0;
-  --colorSetting: #fff;
-  --bodyBG: #050202; /* Negro Azabache */
-  --cardBG: #5a5a5a; /* Un negro más claro para los fondos de las tarjetas */
-  --paperBG: #1c1c1c; /* Fondo de papel ligeramente gris oscuro */
-  --grayDropdown: #111111;
-  --lightBG: #1a1a1a;
-  --thinBorder: #332620; /* Tono marrón oscuro para los bordes delgados */
-  --lightBorder: #2e1912; /* Bordes claros, pero en marrón oscuro */
-  --deepBorder: #4d2a1e; /* Bordes más profundos, tono marrón rojizo */
-  --hardBorder: #602b1a; /* Un tono marrón más duro */
-  --thinGray: #1a1a1a; /* Mantiene un gris muy oscuro para las líneas finas */
-  --lightGray: #2e1912;
-  --deepGray: #140a07; /* Negro con un toque de marrón oscuro */
-  --hardGray: #0a0403;
-  --hoverBG: #4d2a1e; /* Fondo de hover con tono marrón rojizo */
-  --activeBG: rgba(183, 65, 14, 0.100); /* Rojo teja claro con transparencia */
-  --facebook: #3b5998; /* Sin cambios */
-  --linkedin: #0e76a8; /* Sin cambios */
-  --twitter: #00acee; /* Sin cambios */
-  --google: #E60023; /* Sin cambios */
-  --instagram: #F77737; /* Sin cambios */
-  --whatsapp: #25D366; /* Sin cambios */
-  --pinterest: #f0002a; /* Sin cambios */
-  --youtube: #FF0000; /* Sin cambios */
-  --apple: #555555; /* Sin cambios */
-  --primaryRGB: 183, 65, 14; /* Rojo teja en formato RGB */
-  --lightRGB: 26, 26, 26; /* Negro más claro */
-  --blackRGB: 0, 0, 0; /* Negro puro */
-  --redRGB: 241, 17, 51;
-  --darkRGB: 13, 13, 13; /* Negro azabache */
-  --grayRGB: 129, 129, 129;
+  --primaryHEX: #8B4513; /* Marrón madera */
+  --primaryGreen: #A0522D; /* Marrón tierra */
+  --lightColor: #FFFFFF; /* Blanco */
+  --textColor: #F5DEB3; /* Beige trigo */
+  --activeColor: #CD853F; /* Tono claro de marrón */
+  --placeholderColor: #A67D5D; /* Marrón claro */
+  --headingColor: #FFDAB9; /* Melocotón claro */
+  --colorSetting: #F5DEB3; /* Tono trigo */
+  --bodyBG: #2F1B0C; /* Marrón oscuro */
+  --cardBG: #3C2A1B; /* Marrón profundo para fondos de tarjetas */
+  --paperBG: #2E1C10; /* Fondo de papel marrón oscuro */
+  --grayDropdown: #4B2E2E; /* Marrón profundo */
+  --lightBG: #3B2D2D; /* Marrón grisáceo */
+  --thinBorder: #A0522D; /* Bordes en marrón claro */
+  --lightBorder: #8B5A2B; /* Bordes marrón oscuro */
+  --deepBorder: #5C4033; /* Bordes más profundos, tono chocolate */
+  --hardBorder: #3E2723; /* Tono marrón oscuro */
+  --thinGray: #4D2A1E; /* Marrón rojizo para líneas finas */
+  --lightGray: #603D3D; /* Gris oscuro en marrón */
+  --deepGray: #4B2E2E; /* Marrón muy oscuro */
+  --hardGray: #3E2723; /* Marrón oscuro */
+  --hoverBG: #5C4033; /* Fondo de hover marrón oscuro */
+  --activeBG: rgba(139, 69, 19, 0.1); /* Marrón madera claro con transparencia */
+  --facebook: #3b5998;
+  --linkedin: #0e76a8;
+  --twitter: #00acee;
+  --google: #E60023;
+  --apple: #555555;
+  --instagram: #F77737;
+  --whatsapp: #25D366;
+  --pinterest: #f0002a;
+  --youtube: #FF0000;
+  --primaryRGB: 139, 69, 19; /* Marrón en formato RGB */
+  --lightRGB: 75, 46, 46; /* Marrón oscuro */
+  --blackRGB: 0, 0, 0;
+  --redRGB: 205, 92, 92; /* Rojo teja */
+  --darkRGB: 54, 33, 18; /* Marrón oscuro */
+  --grayRGB: 139, 115, 85; /* Gris cálido */
   --blueRGB: 43, 119, 229;
   --greenRGB: 26, 159, 83;
-  --purpleRGB: 190, 14, 225;
-  --orangeRGB: 255, 115, 0;
-  --yellowRGB: 225, 148, 14;
+  --purpleRGB: 160, 82, 45; /* Marrón rojizo */
+  --orangeRGB: 255, 127, 80; /* Coral */
+  --yellowRGB: 238, 201, 0; /* Dorado */
   --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 12%);
   --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 6%);
   --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 10%);
 }
+
 
 * {
   margin: 0px;
@@ -850,17 +851,8 @@ textarea.form-control {
 .modal-content {
   background-color: var(--cardBG);
   border: 1px solid var(--deepBorder);
-  input{
-    background-color: var(--cardBG);
-    color: var(--textColor);
-  }
-  input:focus {
-    background-color: var(--selectedBG); /* Cambia este valor según el color deseado */
-    color: var(--selectedTextColor); /* Cambia el color del texto si también lo deseas */
-    border-color: var(--focusBorderColor); /* Opcional: cambia el borde si lo necesitas */
-    outline: none; /* Elimina el contorno predeterminado del navegador, si lo deseas */
-  }
-  input:disabled{
+
+  input:disabled, select:disabled, textarea:disabled {
     background-color: var(--disabledBG);
     color: var(--disabledTextColor);
     cursor:not-allowed

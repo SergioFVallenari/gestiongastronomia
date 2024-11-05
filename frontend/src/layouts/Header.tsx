@@ -9,7 +9,7 @@ import { Logo } from '../components/index.ts';
 import data from '../data/master/header.json';
 import src from '../images/logo-donFaustino/don-faustino2.png';
 // import { useNavigate } from 'react-router-dom';
-import TituloHeader from '../ComponentesPag/Header/TituloHeader.tsx';
+import TituloHeader from '../Views/Header/TituloHeader.tsx';
 // import WidgetDropdown from '../components/header/WidgetDropdown.tsx';
 
 interface IHeader {

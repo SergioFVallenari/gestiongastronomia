@@ -25,7 +25,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
     const [categorias, setCategorias] = useState<any[]>([]);
 
     useEffect(() => {
-        axios.post('http://localhost:3001/articulos/lista_modulos',{modulo:'categorias_articulos'})
+        axios.post('http://localhost:3001/tabla/lista_modulos',{modulo:'categorias_articulos'})
         .then(res => {
             setCategorias(res.data.content);
         })

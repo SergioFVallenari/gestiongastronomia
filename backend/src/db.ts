@@ -1,10 +1,11 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+dotenv.config(); 
 const { DATABASE, USU, PASSWORD, HOST } = process.env;
-console.log(DATABASE, USU, PASSWORD, HOST, '<----');
-const sequelize = new Sequelize(`${'donfaustino'}`, `${'root'}`, `Vehemente676!`, {
+const sequelize = new Sequelize(`${DATABASE}`, `${USU}`, `${PASSWORD}`, {
   dialect: "mysql",
-  host: '127.0.0.1',
-  port: 3307,
+  host: `${HOST}`,
+  port: 3306,
   dialectOptions: {
     timezone: '-03:00',
     charset: 'utf8mb4',

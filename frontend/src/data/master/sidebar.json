@@ -4,7 +4,7 @@
       "title": "modulos",
       "menu": [
         {
-          "href": "/",
+          "href": "/Dashboard",
           "icon": "leaderboard",
           "text": "dashboard"
         },
@@ -14,12 +14,12 @@
           "text": "articulos"
         },
         {
-          "href": "/Materia-Prima",
+          "href": "/Ingredientes",
           "icon": "category",
-          "text": "Ingredientes"
+          "text": "ingredientes"
         },
         {
-          "href": "/Ingresos",
+          "href": "/Compras",
           "icon": "receipt_long",
           "text": "compras"
         },

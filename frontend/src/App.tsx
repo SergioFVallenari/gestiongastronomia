@@ -6,12 +6,13 @@ import './css/styles.css';
 import './css/icofont/icofont.css';
 import './css/icon.css';
 import './css/text.css';
-import Articulos from './ComponentesPag/Articulos/Articulos'
-import Dashboard from './ComponentesPag/Dashboard/Dashboard';
-import Ingresos from './ComponentesPag/Ingresos/Ingresos';
-import MateriaPrima from './ComponentesPag/Materia-Prima/MateriaPrima';
-import Ventas from './ComponentesPag/Ventas/Ventas';
-import Carta from './ComponentesPag/Carta/Carta';
+import Articulos from './Views/Articulos/Articulos'
+import Dashboard from './Views/Dashboard/Dashboard';
+import Ingresos from './Views/Ingresos/Ingresos';
+import MateriaPrima from './Views/Materia-Prima/MateriaPrima';
+import Ventas from './Views/Ventas/Ventas';
+import Carta from './Views/Carta/Carta';
+import Login from './pages/Login/Login';
 
 const App: React.FC = (): JSX.Element => {
 
@@ -20,10 +21,11 @@ const App: React.FC = (): JSX.Element => {
       <LoaderProvider>
         <HashRouter>
           <Routes>
-            <Route path='/' element={<Dashboard></Dashboard>} />
+            <Route path='/' element={<Login></Login>} />
+            <Route path='/dashboard' element={<Dashboard></Dashboard>} />
             <Route path='/articulos' element={<Articulos></Articulos>} />
-            <Route path='/materia-prima' element={<MateriaPrima></MateriaPrima>} />
-            <Route path='/ingresos' element={<Ingresos></Ingresos>} />
+            <Route path='/ingredientes' element={<MateriaPrima></MateriaPrima>} />
+            <Route path='/compras' element={<Ingresos></Ingresos>} />
             <Route path='/ventas' element={<Ventas></Ventas>} />
             <Route path='/carta' element={<Carta></Carta>} />
           </Routes>

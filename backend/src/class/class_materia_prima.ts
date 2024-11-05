@@ -3,7 +3,8 @@ import { masajeo, spGeneral } from "../helpers";
 export default class MateriaPrima{
     async altaMateriaPrima(body:any){
         const formateo = await masajeo(body);
-        const result = await spGeneral("donfaustino_insert_materia_prima(:xnombre, :xsku, :xprecio_costo, :xcantidad,:xcategoria_materia_prima,:xpeso_gramos)",formateo);
+        console.log('este es el formateo', formateo)
+        const result = await spGeneral("donfaustino_insert_materia_prima(:xnombre, :xsku, :xprecio_costo, :xcantidad,:xcategoria_materia_prima,:xpeso_gramos,:xes_compuesto,:xjson_ingredientes)",formateo);
         return result;
     }
     async getMateriaPrima(){

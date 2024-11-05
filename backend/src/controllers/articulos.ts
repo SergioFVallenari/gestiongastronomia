@@ -1,7 +1,7 @@
 import {Request, Response, Router } from 'express'
 import axios from 'axios'
 import classArticulos from '../class/class_articulos'
-const {crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo, getListaByModulo} = new classArticulos()
+const {crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo} = new classArticulos()
 
 const app = Router()
 
@@ -81,18 +81,6 @@ app.put('/modificar_articulo/:id', async (req: Request, res: Response) => {
         
     }
 });
-app.post('/lista_modulos', async (req: Request, res: Response) => {
-    const body = req.body
-    try {
-        const response = await getListaByModulo(body)
-        res.status(200).json({
-            info: true,
-            msg: "Modulos",
-            content: response
-        })
-    } catch (error) {
-        
-    }
-});
+
 
 export default app

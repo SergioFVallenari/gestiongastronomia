@@ -6,6 +6,7 @@ const app = Router()
 app.post('/alta_materia_prima', async (req: Request, res: Response) => {
     const body = req.body
     try {
+        console.log(body)
         const response = await altaMateriaPrima(body)
         res.status(200).json(
             {
