@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { JSONTree } from "react-json-tree";
+import api from "../../helpers";
 
 interface FormIngresosProps {
     idIngreso: number;
@@ -22,7 +22,7 @@ const FormIngresos: React.FC<FormIngresosProps> = ({ idIngreso, disabled }) => {
 
     });
     useEffect(() => {
-        axios.get(`http://localhost:3001/ingresos/get_ingreso/${idIngreso}`)
+        api.get(`http://localhost:3001/ingresos/get_ingreso/${idIngreso}`)
             .then(res => {
                 setIngreso(res.data.content[0]);
             })

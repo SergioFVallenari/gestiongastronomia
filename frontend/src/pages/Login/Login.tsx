@@ -1,37 +1,60 @@
 import { useForm } from "react-hook-form";
-import { Box } from "../../components/elements";
+import { Box, Form, Heading } from "../../components/elements";
+import donfaustinopng from '../../images/logo-donFaustino/don-faustino2.png';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            email: '',
+            username: '',
             password: ''
         }
     });
+    const onSubmit = (data: any) => {
+        axios.post('http://localhost:3001/autorizacion/login', data)
+            .then(res => {
+                const data = res.data;
+                if (data.info) {
+                    localStorage.setItem('token', data.content);
+                    navigate('/dashboard');
+                } else {
+                    alert(data.msg);
+                }
+            });
+    }
+
     return (
         <Box className="mc-auth">
             <Box className="mc-auth-group">
                 <Box className="mc-auth-logo">
-                    <img src="assets/images/logo.png" alt="Logo" />
+                    <img src={donfaustinopng} alt="Logo" />
                 </Box>
                 <Box className="mc-auth-form">
-                    <form onSubmit={handleSubmit(data => console.log(data))} className="row">
-                        <div className="col-md-6">
+                    <Heading as='h4' className='mc-auth-title'>
+                        Inicio de sesión
+                    </Heading>
+                    <br></br>
+                    <Form onSubmit={handleSubmit(onSubmit)} className="row shadow-lg mc-auth-form">
+                        <div className="col-md-12">
                             <div className="mb-3">
-                                <label className="form-label">Email</label>
-                                <input type="text"{...register('email', ({ required: 'Email is required' }))} />
-                                {errors.email && <span>{errors.email.message}</span>}
+                                <label className="form-label">Correo Electronico</label>
+                                <input type="text"{...register('username', ({ required: 'Email is required' }))} />
+                                {errors.username && <span>{errors.username.message}</span>}
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="mb-3">
+                                <label className="form-label">Password</label>
+                                <input type="password" {...register('password', ({ required: 'Password is required' }))} />
+                                {errors.password && <span>{errors.password.message}</span>}
                             </div>
                         </div>
                         <div className="mc-auth-form-group">
-                            <label>Password</label>
-                            <input type="password" {...register('password', ({ required: 'Password is required' }))} />
-                            {errors.password && <span>{errors.password.message}</span>}
+                            <button type="submit" className="btn btn-danger">Ingresar</button>
                         </div>
-                        <div className="mc-auth-form-group">
-                            <button type="submit">Login</button>
-                        </div>
-                    </form>
+                    </Form>
                 </Box>
             </Box>
         </Box>

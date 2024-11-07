@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import PageLayout from "../../layouts/PageLayout";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Card, Form, Tab, Tabs } from "react-bootstrap";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
 import FormIngresos from "./FormIngresos";
 import { EnviarMensaje } from "../herramientas/General/General";
+import api from "../../helpers";
 
 const Ingresos: React.FC = (): JSX.Element => {
     const [precioCosto, setPrecioCosto] = useState<number | null>(null); // Estado para almacenar el precio de costo
@@ -37,22 +37,25 @@ const Ingresos: React.FC = (): JSX.Element => {
     const ModalShow = (id: number, accion: string) => setModalIngresos({ show: true, id: id, accion: accion });
 
     useEffect(() => {
-        axios.post('http://localhost:3001/articulos/get_articulos')
+        api.post('http://localhost:3001/articulos/get_articulos')
             .then(res => {
-                setArticulos(res.data.content);
+                setArticulos(res?.data?.content);
             })
             .catch(error => {
                 console.error("Error cargando artículos:", error);
             });
-        axios.post('http://localhost:3001/materia_prima/get_materia_prima')
+        api.post('http://localhost:3001/materia_prima/get_materia_prima')
             .then(res => {
-                setArticulos(prevArticulos => [...prevArticulos, ...res.data.content]);
+                const articulosNoCompuestos = res?.data?.content.filter((articulo: any) => articulo.es_compuesto == 0);
+
+                setArticulos(prevArticulos => [...prevArticulos, ...articulosNoCompuestos]);
                 // setValue('precio_modificado', res.data.content[0].precio_costo);
             })
             .catch(error => {
                 console.error("Error cargando materia prima:", error);
             })
     }, []);
+    console.log(articulos)
     useEffect(() => {
         const articuloSeleccionado = articulos.find(articulo => articulo.sku === getValues("articulo"));
         if (articuloSeleccionado) {
@@ -114,7 +117,7 @@ const Ingresos: React.FC = (): JSX.Element => {
             precio_modificado: ingreso.chkPrecio ? (ingreso.precioXarticulo / ingreso.cantidad) : 0
         }));
 
-        axios.post('http://localhost:3001/ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
+        api.post('http://localhost:3001/ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
             .then(res => {
                 if (res.data.info)
                 {
@@ -170,9 +173,9 @@ const Ingresos: React.FC = (): JSX.Element => {
                                     <input
                                         type="number"
                                         step="0.01"
-                                        min='0'
+                                        min='0.01'
                                         max='9999999999.99'
-                                        {...register("cantidad", { required: true, min: 1 })}
+                                        {...register("cantidad", { required: true, min: 0.01 })}
                                         className="form-control"
                                     />
                                     {errors.cantidad && <span className="text-danger">Debes ingresar una cantidad válida</span>}

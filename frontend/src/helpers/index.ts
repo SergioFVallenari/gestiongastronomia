@@ -293,3 +293,38 @@ export const recorte = (texto: string) => {
 //   else if (name === 'fecha_alta') return recortarFecha(value);
 //   else return value;
 // }
+
+import axios from 'axios';
+
+// Crear una instancia de Axios
+const api = axios.create({
+  baseURL: 'http://localhost:3001', // Cambia esta URL según la dirección de tu backend
+});
+
+// Interceptor para incluir el token en cada solicitud
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor para manejar errores de autenticación
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Si hay un error 401 (no autorizado), redirige al login
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;

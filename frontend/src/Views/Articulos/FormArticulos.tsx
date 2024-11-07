@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import DonFaustinoLoad, { EnviarMensaje } from '../herramientas/General/General';
 import { useEffect, useState } from 'react';
+import api from '../../helpers';
 
 interface FormArticulosProps {
     accion: string; // 'a' para alta, 'm' para modificar, 'v' para visualizar (consulta)
@@ -25,13 +25,13 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
     const [categorias, setCategorias] = useState<any[]>([]);
 
     useEffect(() => {
-        axios.post('http://localhost:3001/tabla/lista_modulos',{modulo:'categorias_articulos'})
+        api.post('http://localhost:3001/tabla/lista_modulos',{modulo:'categorias_articulos'})
         .then(res => {
             setCategorias(res.data.content);
         })
         if (accion !== 'a' && idArticulo) {
             // Si es modificación o visualización, cargamos los datos del artículo
-            axios.get(`http://localhost:3001/articulos/get_articulo/${idArticulo}`)
+            api.get(`http://localhost:3001/articulos/get_articulo/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
                     // Prellenamos el formulario con los datos del artículo
@@ -47,9 +47,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
     const onSubmit = async (data:any) => {
         if (accion === 'a') {
             // Alta de un nuevo artículo
-            console.log(data);
-            
-            await axios.post('http://localhost:3001/articulos/alta_articulos', data)
+            await api.post('http://localhost:3001/articulos/alta_articulos', data)
                 .then(res => {
                     DonFaustinoLoad.DonFaustinoLoad(true);
                     if (res.status === 200) {
@@ -60,8 +58,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         } else if (accion === 'm' && idArticulo) {
             // Modificación de un artículo existente
-            console.log(data);
-            await axios.put(`http://localhost:3001/articulos/modificar_articulo/${idArticulo}`, data)
+            await api.put(`http://localhost:3001/articulos/modificar_articulo/${idArticulo}`, data)
                 .then(res => {
                     console.log(res.data.content[0].msg)
                     if (res.status === 200) {

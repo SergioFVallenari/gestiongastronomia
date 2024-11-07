@@ -2,7 +2,7 @@ import { Card, Tab, Tabs } from "react-bootstrap";
 import PageLayout from "../../layouts/PageLayout";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
-import axios from "axios";
+import api from "../../helpers";
 import { useState } from "react";
 import FormMateriaPrima from "./FormMateriaPrima";
 
@@ -61,7 +61,7 @@ const MateriaPrima: React.FC = (): JSX.Element => {
   }
   const handleDelete = (id: any) => {
     console.log(id)
-    axios.put('http://localhost:3001/materia_prima/baja_materia_prima', { id: id })
+    api.put('http://localhost:3001/materia_prima/baja_materia_prima', { id: id })
   }
 
   //Render

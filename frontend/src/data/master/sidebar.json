@@ -35,5 +35,10 @@
         }
       ]
     }
-  ]
+  ],
+  "button": {
+    "icon": "lock",
+    "path": "/login",
+    "text": "cerrar sesión"
+  }
 }

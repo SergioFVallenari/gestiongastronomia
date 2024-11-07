@@ -305,6 +305,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     contentType: 'application/json',
                     type: getMetodoOrigen(origen),
                     url: getUrlOrigen(origen),
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`, // Agrega el token de autenticación
+                    },
                     dataSrc: function (json: any) {
                         if (json && json.content) {
                             dispatch(setDataForGrid({ origen: origen, data: json.content }));

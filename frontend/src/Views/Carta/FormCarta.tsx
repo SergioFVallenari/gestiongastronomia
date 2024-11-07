@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Select from 'react-select';
+import api from "../../helpers";
 
 const FormCarta = () => {
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
@@ -19,7 +19,7 @@ const FormCarta = () => {
     const [ingredientesSeleccionados, setIngredientesSeleccionados] = useState<any[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/materia_prima/lista_ingredientes')
+        api.get('http://localhost:3001/materia_prima/lista_ingredientes')
             .then(res => {
                 const options = res.data.content.map((ingrediente: any) => ({
                     value: ingrediente.id,
@@ -66,7 +66,7 @@ const FormCarta = () => {
 
     const calcularCosto = () => {
         const json_ingredientes = getValues('ingredientes')
-        axios.post('http://localhost:3001/materia_prima/calcular_precio_costo', { json_ingredientes: JSON.stringify(json_ingredientes) })
+        api.post('http://localhost:3001/materia_prima/calcular_precio_costo', { json_ingredientes: JSON.stringify(json_ingredientes) })
             .then(res => {
                 setValue('precio_costo', res.data.content[0].costo_total);
             });

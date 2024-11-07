@@ -11,13 +11,13 @@ interface IDrawerContextType {
 
 const Sidebar = (): JSX.Element => {
   const { drawer } = useGetComplexObject<IDrawerContextType>(DrawerContext);
-  // function cerrarSesion() {
-  //   localStorage.clear();
-  // }
+  function cerrarSesion() {
+    localStorage.clear();
+  }
   return (
     <Section as='aside' className={`mc-sidebar thin-scrolling ${drawer ? 'active' : ''}`}>
       <MultipleMenu data={data?.navs} />
-      {/* <Logout data={data?.button} onClick={cerrarSesion} href={'/'} /> */}
+      <Logout data={data?.button} onClick={cerrarSesion} href={'/'} />
     </Section>
   );
 };
