@@ -1,5 +1,5 @@
 interface IButton {
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: React.MouseEventHandler<HTMLElement>;
   className: string;
   icon?: string;
@@ -20,9 +20,38 @@ interface IButton {
   hidden?: boolean;
 }
 
-const Button: React.FC<IButton> = ({ type, onClick, className, icon, iconClass, text, badge, arrow, children, disabled, role, databstoggle, href, arialabelledby, tabIndex, hidden }) => {
+const Button: React.FC<IButton> = ({
+  type,
+  onClick,
+  className,
+  icon,
+  iconClass,
+  text,
+  badge,
+  arrow,
+  children,
+  disabled,
+  role,
+  databstoggle,
+  href,
+  arialabelledby,
+  tabIndex,
+  hidden,
+}) => {
+  if (href) {
+    return (
+      <a href={href} className={className} role={role} data-bs-toggle={databstoggle} aria-labelledby={arialabelledby} tabIndex={tabIndex} hidden={hidden}>
+        {icon || iconClass ? <i className={iconClass || 'material-icons'}>{icon}</i> : <></>}
+        {text && <span>{text}</span>}
+        {badge && <sup className={badge.variant}>{badge.text}</sup>}
+        {arrow && <small className='material-icons'>{arrow}</small>}
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button disabled={disabled} type={type || 'button'} onClick={onClick} className={className} role={role} data-bs-toggle={databstoggle} href={href} aria-labelledby={arialabelledby} tabIndex={tabIndex} hidden={hidden}>
+    <button disabled={disabled} type={type || 'button'} onClick={onClick} className={className} role={role} data-bs-toggle={databstoggle} aria-labelledby={arialabelledby} tabIndex={tabIndex} hidden={hidden}>
       {icon || iconClass ? <i className={iconClass || 'material-icons'}>{icon}</i> : <></>}
       {text && <span>{text}</span>}
       {badge && <sup className={badge.variant}>{badge.text}</sup>}

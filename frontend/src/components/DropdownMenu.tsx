@@ -4,7 +4,8 @@ import { Dropdown } from 'react-bootstrap';
 
 interface IDropdownMenu {
   dropdown: IDropdown[];
-  onClick: Function;
+  onClick: any;
+  className?: string; 
 }
 
 interface IDropdown {

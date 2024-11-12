@@ -295,6 +295,17 @@ export const recorte = (texto: string) => {
 // }
 
 import axios from 'axios';
+const VITE_API_URL_DONFAUSTINO = import.meta.env.VITE_API_URL_DONFAUSTINO;
+
+export const PostGeneral = async (url: string, body: any) => {
+  try {
+    return await api.post(`${VITE_API_URL_DONFAUSTINO}` + url, body).then((res) => {
+      return res.data;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Crear una instancia de Axios
 const api = axios.create({

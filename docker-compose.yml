@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: . # La raíz del proyecto
+      dockerfile: dockerfile # La ruta del Dockerfile en la raíz
+    ports:
+      - "8080:8080" # Mapea el puerto local 3001 al puerto 3001 del contenedor
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend:/app # Monta el backend para ver cambios en tiempo real
+    command: npm run dev # Ejecuta el servidor en modo desarrollo

@@ -59,7 +59,9 @@ const Carta: React.FC = () => {
                     </Card.Body>
                 </Card>
                 <ModalDinamico id="modal_carta" sizeModal="xl" modalTitulo={titulo} handleClose={handleClose} manejador={modalArticulos}>
-                    <FormCarta></FormCarta>
+                    <FormCarta
+                    formDisabled={formDisabled}
+                    />
                 </ModalDinamico>
             </div>
         </PageLayout>

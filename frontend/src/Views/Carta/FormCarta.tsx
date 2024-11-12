@@ -4,7 +4,11 @@ import { useForm } from "react-hook-form";
 import Select from 'react-select';
 import api from "../../helpers";
 
-const FormCarta = () => {
+interface iFormCarta {
+    formDisabled?: boolean;
+}
+
+const FormCarta:React.FC<iFormCarta> = ({formDisabled}) => {
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
         defaultValues: {
             producto: '',
@@ -80,7 +84,7 @@ const FormCarta = () => {
                         <div className="col-md-6">
                             <div className="mb-3">
                                 <label className="form-label">Producto</label>
-                                <input type="text" className="form-control" {...register('producto', { required: 'Obligatorio' })} />
+                                <input type="text" className="form-control" {...register('producto', { required: 'Obligatorio' })} disabled={formDisabled}/>
                                 {errors.producto && <span className="text-danger">{errors.producto.message}</span>}
                             </div>
                         </div>

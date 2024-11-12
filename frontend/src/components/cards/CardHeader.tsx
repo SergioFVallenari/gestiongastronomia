@@ -6,7 +6,9 @@ interface IDostMenu {
   dropdown: {
     icon: string;
     text: string;
+    path: string;
   }[];
+  onClick?: Function;
 }
 interface IButton {
   path: string;
@@ -17,7 +19,7 @@ interface ICardHeader {
   title: string;
   dotsMenu?: IDostMenu;
   button?: IButton;
-  onClick?: Function;
+  onClick: Function;
   className?: string;
 }
 const CardHeader: React.FC<ICardHeader> = ({ title, dotsMenu, button, onClick, className }): JSX.Element => {

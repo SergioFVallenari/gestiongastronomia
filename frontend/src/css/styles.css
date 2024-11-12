@@ -7,29 +7,29 @@
 *   All copyrights reserved by Mironcoder
 */
 .light_mode {
-  --primaryHEX: #8B4513; /* Marrón madera */
-  --primaryGreen: #D2691E; /* Naranja tierra */
+  --primaryHEX: #007bff; /* Azul principal */
+  --primaryGreen: #28a745; /* Verde principal */
   --lightColor: #ffffff; /* Blanco */
-  --textColor: #4B2E2E; /* Marrón oscuro */
-  --activeColor: #8B4513; /* Marrón madera */
-  --placeholderColor: #A0522D; /* Marrón claro */
-  --headingColor: #6B4226; /* Marrón oscuro para encabezados */
-  --colorSetting: #4B2E2E; /* Marrón oscuro */
-  --bodyBG: #FAF3E0; /* Beige claro para el fondo */
-  --cardBG: #F5EFE4; /* Fondo de tarjeta, beige claro */
-  --paperBG: #F8F1E6; /* Fondo de papel, beige suave */
-  --lightBG: #EFE9DC; /* Fondo en gris claro, estilo madera */
-  --thinBorder: #D2B48C; /* Tonos de borde en beige claro */
-  --lightBorder: #C5A383; /* Bordes ligeros en beige cálido */
-  --deepBorder: #A67648; /* Bordes más profundos en marrón medio */
-  --hardBorder: #8B4513; /* Bordes duros en marrón madera */
-  --thinGray: #F4EDE4; /* Gris muy claro para líneas finas */
-  --lightGray: #F0E4D6; /* Gris muy claro */
-  --grayDropdown: #B87333; /* Tono cobre */
-  --deepGray: #A0522D; /* Marrón medio */
-  --hardGray: #8B5A2B; /* Marrón oscuro */
-  --hoverBG: #ECD9C6; /* Fondo de hover en beige claro */
-  --activeBG: rgba(139, 69, 19, 0.1); /* Fondo activo marrón madera con transparencia */
+  --textColor: #343a40; /* Gris oscuro para el texto */
+  --activeColor: #007bff; /* Azul principal */
+  --placeholderColor: #6c757d; /* Gris medio para placeholders */
+  --headingColor: #212529; /* Gris oscuro para encabezados */
+  --colorSetting: #343a40; /* Gris oscuro */
+  --bodyBG: #f8f9fa; /* Fondo claro */
+  --cardBG: #ffffff; /* Fondo de tarjeta, blanco */
+  --paperBG: #e9ecef; /* Fondo de papel, gris claro */
+  --lightBG: #f1f3f5; /* Fondo gris claro */
+  --thinBorder: #dee2e6; /* Bordes claros */
+  --lightBorder: #ced4da; /* Bordes claros en gris */
+  --deepBorder: #adb5bd; /* Bordes profundos en gris medio */
+  --hardBorder: #6c757d; /* Bordes oscuros en gris */
+  --thinGray: #f8f9fa; /* Gris muy claro para líneas finas */
+  --lightGray: #e9ecef; /* Gris claro */
+  --grayDropdown: #adb5bd; /* Gris para dropdowns */
+  --deepGray: #495057; /* Gris profundo */
+  --hardGray: #343a40; /* Gris oscuro */
+  --hoverBG: #e2e6ea; /* Fondo de hover en gris claro */
+  --activeBG: rgba(0, 123, 255, 0.1); /* Fondo activo azul con transparencia */
   --facebook: #3b5998;
   --linkedin: #0e76a8;
   --twitter: #00acee;
@@ -39,46 +39,46 @@
   --whatsapp: #25D366;
   --pinterest: #f0002a;
   --youtube: #FF0000;
-  --primaryRGB: 139, 69, 19; /* Marrón en formato RGB */
-  --lightRGB: 255, 248, 240; /* Beige */
-  --blackRGB: 75, 46, 46; /* Marrón oscuro */
-  --redRGB: 205, 92, 92; /* Rojo teja */
-  --darkRGB: 54, 33, 18; /* Marrón oscuro */
-  --grayRGB: 139, 115, 85; /* Gris cálido */
-  --blueRGB: 43, 119, 229;
-  --greenRGB: 26, 159, 83;
-  --purpleRGB: 160, 82, 45; /* Marrón rojizo */
-  --orangeRGB: 255, 127, 80; /* Coral */
-  --yellowRGB: 238, 201, 0; /* Dorado */
-  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 12%);
-  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 6%);
-  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 10%);
+  --primaryRGB: 0, 123, 255; /* Azul en formato RGB */
+  --lightRGB: 255, 255, 255; /* Blanco */
+  --blackRGB: 33, 37, 41; /* Gris oscuro */
+  --redRGB: 220, 53, 69; /* Rojo */
+  --darkRGB: 52, 58, 64; /* Gris oscuro */
+  --grayRGB: 108, 117, 125; /* Gris */
+  --blueRGB: 0, 123, 255;
+  --greenRGB: 40, 167, 69;
+  --purpleRGB: 102, 16, 242; /* Púrpura */
+  --orangeRGB: 255, 159, 64; /* Naranja */
+  --yellowRGB: 255, 193, 7; /* Amarillo */
+  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 0.12);
+  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 0.06);
+  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 0.1);
 }
 
 .dark_mode {
-  --primaryHEX: #8B4513; /* Marrón madera */
-  --primaryGreen: #A0522D; /* Marrón tierra */
+  --primaryHEX: #007bff; /* Azul principal */
+  --primaryGreen: #28a745; /* Verde principal */
   --lightColor: #FFFFFF; /* Blanco */
-  --textColor: #F5DEB3; /* Beige trigo */
-  --activeColor: #CD853F; /* Tono claro de marrón */
-  --placeholderColor: #A67D5D; /* Marrón claro */
-  --headingColor: #FFDAB9; /* Melocotón claro */
-  --colorSetting: #F5DEB3; /* Tono trigo */
-  --bodyBG: #2F1B0C; /* Marrón oscuro */
-  --cardBG: #3C2A1B; /* Marrón profundo para fondos de tarjetas */
-  --paperBG: #2E1C10; /* Fondo de papel marrón oscuro */
-  --grayDropdown: #4B2E2E; /* Marrón profundo */
-  --lightBG: #3B2D2D; /* Marrón grisáceo */
-  --thinBorder: #A0522D; /* Bordes en marrón claro */
-  --lightBorder: #8B5A2B; /* Bordes marrón oscuro */
-  --deepBorder: #5C4033; /* Bordes más profundos, tono chocolate */
-  --hardBorder: #3E2723; /* Tono marrón oscuro */
-  --thinGray: #4D2A1E; /* Marrón rojizo para líneas finas */
-  --lightGray: #603D3D; /* Gris oscuro en marrón */
-  --deepGray: #4B2E2E; /* Marrón muy oscuro */
-  --hardGray: #3E2723; /* Marrón oscuro */
-  --hoverBG: #5C4033; /* Fondo de hover marrón oscuro */
-  --activeBG: rgba(139, 69, 19, 0.1); /* Marrón madera claro con transparencia */
+  --textColor: #e9ecef; /* Gris claro */
+  --activeColor: #17a2b8; /* Azul claro */
+  --placeholderColor: #6c757d; /* Gris medio */
+  --headingColor: #ced4da; /* Gris claro */
+  --colorSetting: #e9ecef; /* Gris claro */
+  --bodyBG: #212529; /* Fondo oscuro */
+  --cardBG: #343a40; /* Fondo de tarjeta, gris oscuro */
+  --paperBG: #495057; /* Fondo de papel, gris medio */
+  --grayDropdown: #6c757d; /* Gris para dropdowns */
+  --lightBG: #495057; /* Gris oscuro */
+  --thinBorder: #6c757d; /* Bordes en gris medio */
+  --lightBorder: #495057; /* Bordes en gris oscuro */
+  --deepBorder: #343a40; /* Bordes más profundos, gris oscuro */
+  --hardBorder: #212529; /* Gris muy oscuro */
+  --thinGray: #6c757d; /* Gris medio para líneas finas */
+  --lightGray: #495057; /* Gris oscuro */
+  --deepGray: #343a40; /* Gris muy oscuro */
+  --hardGray: #212529; /* Gris oscuro */
+  --hoverBG: #495057; /* Fondo de hover gris oscuro */
+  --activeBG: rgba(0, 123, 255, 0.1); /* Azul claro con transparencia */
   --facebook: #3b5998;
   --linkedin: #0e76a8;
   --twitter: #00acee;
@@ -88,20 +88,20 @@
   --whatsapp: #25D366;
   --pinterest: #f0002a;
   --youtube: #FF0000;
-  --primaryRGB: 139, 69, 19; /* Marrón en formato RGB */
-  --lightRGB: 75, 46, 46; /* Marrón oscuro */
+  --primaryRGB: 0, 123, 255; /* Azul en formato RGB */
+  --lightRGB: 33, 37, 41; /* Gris oscuro */
   --blackRGB: 0, 0, 0;
-  --redRGB: 205, 92, 92; /* Rojo teja */
-  --darkRGB: 54, 33, 18; /* Marrón oscuro */
-  --grayRGB: 139, 115, 85; /* Gris cálido */
-  --blueRGB: 43, 119, 229;
-  --greenRGB: 26, 159, 83;
-  --purpleRGB: 160, 82, 45; /* Marrón rojizo */
-  --orangeRGB: 255, 127, 80; /* Coral */
-  --yellowRGB: 238, 201, 0; /* Dorado */
-  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 12%);
-  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 6%);
-  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 10%);
+  --redRGB: 220, 53, 69; /* Rojo */
+  --darkRGB: 52, 58, 64; /* Gris oscuro */
+  --grayRGB: 108, 117, 125; /* Gris */
+  --blueRGB: 0, 123, 255;
+  --greenRGB: 40, 167, 69;
+  --purpleRGB: 102, 16, 242; /* Púrpura */
+  --orangeRGB: 255, 159, 64; /* Naranja */
+  --yellowRGB: 255, 193, 7; /* Amarillo */
+  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 0.12);
+  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 0.06);
+  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 0.1);
 }
 
 

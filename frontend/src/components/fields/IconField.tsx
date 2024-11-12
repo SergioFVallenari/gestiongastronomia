@@ -15,29 +15,44 @@ interface IIconField {
   placeholder: string;
   onChangeInput?: React.ChangeEventHandler<HTMLInputElement>;
   onChangeSelect?: React.ChangeEventHandler<HTMLSelectElement>;
-  className?: string;
+  className?: string; // Esta propiedad puede ser opcional
 }
 
-const IconField: React.FC<IIconField> = ({ value = '', name = '', classes, icon, option, activeOption, type, placeholder, onChangeInput, onChangeSelect, ...rest }) => {
+const IconField: React.FC<IIconField> = ({
+  value = '',
+  name = '',
+  classes,
+  icon,
+  option,
+  activeOption,
+  type,
+  placeholder,
+  onChangeInput,
+  onChangeSelect,
+  className = '', // Definir un valor por defecto para `className` en caso de ser undefined
+  ...rest
+}) => {
   const [visible] = React.useState(false);
+
+  // Asegurarse de que la clase siempre sea un string
+  const finalClassName = className ? className : ''; 
+
   return (
     <Box className={`mc-icon-field ${classes || 'w-md h-sm white'}`}>
       <Icon type={icon || 'account_circle'} />
       {type ? (
         <>
-          <Input type={visible ? 'text' : type || 'text'} placeholder={type ? placeholder || 'Type here...' : ''} name={name} value={value} onChange={onChangeInput || (() => {})} {...rest} />
-          {/*           {passwordVisible && (
-            <Button
-              type="button"
-              className="material-icons"
-              onClick={() => setVisible(!visible)}
-            >
-              {visible ? "visibility_off" : "visibility"}
-            </Button>
-          )} */}
+          <Input
+            type={visible ? 'text' : type || 'text'}
+            placeholder={type ? placeholder || 'Type here...' : ''}
+            name={name}
+            value={value}
+            onChange={onChangeInput || (() => {})}
+            {...rest}
+          />
         </>
       ) : (
-        <Select {...rest} onChange={onChangeSelect || (() => {})}>
+        <Select className={finalClassName} {...rest} onChange={onChangeSelect || (() => {})}>
           <Option>{activeOption || 'Selecciona opcion'}</Option>
           {option?.map((item, index) => (
             <Option key={index} value={item.value}>

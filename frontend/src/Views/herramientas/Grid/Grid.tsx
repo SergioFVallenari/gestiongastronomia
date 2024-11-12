@@ -12,6 +12,8 @@ import { Table } from 'react-bootstrap';
 import { Order } from 'datatables.net';
 import { useDispatch } from 'react-redux';
 import { setDataForGrid } from '../../../store/slices/DataGridSlice';
+const VITE_API_URL_DONFAUSTINO = import.meta.env.VITE_API_URL_DONFAUSTINO;
+
 interface IFiltro {
     id?: number;
     idarticulo?: number;
@@ -178,7 +180,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
         let url = '';
         switch (origen) {
             case 'articulos':
-                url = 'http://localhost:3001/articulos/get_articulos';
+                url = `${VITE_API_URL_DONFAUSTINO}/articulos/get_articulos`;
                 break;
             case 'ingresos':
                 url = 'http://localhost:3001/ingresos/get_ingresos';

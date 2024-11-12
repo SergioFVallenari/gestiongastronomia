@@ -16,7 +16,7 @@ const PageLayout: React.FC<IPageLayout> = ({ label, children }) => {
 
   return (
     <DrawerProvider>
-      <Header label={label} />
+      <Header label={label ? label: ''} />
       <Sidebar />
       <Main>
         <>

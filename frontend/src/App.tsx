@@ -20,7 +20,7 @@ const App: React.FC = (): JSX.Element => {
   return (
     <ThemeProvider>
       <LoaderProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/react-app">
           <Routes>
             {/* Ruta para redirigir al login o dashboard según autenticación */}
             <Route path='/' element={<RedirectToAppropriatePage />} />

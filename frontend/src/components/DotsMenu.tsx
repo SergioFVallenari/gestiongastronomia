@@ -8,6 +8,7 @@ interface IDostMenu {
   dropdown: {
     icon: string;
     text: string;
+    path: string; // Asegúrate de que 'path' esté presente
   }[];
   onClick: Function;
 }

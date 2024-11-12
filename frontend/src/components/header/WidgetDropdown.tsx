@@ -31,7 +31,7 @@ interface IWidgetDropdown {
 //   tokenDecifrado: (token: string) => Promise<any>;
 // }
 
-const WidgetDropdown: React.FC<IWidgetDropdown> = ({ title, icon, addClass, badge, dropdown, menu = true }) => {
+const WidgetDropdown: React.FC<IWidgetDropdown> = ({ title, icon, addClass, dropdown, menu = true }) => {
   // const { datos } = useGetComplexObject<FlexitContextType>(FlexitContext);
   // const [notificaciones, setNotificaciones] = useState<INotificaciones[]>([]);
 

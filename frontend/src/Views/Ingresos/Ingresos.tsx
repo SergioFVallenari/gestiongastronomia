@@ -9,7 +9,6 @@ import { EnviarMensaje } from "../herramientas/General/General";
 import api from "../../helpers";
 
 const Ingresos: React.FC = (): JSX.Element => {
-    const [precioCosto, setPrecioCosto] = useState<number | null>(null); // Estado para almacenar el precio de costo
     const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm({
         defaultValues: {
             cantidad: 0,
@@ -59,10 +58,8 @@ const Ingresos: React.FC = (): JSX.Element => {
     useEffect(() => {
         const articuloSeleccionado = articulos.find(articulo => articulo.sku === getValues("articulo"));
         if (articuloSeleccionado) {
-            setPrecioCosto(articuloSeleccionado.precio_costo);
             setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
         } else {
-            setPrecioCosto(null); // Restablecer si no hay selección
             setValue("precio_modificado", 0); // Restablecer si no hay selección
 
         }
