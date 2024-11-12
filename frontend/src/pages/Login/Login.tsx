@@ -47,14 +47,14 @@ const Login: React.FC = () => {
                         <div className="col-md-12">
                             <div className="mb-3">
                                 <label className="form-label">Correo Electronico</label>
-                                <input type="text"{...register('username', ({ required: 'Email is required' }))} />
+                                <input type="text"{...register('username', ({ required: 'Email is required' }))} style={{ backgroundColor: 'white' }} />
                                 {errors.username && <span>{errors.username.message}</span>}
                             </div>
                         </div>
                         <div className="col-md-12">
                             <div className="mb-3">
                                 <label className="form-label">Password</label>
-                                <input type="password" {...register('password', ({ required: 'Password is required' }))} />
+                                <input type="password" {...register('password', ({ required: 'Password is required' }))} style={{ backgroundColor: 'white' }}/>
                                 {errors.password && <span>{errors.password.message}</span>}
                             </div>
                         </div>
