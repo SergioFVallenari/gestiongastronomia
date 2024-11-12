@@ -22,7 +22,7 @@ const FormIngresos: React.FC<FormIngresosProps> = ({ idIngreso, disabled }) => {
 
     });
     useEffect(() => {
-        api.get(`http://localhost:3001/ingresos/get_ingreso/${idIngreso}`)
+        api.get(`/ingresos/get_ingreso/${idIngreso}`)
             .then(res => {
                 setIngreso(res.data.content[0]);
             })

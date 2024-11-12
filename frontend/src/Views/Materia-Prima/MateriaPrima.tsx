@@ -59,9 +59,8 @@ const MateriaPrima: React.FC = (): JSX.Element => {
         break;
     }
   }
-  const handleDelete = (id: any) => {
-    console.log(id)
-    api.put('http://localhost:3001/materia_prima/baja_materia_prima', { id: id })
+  const handleDelete = (id: number | string) => {
+    api.put(`/materia_prima/baja_materia_prima`, { id: id })
   }
 
   //Render

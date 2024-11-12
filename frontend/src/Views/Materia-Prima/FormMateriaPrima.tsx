@@ -10,7 +10,7 @@ interface FormArticulosProps {
     idArticulo: number | null;
     onSubmitSuccess: () => void;
     formDisabled?: boolean;
-    setRecargaGridMateriaPrima: any;
+    setRecargaGridMateriaPrima: (value: string) => void;
 }
 
 const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
@@ -38,11 +38,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
     const isArticuloCompuesto = watch('chkArticuloCompuesto');
 
     useEffect(() => {
-        api.post('http://localhost:3001/tabla/lista_modulos', { modulo: 'categorias_materia_prima' })
+        api.post('/tabla/lista_modulos', { modulo: 'categorias_materia_prima' })
             .then(res => setCategorias(res.data.content));
 
         if (accion !== 'a' && idArticulo) {
-            api.get(`http://localhost:3001/materia_prima/get_materia_prima/${idArticulo}`)
+            api.get(`/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
                     setValue('nombre', articulo.nombre);
@@ -75,7 +75,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             }
             console.log(body, 'alta');
             // Alta de un nuevo artículo
-            await api.post('http://localhost:3001/materia_prima/alta_materia_prima', body)
+            await api.post('/materia_prima/alta_materia_prima', body)
                 .then(res => {
                     DonFaustinoLoad.DonFaustinoLoad(true);
                     if (res.status === 200) {
@@ -85,7 +85,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                     }
                 });
         } else if (accion === 'm' && idArticulo) {
-            await api.put(`http://localhost:3001/materia_prima/modificar_materia_prima/${idArticulo}`, data)
+            await api.put(`/materia_prima/modificar_materia_prima/${idArticulo}`, data)
                 .then(res => {
                     if (res.status === 200) {
                         EnviarMensaje('success', res.data.content[0].msg);
@@ -126,7 +126,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
     const addCategoria = () => {
         if (nuevaCategoria) {
-            api.post('http://localhost:3001/tabla/insert_categoria', { modulo: 'categorias_materia_prima', valor_modulo: nuevaCategoria })
+            api.post('/tabla/insert_categoria', { modulo: 'categorias_materia_prima', valor_modulo: nuevaCategoria })
                 .then(res => {
                     setCategorias(prevCategorias => [...prevCategorias, res.data.content[0]]);
                     setValue('categoria_materia_prima', res.data.content[0].id_valor_modulo);

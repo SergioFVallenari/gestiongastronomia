@@ -8,9 +8,13 @@ interface FormArticulosProps {
     idArticulo: number | null; // Si es null, significa que es una alta
     onSubmitSuccess: () => void; // Callback para manejar éxito después de la operación
     formDisabled?: boolean; // Deshabilitar formulario
-    setRecargaGridArticulos: any; // Callback para recargar el grid de artículos
+    setRecargaGridArticulos: (value: string) => void; // Callback para recargar el grid de artículos
 }
 
+interface Categoria {
+    id_valor_modulo: number;
+    valor_modulo: string;
+}
 const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridArticulos }) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
@@ -22,16 +26,17 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
             categoria_articulo:''
         }
     });
-    const [categorias, setCategorias] = useState<any[]>([]);
+
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
 
     useEffect(() => {
-        api.post('http://localhost:3001/tabla/lista_modulos',{modulo:'categorias_articulos'})
+        api.post(`/tabla/lista_modulos`,{modulo:'categorias_articulos'})
         .then(res => {
             setCategorias(res.data.content);
         })
         if (accion !== 'a' && idArticulo) {
             // Si es modificación o visualización, cargamos los datos del artículo
-            api.get(`http://localhost:3001/articulos/get_articulo/${idArticulo}`)
+            api.get(`/articulos/get_articulo/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
                     // Prellenamos el formulario con los datos del artículo
@@ -44,10 +49,10 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         }
     }, [accion, idArticulo, setValue]);
-    const onSubmit = async (data:any) => {
+    const onSubmit = async (data:unknown) => {
         if (accion === 'a') {
             // Alta de un nuevo artículo
-            await api.post('http://localhost:3001/articulos/alta_articulos', data)
+            await api.post(`/articulos/alta_articulos`, data)
                 .then(res => {
                     DonFaustinoLoad.DonFaustinoLoad(true);
                     if (res.status === 200) {
@@ -58,7 +63,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         } else if (accion === 'm' && idArticulo) {
             // Modificación de un artículo existente
-            await api.put(`http://localhost:3001/articulos/modificar_articulo/${idArticulo}`, data)
+            await api.put(`/articulos/modificar_articulo/${idArticulo}`, data)
                 .then(res => {
                     console.log(res.data.content[0].msg)
                     if (res.status === 200) {

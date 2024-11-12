@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Box, Form, Heading } from "../../components/elements";
 import donfaustinopng from '../../images/logo-donFaustino/don-faustino2.png';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { PostGeneral } from "../../helpers";
 
+interface LoginFormInputs {
+    username: string;
+    password: string;
+    [key: string]: string | number | boolean;
+}
 const Login: React.FC = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -12,17 +17,19 @@ const Login: React.FC = () => {
             password: ''
         }
     });
-    const onSubmit = (data: any) => {
-        axios.post('http://localhost:3001/autorizacion/login', data)
-            .then(res => {
-                const data = res.data;
-                if (data.info) {
-                    localStorage.setItem('token', data.content);
-                    navigate('/dashboard');
-                } else {
-                    alert(data.msg);
-                }
-            });
+
+    const onSubmit = (data: LoginFormInputs) => {
+        PostGeneral('/autorizacion/login', data)
+        .then(res => {
+            const data = res
+            if (data.info) {
+                localStorage.setItem('token', data.content);
+                navigate('/dashboard');
+            } else {
+                alert(data.msg);
+            }
+        });
+            
     }
 
     return (

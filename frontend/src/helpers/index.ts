@@ -297,7 +297,7 @@ export const recorte = (texto: string) => {
 import axios from 'axios';
 const VITE_API_URL_DONFAUSTINO = import.meta.env.VITE_API_URL_DONFAUSTINO;
 
-export const PostGeneral = async (url: string, body: any) => {
+export const PostGeneral = async (url: string, body: { [key: string]: string | number | boolean }) => {
   try {
     return await api.post(`${VITE_API_URL_DONFAUSTINO}` + url, body).then((res) => {
       return res.data;
@@ -309,7 +309,7 @@ export const PostGeneral = async (url: string, body: any) => {
 
 // Crear una instancia de Axios
 const api = axios.create({
-  baseURL: 'http://localhost:3001', // Cambia esta URL según la dirección de tu backend
+  baseURL: `${VITE_API_URL_DONFAUSTINO}`, // Cambia esta URL según la dirección de tu backend
 });
 
 // Interceptor para incluir el token en cada solicitud

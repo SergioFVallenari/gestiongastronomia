@@ -23,7 +23,7 @@ const FormCarta:React.FC<iFormCarta> = ({formDisabled}) => {
     const [ingredientesSeleccionados, setIngredientesSeleccionados] = useState<any[]>([]);
 
     useEffect(() => {
-        api.get('http://localhost:3001/materia_prima/lista_ingredientes')
+        api.get('/materia_prima/lista_ingredientes')
             .then(res => {
                 const options = res.data.content.map((ingrediente: any) => ({
                     value: ingrediente.id,
@@ -70,7 +70,7 @@ const FormCarta:React.FC<iFormCarta> = ({formDisabled}) => {
 
     const calcularCosto = () => {
         const json_ingredientes = getValues('ingredientes')
-        api.post('http://localhost:3001/materia_prima/calcular_precio_costo', { json_ingredientes: JSON.stringify(json_ingredientes) })
+        api.post('/materia_prima/calcular_precio_costo', { json_ingredientes: JSON.stringify(json_ingredientes) })
             .then(res => {
                 setValue('precio_costo', res.data.content[0].costo_total);
             });

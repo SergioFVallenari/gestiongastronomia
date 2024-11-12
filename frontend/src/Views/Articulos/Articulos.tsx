@@ -4,7 +4,7 @@ import { useState } from "react";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
 import FormArticulos from "./FormArticulos";
-import axios from "axios";
+import api from "../../helpers";
 
 const Articulos: React.FC = (): JSX.Element => {
   //Estados
@@ -60,7 +60,7 @@ const Articulos: React.FC = (): JSX.Element => {
     }
   }
   const handleDelete = (id: any) => {
-    axios.delete('http://localhost:3001/articulos/baja_articulos', { data: { id: id } })
+    api.delete('/articulos/baja_articulos', { data: { id: id } })
   }
   
   //Render

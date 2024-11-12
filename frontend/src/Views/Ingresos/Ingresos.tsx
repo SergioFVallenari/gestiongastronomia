@@ -36,14 +36,14 @@ const Ingresos: React.FC = (): JSX.Element => {
     const ModalShow = (id: number, accion: string) => setModalIngresos({ show: true, id: id, accion: accion });
 
     useEffect(() => {
-        api.post('http://localhost:3001/articulos/get_articulos')
+        api.post('/articulos/get_articulos')
             .then(res => {
                 setArticulos(res?.data?.content);
             })
             .catch(error => {
                 console.error("Error cargando artículos:", error);
             });
-        api.post('http://localhost:3001/materia_prima/get_materia_prima')
+        api.post('/materia_prima/get_materia_prima')
             .then(res => {
                 const articulosNoCompuestos = res?.data?.content.filter((articulo: any) => articulo.es_compuesto == 0);
 
@@ -114,7 +114,7 @@ const Ingresos: React.FC = (): JSX.Element => {
             precio_modificado: ingreso.chkPrecio ? (ingreso.precioXarticulo / ingreso.cantidad) : 0
         }));
 
-        api.post('http://localhost:3001/ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
+        api.post(' /ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
             .then(res => {
                 if (res.data.info)
                 {

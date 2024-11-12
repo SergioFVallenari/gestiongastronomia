@@ -134,7 +134,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                             
                             const maxLength = 50
             
-                            const formattedString = jsonString.replace(/\\/g, '').replace(/\"/g, '');
+                            const formattedString = jsonString.replace(/\\/g, '').replace(/"/g, '');
             
                             return formattedString.length > maxLength 
                                 ? formattedString.substring(0, maxLength) + '...' 
@@ -183,10 +183,10 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 url = `${VITE_API_URL_DONFAUSTINO}/articulos/get_articulos`;
                 break;
             case 'ingresos':
-                url = 'http://localhost:3001/ingresos/get_ingresos';
+                url = `${VITE_API_URL_DONFAUSTINO}/ingresos/get_ingresos`;
                 break;
             case 'materia_prima':
-                url = 'http://localhost:3001/materia_prima/get_materia_prima';
+                url = `${VITE_API_URL_DONFAUSTINO}/materia_prima/get_materia_prima`;
                 break;    
             default:
                 return '';
@@ -272,11 +272,11 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'stock':
                 return '<"row"<"col-12"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-flex justify-content-start mb-2"<"row"<"col-12 div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"col-12 col-lg-4"l><"col-12 col-lg-8"<"row"<"col-12 col-lg-4 col-xl-4"i><"col-12 col-lg-8 col-xl-8"p>>>>';
             default:
-                return '<"row"<"col-12 col-sm-7 col-lg-8"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-block d-sm-flex justify-content-end col-sm-5 col-lg-4 mb-2"<"row"<"col-12 div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto"l><"d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto text-center"i><"d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto"p>>>';
+                return '<"row "<"col-12 col-md-7 col-lg-8"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-block d-lg-flex w-auto justify-content-end col-md-5 col-lg-4"<"row"<"col-12 w-auto div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"col-12 col-lg-4"l><"col-12 col-lg-8"<"row"<"col-12 col-lg-4 col-xl-4"i><"col-12 col-lg-8 col-xl-8"p>>>>';
         }
     }
     const getDataOrigen = (origen: string) => {
-        var data: any = {};
+        let data: any = {};
         switch (origen) {
             case 'articulos':
                 {
@@ -301,7 +301,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             $(tableOp.current).DataTable({
                 colReorder: true,
                 destroy: true,
-                responsive: true,
+                responsive: false,
                 processing: true,
                 ajax: {
                     contentType: 'application/json',
@@ -325,9 +325,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 buttons: getButtonsGrids(origen),
                 drawCallback: function (_settings: any) {
                     if ($('.tabla-agrupada').length > 0) {
-                        var api = ($(this) as any).api();
-                        var rows = api.rows({ page: 'current' }).nodes();
-                        var last: any = null;
+                        const api = ($(this) as any).api();
+                        const rows = api.rows({ page: 'current' }).nodes();
+                        let last: any = null;
                         api
                             .column(groupColumn, { page: 'current' })
                             .data()
