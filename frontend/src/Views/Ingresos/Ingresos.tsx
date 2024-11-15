@@ -56,14 +56,14 @@ const Ingresos: React.FC = (): JSX.Element => {
     }, []);
     console.log(articulos)
     useEffect(() => {
-        const articuloSeleccionado = articulos.find(articulo => articulo.sku === getValues("articulo"));
+        const selectedArticulo = getValues("articulo");
+        const articuloSeleccionado = articulos.find(articulo => articulo.sku === selectedArticulo);
         if (articuloSeleccionado) {
             setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
         } else {
             setValue("precio_modificado", 0); // Restablecer si no hay selección
-
         }
-    }, [getValues("articulo"), articulos]);
+    }, [articulos, getValues, setValue]);
 
     const onSubmit = (data: any) => {
         const articuloSeleccionado = articulos.find(articulo => articulo.sku === data.articulo);
@@ -114,7 +114,7 @@ const Ingresos: React.FC = (): JSX.Element => {
             precio_modificado: ingreso.chkPrecio ? (ingreso.precioXarticulo / ingreso.cantidad) : 0
         }));
 
-        api.post(' /ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
+        api.post('/ingresos/alta_ingreso', { body: body, costo_total: costoTotal })
             .then(res => {
                 if (res.data.info)
                 {

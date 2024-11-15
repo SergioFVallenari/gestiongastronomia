@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { Box, Image, Heading } from '../components/elements';
 import PulseLoader from 'react-spinners/PulseLoader';
-import loadingImg from '../images/logo-flexit.png';
+import loadingImg from '../images/logo-donFaustino/don-faustino2.png';
 
 interface LoaderContextType {
   loading: boolean;
