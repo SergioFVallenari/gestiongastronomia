@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/react-app/', // Cambia este valor si el subdirectorio es diferente
+  base: '/', // Cambia este valor si el subdirectorio es diferente
   build: {
     outDir: 'dist',
     assetsDir: 'static',

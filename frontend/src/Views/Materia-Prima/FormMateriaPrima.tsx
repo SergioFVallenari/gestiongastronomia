@@ -2,8 +2,16 @@ import { useForm } from 'react-hook-form';
 import api from '../../helpers';
 import DonFaustinoLoad, { EnviarMensaje } from '../herramientas/General/General';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Switch from '@mui/material/Switch';
+import { FormControlLabel } from '@mui/material';
 
 interface FormArticulosProps {
     accion: string;
@@ -15,7 +23,7 @@ interface FormArticulosProps {
 
 const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
     const matPrimData = useSelector((state: any) => state?.grid?.data.materia_prima);
-    const [categorias, setCategorias] = useState<any[]>([]);
+    const [categorias, setCategorias] = useState<any[]>([]); 
     const [ingredientes, setIngredientes] = useState<any[]>([]);
     const [ingredienteSeleccionado, setIngredienteSeleccionado] = useState<any | null>(null);
     const [nuevaCategoria, setNuevaCategoria] = useState<string>('');
@@ -71,7 +79,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 categoria_materia_prima: data.categoria_materia_prima,
                 peso_gramos: data.peso_gramos,
                 json_ingredientes: ingredientesFormatt,
-                es_compuesto: data.chkArticuloCompuesto? 1 : 0
+                es_compuesto: data.chkArticuloCompuesto ? 1 : 0
             }
             console.log(body, 'alta');
             // Alta de un nuevo artículo
@@ -136,137 +144,208 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
     return (
         <>
-            <form className='row' onSubmit={handleSubmit(onSubmit)}>
+            <form className='row mt-2' onSubmit={handleSubmit(onSubmit)}>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Artículo</label>
-                        <input type='text' className='form-control' {...register('nombre', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
-                        {errors.nombre && <span className='text-danger'>{errors.nombre.message}</span>}
+                        <TextField 
+                            label="Artículo" 
+                            fullWidth 
+                            variant="outlined"
+                            {...register('nombre', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled} 
+                            error={!!errors.nombre}
+                            helperText={errors.nombre?.message}
+                        />
                     </div>
                 </div>
+
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Sku</label>
-                        <input type='text' className='form-control' {...register('sku', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} />
-                        {errors.sku && <span className='text-danger'>{errors.sku.message}</span>}
+                        <TextField 
+                            label="Sku" 
+                            fullWidth 
+                            variant="outlined"
+                            {...register('sku', { required: 'Obligatorio' })}
+                            disabled={accion !== 'a' && formDisabled} 
+                            error={!!errors.sku}
+                            helperText={errors.sku?.message}
+                        />
                     </div>
                 </div>
+
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Precio Costo (por kg)</label>
-                        <input type='text' className='form-control' {...register('precio_costo', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
-                        {errors.precio_costo && <span className='text-danger'>{errors.precio_costo.message}</span>}
+                        <TextField 
+                            label="Precio Costo (por kg)" 
+                            fullWidth 
+                            variant="outlined"
+                            {...register('precio_costo', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled}
+                            error={!!errors.precio_costo}
+                            helperText={errors.precio_costo?.message}
+                        />
                     </div>
                 </div>
+
                 <div className='col-md-6'>
                     <div className='mb-3'>
-                        <label className='form-label'>Categoría</label>
-                        <select className='form-control' {...register('categoria_materia_prima', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled}>
-                            <option value="">Seleccione una categoría</option>
-                            {categorias.map((categoria, index) => (
-                                <option key={index} value={categoria.id_valor_modulo}>{categoria.valor_modulo.toUpperCase()}</option>
-                            ))}
-                        </select>
-                        {errors.categoria_materia_prima && <span className='text-danger'>{errors.categoria_materia_prima.message}</span>}
-                        <input
-                            type="text"
-                            className='form-control mt-2'
-                            placeholder='Agregar nueva categoría'
+                        <FormControl fullWidth error={!!errors.categoria_materia_prima}>
+                            <InputLabel>Categoría</InputLabel>
+                            <Select 
+                                label="Categoría"
+                                {...register('categoria_materia_prima', { required: 'Obligatorio' })}
+                                disabled={accion === 'c' && formDisabled}
+                            >
+                                <MenuItem value="">Seleccione una categoría</MenuItem>
+                                {categorias.map((categoria, index) => (
+                                    <MenuItem key={index} value={categoria.id_valor_modulo}>
+                                        {categoria.valor_modulo.toUpperCase()}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.categoria_materia_prima && <FormHelperText>{errors.categoria_materia_prima.message}</FormHelperText>}
+                        </FormControl>
+
+                        <TextField 
+                            label="Agregar nueva categoría"
                             value={nuevaCategoria}
                             onChange={(e) => setNuevaCategoria(e.target.value)}
+                            fullWidth
+                            sx={{mt:2}}
                             hidden={accion === 'c' && formDisabled}
                         />
-                        <button type="button" className='btn btn-warning mt-2' onClick={addCategoria} hidden={accion === 'c' && formDisabled} >Agregar</button>
+                        <Button 
+                            variant="contained" 
+                            color="warning" 
+                            onClick={addCategoria}
+                            sx={{ mt: 2 }}
+                            hidden={accion === 'c' && formDisabled}
+                        >
+                            Agregar
+                        </Button>
                     </div>
                 </div>
+
                 <div className='col-md-6'>
                     <div className='mb-3'>
-                        <label className='form-label'>Disponible (kg)</label>
-                        <input type='text' className='form-control' {...register('peso_gramos', { required: 'Obligatorio' })} disabled />
-                        {errors.peso_gramos && <span className='text-danger'>{errors.peso_gramos.message}</span>}
+                        <TextField 
+                            label="Disponible (kg)" 
+                            fullWidth 
+                            variant="outlined"
+                            {...register('peso_gramos', { required: 'Obligatorio' })}
+                            disabled
+                            error={!!errors.peso_gramos}
+                            helperText={errors.peso_gramos?.message}
+                        />
                     </div>
                 </div>
+
                 <div className='col-md-12'>
-                    <Form.Check
-                        type='switch'
-                        label='Artículo compuesto'
-                        {...register('chkArticuloCompuesto')}
-                        disabled={accion === 'c' && formDisabled}
+                    <FormControlLabel
+                        control={
+                            <Switch 
+                                {...register('chkArticuloCompuesto')} 
+                                disabled={accion === 'c' && formDisabled}
+                            />
+                        } 
+                        label="Artículo compuesto"
                     />
                 </div>
-                {
-                    isArticuloCompuesto && (
-                        <>
-                            <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                                <div className='mb-3'>
-                                    <label className='form-label'>Seleccionar ingredientes</label>
-                                    <select className='form-control' onChange={(e) => setIngredienteSeleccionado(Number(e.target.value))} disabled={accion === 'c' && formDisabled}>
-                                        <option value='sel'>Seleccione un ingrediente</option>
-                                        {matPrimData?.map((matPrim: any, index: number) => (
-                                            <option key={index} value={matPrim.id}>{matPrim.nombre}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                                <div className='mb-3'>
-                                    <label className='form-label'>Cantidad (en gramos)</label>
-                                    <input type='number'
-                                        className='form-control'
-                                        min='0'
-                                        max='9999999999.99'
-                                        step='0.01'
-                                        {...register('cantidad_ingrediente', { required: 'Obligatorio' })}
-                                        disabled={accion === 'c' && formDisabled} />
-                                    {errors.cantidad_ingrediente && <span className='text-danger'>{errors.cantidad_ingrediente.message}</span>}
-                                </div>
-                            </div>
-                            <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                                <div className='mb-3'>
-                                    <label className='form-label'>Cant. Resultante</label>
-                                    <input type='number'
-                                        className='form-control'
-                                        min='0'
-                                        max='9999999999'
-                                        step='1'
-                                        {...register('porciones', { required: 'Obligatorio' })}
-                                        disabled={accion === 'c' && formDisabled} />
-                                    {errors.porciones && <span className='text-danger'>{errors.porciones.message}</span>}
-                                </div>
-                            </div>
-                            <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                                <button className='btn btn-warning mt-4' type='button' onClick={agregarIngredientes} disabled={accion === 'c' && formDisabled}>
-                                    Agregar
-                                </button>
-                            </div>
-                            <div className='col-md-12'>
-                                <table className='table table-bordered'>
-                                    <thead>
-                                        <tr>
-                                            <th>Ingrediente</th>
-                                            <th>Cantidad</th>
+
+                {isArticuloCompuesto && (
+                    <>
+                        <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
+                            <FormControl fullWidth>
+                                <InputLabel>Ingrediente</InputLabel>
+                                <Select 
+                                    value={ingredienteSeleccionado ?? ''}
+                                    onChange={(e) => setIngredienteSeleccionado(Number(e.target.value))}
+                                    disabled={accion === 'c' && formDisabled}
+                                    label="Ingrediente"
+                                >
+                                    <MenuItem value="sel">Seleccione un ingrediente</MenuItem>
+                                    {matPrimData?.map((matPrim: any, index: number) => (
+                                        <MenuItem key={index} value={matPrim.id}>{matPrim.nombre}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
+
+                        <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
+                            <TextField 
+                                label="Cantidad (en gramos)"
+                                type="number"
+                                fullWidth
+                                {...register('cantidad_ingrediente', { required: 'Obligatorio' })}
+                                error={!!errors.cantidad_ingrediente}
+                                helperText={errors.cantidad_ingrediente?.message}
+                                disabled={accion === 'c' && formDisabled}
+                            />
+                        </div>
+
+                        <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
+                            <TextField 
+                                label="Cant. Resultante"
+                                type="number"
+                                fullWidth
+                                {...register('porciones', { required: 'Obligatorio' })}
+                                error={!!errors.porciones}
+                                helperText={errors.porciones?.message}
+                                disabled={accion === 'c' && formDisabled}
+                            />
+                        </div>
+
+                        <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
+                            <Button 
+                                variant="contained" 
+                                color="warning" 
+                                onClick={agregarIngredientes} 
+                                sx={{ mt: 2 }}
+                                disabled={accion === 'c' && formDisabled}
+                            >
+                                Agregar
+                            </Button>
+                        </div>
+
+                        <div className='col-md-12'>
+                            <table className='table table-bordered'>
+                                <thead>
+                                    <tr>
+                                        <th>Ingrediente</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {ingredientes.map((ingrediente, index) => (
+                                        <tr key={index}>
+                                            <td>{ingrediente.nombre}</td>
+                                            <td>{ingrediente.cantidad} g</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {ingredientes.map((ingrediente, index) => (
-                                            <tr key={index}>
-                                                <td>{ingrediente.nombre}</td>
-                                                <td>{ingrediente.cantidad} g</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </>
-                    )
-                }
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                )}
+
                 <div className='col-md-6'>
-                    <button className='btn btn-primary m-2' type='submit' disabled={accion === 'c' && formDisabled}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        type="submit" 
+                        sx={{ m: 2 }}
+                        disabled={accion === 'c' && formDisabled}
+                    >
                         Guardar
-                    </button>
-                    <button className='btn btn-secondary m-2' type='button'>
+                    </Button>
+                    <Button 
+                        variant="outlined" 
+                        color="secondary" 
+                        sx={{ m: 2 }}
+                        type="button"
+                    >
                         Cancelar
-                    </button>
+                    </Button>
                 </div>
             </form>
         </>

@@ -35,30 +35,29 @@ const Ingresos: React.FC = (): JSX.Element => {
     const ModalClose = () => setModalIngresos({ show: false, id: 0, accion: 'a' });
     const ModalShow = (id: number, accion: string) => setModalIngresos({ show: true, id: id, accion: accion });
 
-    useEffect(() => {
-        api.post('/articulos/get_articulos')
-            .then(res => {
-                setArticulos(res?.data?.content);
-            })
-            .catch(error => {
-                console.error("Error cargando artículos:", error);
-            });
-        api.post('/materia_prima/get_materia_prima')
-            .then(res => {
-                const articulosNoCompuestos = res?.data?.content.filter((articulo: any) => articulo.es_compuesto == 0);
+    const fetchArticulos = async () => {
+        try {
+            const articulosRes = await api.post('/articulos/get_articulos');
+            const materiaPrimaRes = await api.post('/materia_prima/get_materia_prima');
+            const articulosNoCompuestos = materiaPrimaRes?.data?.content.filter((articulo: any) => articulo.es_compuesto == 0);
 
-                setArticulos(prevArticulos => [...prevArticulos, ...articulosNoCompuestos]);
-                // setValue('precio_modificado', res.data.content[0].precio_costo);
-            })
-            .catch(error => {
-                console.error("Error cargando materia prima:", error);
-            })
+            if (articulosRes?.data?.content && articulosNoCompuestos) {
+                setArticulos([...articulosRes.data.content, ...articulosNoCompuestos]);
+            }
+        } catch (error) {
+            console.error("Error cargando artículos:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchArticulos(); // Llama a la función que obtiene los artículos
     }, []);
-    console.log(articulos)
+
     useEffect(() => {
         const selectedArticulo = getValues("articulo");
         const articuloSeleccionado = articulos.find(articulo => articulo.sku === selectedArticulo);
         if (articuloSeleccionado) {
+            console.log(articuloSeleccionado,'articuloSeleccionado')
             setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
         } else {
             setValue("precio_modificado", 0); // Restablecer si no hay selección
@@ -143,6 +142,14 @@ const Ingresos: React.FC = (): JSX.Element => {
         const isChecked = e.target.checked;
         setIsPrecioModificadoEnabled(isChecked);
         setValue("checkPrecio", isChecked);
+        const selectedArticulo = getValues("articulo");
+        const articuloSeleccionado = articulos.find(articulo => articulo.sku === selectedArticulo);
+        if (articuloSeleccionado && isChecked) {
+            console.log(articuloSeleccionado,'articuloSeleccionado')
+            setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
+        } else {
+            setValue("precio_modificado", 0); // Restablecer si no hay selección
+        }
     }
 
     return (

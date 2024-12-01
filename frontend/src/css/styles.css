@@ -7,29 +7,29 @@
 *   All copyrights reserved by Mironcoder
 */
 .light_mode {
-  --primaryHEX: #007bff; /* Azul principal */
-  --primaryGreen: #28a745; /* Verde principal */
+  --primaryHEX: #8B3A3A; /* Rojo-madera, tono cálido */
+  --primaryGreen: #6B8E23; /* Verde oliva, color cálido */
   --lightColor: #ffffff; /* Blanco */
-  --textColor: #343a40; /* Gris oscuro para el texto */
-  --activeColor: #007bff; /* Azul principal */
-  --placeholderColor: #6c757d; /* Gris medio para placeholders */
-  --headingColor: #212529; /* Gris oscuro para encabezados */
-  --colorSetting: #343a40; /* Gris oscuro */
-  --bodyBG: #f8f9fa; /* Fondo claro */
-  --cardBG: #ffffff; /* Fondo de tarjeta, blanco */
-  --paperBG: #e9ecef; /* Fondo de papel, gris claro */
-  --lightBG: #f1f3f5; /* Fondo gris claro */
-  --thinBorder: #dee2e6; /* Bordes claros */
-  --lightBorder: #ced4da; /* Bordes claros en gris */
-  --deepBorder: #adb5bd; /* Bordes profundos en gris medio */
-  --hardBorder: #6c757d; /* Bordes oscuros en gris */
-  --thinGray: #f8f9fa; /* Gris muy claro para líneas finas */
-  --lightGray: #e9ecef; /* Gris claro */
-  --grayDropdown: #adb5bd; /* Gris para dropdowns */
-  --deepGray: #495057; /* Gris profundo */
-  --hardGray: #343a40; /* Gris oscuro */
-  --hoverBG: #e2e6ea; /* Fondo de hover en gris claro */
-  --activeBG: rgba(0, 123, 255, 0.1); /* Fondo activo azul con transparencia */
+  --textColor: #4E4B46; /* Gris cálido oscuro */
+  --activeColor: #D2691E; /* Naranja rojizo, color cálido */
+  --placeholderColor: #C2B280; /* Beige suave */
+  --headingColor: #4E4B46; /* Gris cálido para encabezados */
+  --colorSetting: #4E4B46; /* Gris cálido */
+  --bodyBG: #F4E1D2; /* Fondo suave beige, cálido */
+  --cardBG: #FFFFFF; /* Fondo de tarjeta, blanco */
+  --paperBG: #E9CBA7; /* Gris cálido, tono madera */
+  --lightBG: #F5E6D0; /* Fondo beige claro */
+  --thinBorder: #D3B99D; /* Bordes suaves beige/madera */
+  --lightBorder: #C7A38C; /* Bordes en tono madera suave */
+  --deepBorder: #8B5A2B; /* Bordes en marrón oscuro */
+  --hardBorder: #6F4F1A; /* Bordes de madera, marrón oscuro */
+  --thinGray: #F4E1D2; /* Gris muy claro, beige */
+  --lightGray: #E9CBA7; /* Gris claro, cálido */
+  --grayDropdown: #D3B99D; /* Gris cálido para dropdowns */
+  --deepGray: #4E4B46; /* Gris cálido profundo */
+  --hardGray: #8B5A2B; /* Gris marrón oscuro */
+  --hoverBG: #E1C9A3; /* Fondo de hover cálido */
+  --activeBG: rgba(139, 58, 58, 0.1); /* Fondo activo rojo madera con transparencia */
   --facebook: #3b5998;
   --linkedin: #0e76a8;
   --twitter: #00acee;
@@ -39,46 +39,46 @@
   --whatsapp: #25D366;
   --pinterest: #f0002a;
   --youtube: #FF0000;
-  --primaryRGB: 0, 123, 255; /* Azul en formato RGB */
+  --primaryRGB: 139, 58, 58; /* Rojo madera en formato RGB */
   --lightRGB: 255, 255, 255; /* Blanco */
   --blackRGB: 33, 37, 41; /* Gris oscuro */
   --redRGB: 220, 53, 69; /* Rojo */
-  --darkRGB: 52, 58, 64; /* Gris oscuro */
+  --darkRGB: 139, 58, 58; /* Gris oscuro cálido */
   --grayRGB: 108, 117, 125; /* Gris */
   --blueRGB: 0, 123, 255;
   --greenRGB: 40, 167, 69;
   --purpleRGB: 102, 16, 242; /* Púrpura */
   --orangeRGB: 255, 159, 64; /* Naranja */
   --yellowRGB: 255, 193, 7; /* Amarillo */
-  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 0.12);
-  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 0.06);
-  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 0.1);
+  --btnBoxShadow: 0px 4px 8px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para botones */
+  --cardBoxShadow: 0px 4px 8px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para tarjetas */
+  --paperBoxShadow: 0px 6px 12px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para papel */
 }
 
 .dark_mode {
-  --primaryHEX: #007bff; /* Azul principal */
-  --primaryGreen: #28a745; /* Verde principal */
+  --primaryHEX: #8B3A3A; /* Rojo-madera */
+  --primaryGreen: #6B8E23; /* Verde oliva */
   --lightColor: #FFFFFF; /* Blanco */
-  --textColor: #e9ecef; /* Gris claro */
-  --activeColor: #17a2b8; /* Azul claro */
-  --placeholderColor: #6c757d; /* Gris medio */
-  --headingColor: #ced4da; /* Gris claro */
-  --colorSetting: #e9ecef; /* Gris claro */
-  --bodyBG: #212529; /* Fondo oscuro */
-  --cardBG: #343a40; /* Fondo de tarjeta, gris oscuro */
-  --paperBG: #495057; /* Fondo de papel, gris medio */
-  --grayDropdown: #6c757d; /* Gris para dropdowns */
-  --lightBG: #495057; /* Gris oscuro */
-  --thinBorder: #6c757d; /* Bordes en gris medio */
-  --lightBorder: #495057; /* Bordes en gris oscuro */
-  --deepBorder: #343a40; /* Bordes más profundos, gris oscuro */
-  --hardBorder: #212529; /* Gris muy oscuro */
-  --thinGray: #6c757d; /* Gris medio para líneas finas */
-  --lightGray: #495057; /* Gris oscuro */
-  --deepGray: #343a40; /* Gris muy oscuro */
-  --hardGray: #212529; /* Gris oscuro */
-  --hoverBG: #495057; /* Fondo de hover gris oscuro */
-  --activeBG: rgba(0, 123, 255, 0.1); /* Azul claro con transparencia */
+  --textColor: #D2B48C; /* Gris claro con matiz madera */
+  --activeColor: #D2691E; /* Naranja rojizo */
+  --placeholderColor: #C2B280; /* Beige suave */
+  --headingColor: #D2B48C; /* Gris madera para encabezados */
+  --colorSetting: #D2B48C; /* Gris cálido */
+  --bodyBG: #2F2F2F; /* Fondo oscuro gris, madera */
+  --cardBG: #3E3E3E; /* Fondo gris oscuro, tono madera */
+  --paperBG: #5C4F4A; /* Gris madera, tono cálido */
+  --grayDropdown: #D3B99D; /* Gris cálido para dropdowns */
+  --lightBG: #5C4F4A; /* Gris madera oscuro */
+  --thinBorder: #D3B99D; /* Bordes en gris madera */
+  --lightBorder: #5C4F4A; /* Bordes en gris cálido */
+  --deepBorder: #8B5A2B; /* Bordes en marrón oscuro */
+  --hardBorder: #6F4F1A; /* Bordes de madera, marrón oscuro */
+  --thinGray: #6F4F1A; /* Gris madera para líneas finas */
+  --lightGray: #5C4F4A; /* Gris madera oscuro */
+  --deepGray: #3E3E3E; /* Gris oscuro */
+  --hardGray: #2F2F2F; /* Gris madera profundo */
+  --hoverBG: #7A4E4A; /* Fondo de hover cálido */
+  --activeBG: rgba(139, 58, 58, 0.1); /* Fondo activo con transparencia */
   --facebook: #3b5998;
   --linkedin: #0e76a8;
   --twitter: #00acee;
@@ -88,21 +88,22 @@
   --whatsapp: #25D366;
   --pinterest: #f0002a;
   --youtube: #FF0000;
-  --primaryRGB: 0, 123, 255; /* Azul en formato RGB */
+  --primaryRGB: 139, 58, 58; /* Rojo madera */
   --lightRGB: 33, 37, 41; /* Gris oscuro */
   --blackRGB: 0, 0, 0;
   --redRGB: 220, 53, 69; /* Rojo */
-  --darkRGB: 52, 58, 64; /* Gris oscuro */
+  --darkRGB: 139, 58, 58; /* Gris oscuro cálido */
   --grayRGB: 108, 117, 125; /* Gris */
   --blueRGB: 0, 123, 255;
   --greenRGB: 40, 167, 69;
   --purpleRGB: 102, 16, 242; /* Púrpura */
   --orangeRGB: 255, 159, 64; /* Naranja */
   --yellowRGB: 255, 193, 7; /* Amarillo */
-  --btnBoxShadow: 0px 8px 18px 0px rgba(var(--blackRGB), 0.12);
-  --cardBoxShadow: 0px 15px 25px 0px rgba(var(--blackRGB), 0.06);
-  --paperBoxShadow: 0px 15px 35px 0px rgba(var(--blackRGB), 0.1);
+  --btnBoxShadow: 0px 4px 8px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para botones */
+  --cardBoxShadow: 0px 4px 8px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para tarjetas */
+  --paperBoxShadow: 0px 6px 12px 0px rgba(139, 58, 58, 0.1); /* Sombras suaves para papel */
 }
+
 
 
 * {
@@ -1987,7 +1988,7 @@ th.dtr-hidden {
 
 .card {
   border: 1px solid var(--hardBorder);
-  --bs-card-bg: var(--cardBG);
+  --bs-card-bg: var(--paperBG);
 }
 .card .background-card {
   background-color: var(--cardBG);
@@ -2934,11 +2935,12 @@ th.dtr-hidden {
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 0px;
+  gap: 0;
   position: fixed;
   top: 0px;
   left: 0px;
   z-index: 5;
+  background-color: var(--activeBG) !important;
 }
 @media (max-width: 575px) {
   .mc-header {
@@ -3784,7 +3786,7 @@ th.dtr-hidden {
 .mc-sidebar-logout {
   padding: 45px;
   border-radius: 8px;
-  background: linear-gradient(rgba(85, 223, 178, 0.25), rgba(85, 223, 178, 0.4));
+  /* background: linear-gradient(rgba(189, 23, 23, 0.25), rgba(215, 38, 38, 0.4)); */
   position: relative;
   overflow: hidden;
 }
@@ -3799,7 +3801,7 @@ th.dtr-hidden {
   line-height: 30px;
   border-radius: 50%;
   text-align: center;
-  background: linear-gradient(rgba(39, 204, 202, 0.25), rgba(39, 204, 202, 0.4));
+  /* background: linear-gradient(rgba(172, 2, 2, 0.25), rgba(113, 5, 5, 0.4)); */
 }
 .mc-sidebar-logout::after {
   content: "";
@@ -3812,7 +3814,7 @@ th.dtr-hidden {
   line-height: 80px;
   border-radius: 50%;
   text-align: center;
-  background: linear-gradient(rgba(39, 204, 202, 0.25), rgba(39, 204, 202, 0.4));
+  /* background: linear-gradient(rgba(39, 204, 202, 0.25), rgba(39, 204, 202, 0.4)); */
 }
 .mc-sidebar-logout .mc-btn {
   margin: 0 auto;
@@ -3822,7 +3824,7 @@ th.dtr-hidden {
 .mc-main {
   padding: 24px;
   border-radius: 8px;
-  background-color: var(--thinGray);
+  background-color: var(--bodyBG);
   margin-top: 75px;
   margin-bottom: 20px;
   margin-right: 20px;
@@ -3832,6 +3834,7 @@ th.dtr-hidden {
   -moz-transition: all linear 0.3s;
   -ms-transition: all linear 0.3s;
   -o-transition: all linear 0.3s;
+  min-height: 87vh;
 }
 @media (max-width: 575px) {
   .mc-main {
@@ -4088,6 +4091,10 @@ th.dtr-hidden {
 }
 
 .mc-auth {
+  background-image: url('../images/logo-donFaustino/donfaustino-login2.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   height: 100vh;
   z-index: 1;

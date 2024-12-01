@@ -80,11 +80,11 @@ const Header: React.FC<IHeader> = ({ label }) => {
       <Logo src={src} alt={data?.logo.alt} name={''} href={'/'} />
       <Box className='mc-header-group'>
         <Box className='mc-header-left'>
-          <Button
+          {/* <Button
             icon={data?.search.icon}
             className="mc-header-icon search col-2"
           // onClick={() => setSearch("show")}
-          />
+          /> */}
           <Button icon={drawer ? 'menu_open' : 'menu'} className='mc-header-icon toggle col-2' onClick={toggleDrawer} />
         </Box>
         <Box className='w-100 d-sm-none d-md-block d-none d-sm-block'>

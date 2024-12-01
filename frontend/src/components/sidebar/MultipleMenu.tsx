@@ -21,7 +21,7 @@ const MultipleMenu: React.FC<IMultipleMenu> = ({ data }) => {
       {data?.map((item, index) => (
         <Menu key={index} className='mc-sidebar-menu'>
           {/* <span className='position-absolute end-0 translate-middle badge rounded-pill bg-secondary'>Hola</span> */}
-          <h4 className='d-flex justify-content-center aling-items-center'>Panel de control</h4>
+          {/* <h4 className='d-flex justify-content-center aling-items-center'>Panel de control</h4> */}
           <Heading as='h5' className='mc-sidebar-menu-title'>
             {item.title}
           </Heading>
