@@ -1,6 +1,11 @@
 import React from 'react';
 import { Box, Anchor } from '../elements';
+import { Logout as LogoutIcon } from '@mui/icons-material';
 // const { REACT_APP_FRONT_VERSION } = process.env;
+
+const iconMapping : { [key: string]: React.ElementType } = {
+lock: LogoutIcon,
+};
 
 interface ILogout {
   data: {
@@ -13,14 +18,15 @@ interface ILogout {
 }
 
 const Logout: React.FC<ILogout> = ({ data, onClick, href }) => {
+  const Icon = iconMapping[data.icon];
   return (
     <>
       <Box className='mc-sidebar-logout text-center'>
-        <Anchor onClick={onClick} icon={data?.icon} text={data?.text} href={href} className='mc-btn primary sm' />
+        <Anchor onClick={onClick} icon={Icon} text={data?.text} href={href} className='mc-btn' />
       </Box>
-      <p className='text-end'>
+      {/* <p className='text-end'>
         <small className='mc-sidebar-menu-version'>v. 1.0</small>
-      </p>
+      </p> */}
     </>
   );
 };

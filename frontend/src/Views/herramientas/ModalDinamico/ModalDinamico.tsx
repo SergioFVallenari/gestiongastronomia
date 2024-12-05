@@ -17,7 +17,7 @@ interface IEurekaModals {
 const ModalDinamico: React.FC<IEurekaModals> = ({ manejador, children, modalTitulo, sizeModal, handleClose }) => {
   return (
     <>
-      <Modal size={sizeModal} className={manejador.show ? '' : 'hide'} show={manejador.show} onHide={() => handleClose()}>
+      <Modal size={sizeModal} className={manejador.show ? ' modal-dinamico' : 'hide'} show={manejador.show} onHide={() => handleClose()}>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitulo}</Modal.Title>
         </Modal.Header>

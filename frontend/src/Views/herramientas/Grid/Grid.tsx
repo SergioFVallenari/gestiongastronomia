@@ -42,7 +42,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             default:
                 btn = '';
         }
-        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" + "<button title='" + data + "' class='btn btn-default p-0 btn-sm dropdown-toggle btn-grid' type='button' data-bs-toggle='dropdown' aria-expanded='false'>" + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
+        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" + 
+        "<button title='" + data + "' class='btn-default p-0 btn-sm dropdown-toggle btn-grid' type='button' data-bs-toggle='dropdown' aria-expanded='false'>"
+         + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
     }
     const getColumnsByOrigen = (origen: string) => {
         let columns: any = [];
@@ -80,6 +82,15 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 ]
             break;
             }
+            case 'ventas': {
+                columns = [
+                    { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
+                    { data: 'fecha', title: 'Fecha de Venta', class: 'text-center' },
+                    { data: 'importe_total', title: 'Importe Total', class: 'text-center' },
+                    { data: 'info', title: 'Información', class: 'text-center' },
+                ]
+            }
+            break;
             default:
                 columns = [];
         }
@@ -246,6 +257,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             {
                 extend: 'collection',
                 text: 'Exportar',
+                className: 'btn btn-primary rounded-pill',
                 buttons: [
                     { extend: 'excel', title:'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
                     { extend: 'pdfHtml5',title:'DonFaustino ' + origen ,orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
@@ -255,12 +267,14 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             },
             {
                 text: 'Refresh',
+                className: 'btn btn-primary rounded-pill',
                 action: function (_e: any, _dt: any, _node: any, _config: any) {
                     recargaGrid(moment().format('YYYY-MM-DD HH:mm:ss'));
                 },
             },
             {
                 text: "<button accion='f' class='a-filtro'>Filtros</button>",
+                className: 'btn btn-primary rounded-pill',
                 action: function (e: any, _dt: any, _node: any, _config: any) {
                     ManejoOrigenAcciones('', e);
                 },
@@ -272,7 +286,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'stock':
                 return '<"row"<"col-12"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-flex justify-content-start mb-2"<"row"<"col-12 div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"col-12 col-lg-4"l><"col-12 col-lg-8"<"row"<"col-12 col-lg-4 col-xl-4"i><"col-12 col-lg-8 col-xl-8"p>>>>';
             default:
-                return '<"row "<"col-12 col-md-7 col-lg-8"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-block d-lg-flex w-auto justify-content-end col-md-5 col-lg-4"<"row"<"col-12 w-auto div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"col-12 col-lg-4"l><"col-12 col-lg-8"<"row"<"col-12 col-lg-4 col-xl-4"i><"col-12 col-lg-8 col-xl-8"p>>>>';
+                return '<"row"<"col-12"<"row"<"col-12 div-btn-grid"B>>><"col-12 d-flex justify-content-start mb-2"<"row"<"col-12 div-filter-table"f>>>><"row"<"col-12 content-grid-referencia">><"row"<"col-12"t>><"row grid-footer mt-2"<"col-12 col-lg-4"l><"col-12 col-lg-8"<"row"<"col-12 col-lg-4 col-xl-4"i><"col-12 col-lg-8 col-xl-8"p>>>>';
         }
     }
     const getDataOrigen = (origen: string) => {
@@ -368,6 +382,8 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     zeroRecords: 'No hay registros a mostrar',
                     processing: 'Espere, por favor...',
                     search: 'Buscar: ',
+                    emptyTable: 'No hay datos disponibles en la tabla',
+                    loadingRecords: 'Cargando...',
                 },
             } as any);
         }

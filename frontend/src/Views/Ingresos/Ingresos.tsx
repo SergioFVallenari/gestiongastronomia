@@ -154,7 +154,7 @@ const Ingresos: React.FC = (): JSX.Element => {
 
     return (
         <PageLayout label='Adm. Ingresos'>
-            <Tabs defaultActiveKey="ingresos" id="fill-tab-example" fill>
+            <Tabs defaultActiveKey="ingresos" className="custom-tab" id="fill-tab-example" fill variant="pills">
                 <Tab eventKey="ingresos" title="Ingresos">
                     <hr></hr>
                     <Card>

@@ -17,7 +17,7 @@ const Sidebar = (): JSX.Element => {
   return (
     <Section as='aside' className={`mc-sidebar thin-scrolling ${drawer ? 'active' : ''}`}>
       <MultipleMenu data={data?.navs} />
-      <Logout data={data?.button} onClick={cerrarSesion} href={'/'} />
+      <Logout data={data?.button} onClick={cerrarSesion} href={'/'}/>
     </Section>
   );
 };

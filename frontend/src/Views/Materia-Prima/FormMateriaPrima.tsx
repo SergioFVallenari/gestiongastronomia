@@ -23,7 +23,7 @@ interface FormArticulosProps {
 
 const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridMateriaPrima }) => {
     const matPrimData = useSelector((state: any) => state?.grid?.data.materia_prima);
-    const [categorias, setCategorias] = useState<any[]>([]); 
+    const [categorias, setCategorias] = useState<any[]>([]);
     const [ingredientes, setIngredientes] = useState<any[]>([]);
     const [ingredienteSeleccionado, setIngredienteSeleccionado] = useState<any | null>(null);
     const [nuevaCategoria, setNuevaCategoria] = useState<string>('');
@@ -67,7 +67,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
     const onSubmit = async (data: any) => {
         if (accion === 'a') {
-            if(isArticuloCompuesto === false){
+            if (isArticuloCompuesto === false) {
                 data.ingredientes = [];
             }
             const ingredientesFormatt = JSON.stringify(data.ingredientes);
@@ -115,8 +115,6 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 cantidad: watch('cantidad_ingrediente'), // en gramos
                 porciones: watch('porciones')
             };
-            console.log(nuevoIngrediente);
-
             setIngredientes(prevIngredientes => {
                 const updatedIngredientes = [...prevIngredientes, nuevoIngrediente];
                 setValue('ingredientes', updatedIngredientes);
@@ -147,12 +145,12 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             <form className='row mt-2' onSubmit={handleSubmit(onSubmit)}>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <TextField 
-                            label="Artículo" 
-                            fullWidth 
+                        <TextField
+                            label="Artículo"
+                            fullWidth
                             variant="outlined"
                             {...register('nombre', { required: 'Obligatorio' })}
-                            disabled={accion === 'c' && formDisabled} 
+                            disabled={accion === 'c' && formDisabled}
                             error={!!errors.nombre}
                             helperText={errors.nombre?.message}
                         />
@@ -161,12 +159,12 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <TextField 
-                            label="Sku" 
-                            fullWidth 
+                        <TextField
+                            label="Sku"
+                            fullWidth
                             variant="outlined"
                             {...register('sku', { required: 'Obligatorio' })}
-                            disabled={accion !== 'a' && formDisabled} 
+                            disabled={accion !== 'a' && formDisabled}
                             error={!!errors.sku}
                             helperText={errors.sku?.message}
                         />
@@ -175,9 +173,9 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <TextField 
-                            label="Precio Costo (por kg)" 
-                            fullWidth 
+                        <TextField
+                            label="Precio Costo (por kg)"
+                            fullWidth
                             variant="outlined"
                             {...register('precio_costo', { required: 'Obligatorio' })}
                             disabled={accion === 'c' && formDisabled}
@@ -191,7 +189,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                     <div className='mb-3'>
                         <FormControl fullWidth error={!!errors.categoria_materia_prima}>
                             <InputLabel>Categoría</InputLabel>
-                            <Select 
+                            <Select
                                 label="Categoría"
                                 {...register('categoria_materia_prima', { required: 'Obligatorio' })}
                                 disabled={accion === 'c' && formDisabled}
@@ -199,24 +197,25 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                                 <MenuItem value="">Seleccione una categoría</MenuItem>
                                 {categorias.map((categoria, index) => (
                                     <MenuItem key={index} value={categoria.id_valor_modulo}>
-                                        {categoria.valor_modulo.toUpperCase()}
+                                        {categoria?.valor_modulo?.toUpperCase()}
                                     </MenuItem>
                                 ))}
                             </Select>
                             {errors.categoria_materia_prima && <FormHelperText>{errors.categoria_materia_prima.message}</FormHelperText>}
                         </FormControl>
 
-                        <TextField 
+                        <TextField
                             label="Agregar nueva categoría"
+                            size='small'
                             value={nuevaCategoria}
                             onChange={(e) => setNuevaCategoria(e.target.value)}
                             fullWidth
-                            sx={{mt:2}}
+                            sx={{ mt: 2 }}
                             hidden={accion === 'c' && formDisabled}
                         />
-                        <Button 
-                            variant="contained" 
-                            color="warning" 
+                        <Button
+                            variant="contained"
+                            color="warning"
                             onClick={addCategoria}
                             sx={{ mt: 2 }}
                             hidden={accion === 'c' && formDisabled}
@@ -228,9 +227,9 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
                 <div className='col-md-6'>
                     <div className='mb-3'>
-                        <TextField 
-                            label="Disponible (kg)" 
-                            fullWidth 
+                        <TextField
+                            label="Disponible (kg)"
+                            fullWidth
                             variant="outlined"
                             {...register('peso_gramos', { required: 'Obligatorio' })}
                             disabled
@@ -243,11 +242,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 <div className='col-md-12'>
                     <FormControlLabel
                         control={
-                            <Switch 
-                                {...register('chkArticuloCompuesto')} 
+                            <Switch
+                                {...register('chkArticuloCompuesto')}
                                 disabled={accion === 'c' && formDisabled}
                             />
-                        } 
+                        }
                         label="Artículo compuesto"
                     />
                 </div>
@@ -257,22 +256,27 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
                             <FormControl fullWidth>
                                 <InputLabel>Ingrediente</InputLabel>
-                                <Select 
+                                <Select
                                     value={ingredienteSeleccionado ?? ''}
                                     onChange={(e) => setIngredienteSeleccionado(Number(e.target.value))}
                                     disabled={accion === 'c' && formDisabled}
                                     label="Ingrediente"
                                 >
                                     <MenuItem value="sel">Seleccione un ingrediente</MenuItem>
-                                    {matPrimData?.map((matPrim: any, index: number) => (
-                                        <MenuItem key={index} value={matPrim.id}>{matPrim.nombre}</MenuItem>
-                                    ))}
+                                    {matPrimData.map((ingrediente: any, index: number) => {
+                                        if (ingrediente.es_compuesto == 0) {
+                                            return (<MenuItem key={index} value={ingrediente.id}>
+                                                {ingrediente.nombre}
+                                            </MenuItem>
+                                            )
+                                        }
+                                    })}
                                 </Select>
                             </FormControl>
                         </div>
 
                         <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                            <TextField 
+                            <TextField
                                 label="Cantidad (en gramos)"
                                 type="number"
                                 fullWidth
@@ -284,7 +288,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         </div>
 
                         <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                            <TextField 
+                            <TextField
                                 label="Cant. Resultante"
                                 type="number"
                                 fullWidth
@@ -296,10 +300,10 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         </div>
 
                         <div className='col-md-3' hidden={accion === 'c' && formDisabled}>
-                            <Button 
-                                variant="contained" 
-                                color="warning" 
-                                onClick={agregarIngredientes} 
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                onClick={agregarIngredientes}
                                 sx={{ mt: 2 }}
                                 disabled={accion === 'c' && formDisabled}
                             >
@@ -329,18 +333,18 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 )}
 
                 <div className='col-md-6'>
-                    <Button 
-                        variant="contained" 
-                        color="primary" 
-                        type="submit" 
+                    <Button
+                        className='btn btn-primary'
+                        variant="contained"
+                        type="submit"
                         sx={{ m: 2 }}
                         disabled={accion === 'c' && formDisabled}
                     >
                         Guardar
                     </Button>
-                    <Button 
-                        variant="outlined" 
-                        color="secondary" 
+                    <Button
+                        variant="outlined"
+                        color="error"
                         sx={{ m: 2 }}
                         type="button"
                     >

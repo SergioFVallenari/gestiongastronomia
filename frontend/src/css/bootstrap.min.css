@@ -364,6 +364,7 @@ tr {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
+  height: 50px !important;
 }
 
 label {

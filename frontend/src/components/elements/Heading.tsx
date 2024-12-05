@@ -7,7 +7,7 @@ interface IHeading {
 }
 
 const Heading: React.FC<IHeading> = ({ as, children, className }) => {
-  const Component = as || 'h3';
+  const Component = as || 'h4';
   return <Component className={className}>{children}</Component>;
 };
 
