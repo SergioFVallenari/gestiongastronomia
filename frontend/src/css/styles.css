@@ -6583,3 +6583,84 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
 }
 
 /*# sourceMappingURL=styles.css.map */
+
+
+/* General Styles */
+.product-card {
+  max-height: 32vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-image {
+  height: 120px;
+  object-fit: cover;
+}
+
+.product-title {
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .product-card {
+    max-height: none;
+    height: auto;
+  }
+
+  .product-image {
+    height: 100px;
+  }
+
+  .product-title {
+    font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    margin-bottom: 1rem;
+  }
+
+  .product-title {
+    font-size: 0.8rem;
+  }
+
+  .product-list {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Contenedor scrolleable */
+.product-list-container {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Mejora el scroll en dispositivos táctiles */
+  gap: 16px; /* Espaciado entre las tarjetas */
+  padding-bottom: 10px;
+}
+
+/* Ocultar scrollbar en algunos navegadores */
+.product-list-container::-webkit-scrollbar {
+  display: none;
+}
+
+.product-list-container {
+  -ms-overflow-style: none; /* IE y Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Ajustes en las tarjetas */
+.product-card {
+  flex-shrink: 0; /* Evita que las tarjetas se reduzcan */
+  min-width: 200px;
+  max-width: 200px;
+}
