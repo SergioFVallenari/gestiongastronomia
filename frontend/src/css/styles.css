@@ -6584,71 +6584,80 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
 
 /*# sourceMappingURL=styles.css.map */
 
-
-/* General Styles */
+/* Estilos generales para las tarjetas */
 .product-card {
-  max-height: 32vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 200px;
+  max-width: 250px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Para evitar el desbordamiento del contenido */
+  background-color: white;
 }
 
+.product-card:hover {
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); /* Sombra al pasar el ratón */
+}
+
+/* Imagen de la tarjeta */
 .product-image {
-  height: 120px;
-  object-fit: cover;
+  height: 180px;
+  object-fit: cover; /* Para que la imagen cubra el área de la tarjeta sin deformarse */
+  width: 100%;
+  border-bottom: 2px solid #f1f1f1; /* Línea divisoria */
 }
 
+/* Título y texto */
 .product-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #333;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .product-card {
-    max-height: none;
-    height: auto;
-  }
-
-  .product-image {
-    height: 100px;
-  }
-
-  .product-title {
-    font-size: 0.9rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    text-align: center;
-  }
+.product-text {
+  font-size: 0.9rem;
+  color: #777;
+  text-align: center;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media (max-width: 576px) {
-  .product-card {
-    margin-bottom: 1rem;
-  }
-
-  .product-title {
-    font-size: 0.8rem;
-  }
-
-  .product-list {
-    flex-direction: column;
-    gap: 1rem;
-  }
+/* Botones de cantidad */
+.quantity-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-/* Contenedor scrolleable */
+.quantity-buttons button {
+  font-size: 1.1rem;
+  padding: 4px 10px;
+  border-radius: 50%;
+  color: white;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+/* Estilos para el contenedor de la lista de productos */
 .product-list-container {
   display: flex;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Mejora el scroll en dispositivos táctiles */
-  gap: 16px; /* Espaciado entre las tarjetas */
-  padding-bottom: 10px;
+  gap: 16px;
+  padding-bottom: 16px;
+  padding-top: 10px;
+  -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos táctiles */
 }
 
-/* Ocultar scrollbar en algunos navegadores */
+/* Ajustes para la visibilidad del scrollbar */
 .product-list-container::-webkit-scrollbar {
   display: none;
 }
@@ -6658,9 +6667,72 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
   scrollbar-width: none; /* Firefox */
 }
 
-/* Ajustes en las tarjetas */
-.product-card {
-  flex-shrink: 0; /* Evita que las tarjetas se reduzcan */
-  min-width: 200px;
-  max-width: 200px;
+/* Estilo general para el contenedor de la página */
+.container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Botón para enviar la selección */
+
+
+.mt-4 .btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .product-card {
+    min-width: 150px;
+    max-width: 200px;
+  }
+
+  .product-title {
+    font-size: 1rem;
+  }
+
+  .product-text {
+    font-size: 0.8rem;
+  }
+
+  .quantity-buttons button {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-list-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .product-card {
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .product-title {
+    font-size: 0.9rem;
+  }
+
+  .quantity-buttons button {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
 }

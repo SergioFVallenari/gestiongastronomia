@@ -24,7 +24,8 @@ const FormCarta: React.FC<iFormCarta> = ({ formDisabled, accion, onSubmitSuccess
             precio_venta: 0,
             descripcion: '',
             ingredientes_json: [],
-            ganancia: 0
+            ganancia: 0,
+            sku: ''
         }
     });
 
@@ -56,6 +57,7 @@ const FormCarta: React.FC<iFormCarta> = ({ formDisabled, accion, onSubmitSuccess
                     setValue('precio_costo', cartaData.precio_costo);
                     setValue('precio_venta', cartaData.precio_venta);
                     setValue('descripcion', cartaData.descripcion);
+                    setValue('sku', cartaData.sku);
 
                     const ingredientesData = JSON.parse(cartaData.ingredientes_json).map((ingrediente: any) => ({
                         id: ingrediente.id,
@@ -164,7 +166,7 @@ const FormCarta: React.FC<iFormCarta> = ({ formDisabled, accion, onSubmitSuccess
                 <Tabs defaultActiveKey='datos' id="fill-tab-exasmple" fill className="modal-tab">
                     <Tab eventKey='datos' title='Datos'>
                         <Box className="row mt-2 mb-2">
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                                 <div className="mb-3">
                                     {/* <label className="form-label">Producto</label> */}
                                     <TextField
@@ -182,7 +184,26 @@ const FormCarta: React.FC<iFormCarta> = ({ formDisabled, accion, onSubmitSuccess
                                     {errors.nombre && <span className="text-danger">{errors.nombre.message}</span>}
                                 </div>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-4">
+                                <div className="mb-3">
+                                    {/* <label className="form-label">SKU</label> */}
+                                    <TextField
+                                        label="Sku"
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="SKU del producto"
+                                        slotProps={{
+                                            inputLabel: {
+                                                shrink: true,
+                                            },
+                                        }}
+                                        {...register('sku', { required: 'Obligatorio' })}
+                                        disabled={formDisabled}
+                                    />
+                                    {errors.sku && <span className="text-danger">{errors.sku.message}</span>}
+                                </div>
+                            </div>
+                            <div className="col-md-4">
                                 <div className="mb-3">
                                     {/* <label className="form-label">Precio Costo</label> */}
                                     <div className="input-group">

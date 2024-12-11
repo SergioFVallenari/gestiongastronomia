@@ -1,5 +1,5 @@
 export interface iGetCarta{
-    idcarta: number;
+    id: number;
     nombre: string;
     precio_costo: number;
     precio_venta: number;
@@ -13,5 +13,4 @@ interface iIngredientes {
     sku: string;
     valor_modulo: string;
     cantidad: number;
-
 }

@@ -4,6 +4,7 @@ import api from "../../helpers";
 export const getCarta = createAsyncThunk('/carta/get_carta', async () => {
     try {
         const response = await api.get('/carta/get_carta');
+        console.log(response)
         return response
     } catch (error) {
         return error;

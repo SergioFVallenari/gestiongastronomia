@@ -12,8 +12,11 @@ const Ventas: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     
     useEffect(() => {
-        dispatch(getCarta());
-        dispatch(getArticulos());
+        const fetchData = async () => {
+            await dispatch(getCarta());
+            await dispatch(getArticulos());
+        };
+        fetchData();
     }, [dispatch]);
 
     const handleTabSelect = (key: string | null) => {
