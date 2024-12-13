@@ -11,8 +11,10 @@ interface IProfileDropdown {
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
+import { SvgIconComponent } from '@mui/icons-material';
+
 interface IDropdown {
-  icon: string;
+  icon: SvgIconComponent;
   text: string;
   path: string;
 }
@@ -26,7 +28,7 @@ const ProfileDropdown: React.FC<IProfileDropdown> = ({ name, username, image, dr
       </Dropdown.Toggle>
       <Dropdown.Menu align='end' className='mc-dropdown-paper'>
         {dropdown.map((item, index) => (
-          <Anchor key={index} icon={item.icon} text={item.text} href={item.path} onClick={item.path === '/' ? onClick : () => {}} className={item.icon === 'lock' ? 'mc-dropdown-menu red' : 'mc-dropdown-menu'} />
+          <Anchor key={index} icon={item.icon} text={item.text} href={item.path} onClick={item.path === '/' ? onClick : () => {}} className={item.text === 'lock' ? 'mc-dropdown-menu red' : 'mc-dropdown-menu'} />
         ))}
       </Dropdown.Menu>
     </Dropdown>

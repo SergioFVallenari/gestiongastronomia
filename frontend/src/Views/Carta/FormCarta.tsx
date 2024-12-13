@@ -77,7 +77,7 @@ const FormCarta: React.FC<iFormCarta> = ({ formDisabled, accion, onSubmitSuccess
         fetchCarta();
     }, [dispatch, idCarta, accion]);
 
-    const handleAutocompleteChange = (event: any, selectedOptions: any) => {
+    const handleAutocompleteChange = (_: any, selectedOptions: any) => {
         const ingredientesConCantidad = selectedOptions.map((option: any) => {
             const ingredienteExistente = ingredientesSeleccionados.find(
                 (ingrediente) => ingrediente.id === option?.ingrediente?.id

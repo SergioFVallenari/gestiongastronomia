@@ -34,7 +34,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             sku: '',
             precio_costo: 0,
             cantidad: 0,
-            categoria_materia_prima: 0,
+            categoria_materia_prima: '',
             peso_gramos: 0,
             chkArticuloCompuesto: false,
             ingredientes: [] as any[],
@@ -53,11 +53,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             api.get(`/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
+                    console.log(typeof articulo.categoria_materia_prima);
                     setValue('nombre', articulo.nombre);
                     setValue('sku', articulo.sku);
                     setValue('precio_costo', articulo.precio_costo);
                     setValue('cantidad', articulo.stock);
-                    setValue('categoria_materia_prima', articulo.categoria_materia_prima);
                     setValue('peso_gramos', articulo.peso_gramos);
                     setValue('chkArticuloCompuesto', articulo.es_compuesto === 1 ? true : false);
                     setIngredientes(JSON.parse(articulo.json_ingredientes));
@@ -149,6 +149,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                             label="Artículo"
                             fullWidth
                             variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
                             {...register('nombre', { required: 'Obligatorio' })}
                             disabled={accion === 'c' && formDisabled}
                             error={!!errors.nombre}
@@ -162,6 +167,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         <TextField
                             label="Sku"
                             fullWidth
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
                             variant="outlined"
                             {...register('sku', { required: 'Obligatorio' })}
                             disabled={accion !== 'a' && formDisabled}
@@ -176,6 +186,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         <TextField
                             label="Precio Costo (por kg)"
                             fullWidth
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
                             variant="outlined"
                             {...register('precio_costo', { required: 'Obligatorio' })}
                             disabled={accion === 'c' && formDisabled}
@@ -195,8 +210,8 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                                 disabled={accion === 'c' && formDisabled}
                             >
                                 <MenuItem value="">Seleccione una categoría</MenuItem>
-                                {categorias.map((categoria, index) => (
-                                    <MenuItem key={index} value={categoria.id_valor_modulo}>
+                                {categorias?.map((categoria, index) => (
+                                    <MenuItem key={index} value={categoria.id_valor_modulo.toString()}>
                                         {categoria?.valor_modulo?.toUpperCase()}
                                     </MenuItem>
                                 ))}
@@ -207,6 +222,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         <TextField
                             label="Agregar nueva categoría"
                             size='small'
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
                             value={nuevaCategoria}
                             onChange={(e) => setNuevaCategoria(e.target.value)}
                             fullWidth

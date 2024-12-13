@@ -1,25 +1,27 @@
 import React from 'react';
 import DotsMenu from '../DotsMenu.tsx';
 import { Box, Heading, Anchor } from '../elements/index.ts';
+import { SvgIconComponent } from '@mui/icons-material';
+
 interface IDostMenu {
   dots: string;
   dropdown: {
-    icon: string;
+    icon: SvgIconComponent;
     text: string;
     path: string;
   }[];
-  onClick?: Function;
+  onClick?: (path: string) => void;
 }
 interface IButton {
   path: string;
-  icon: string;
+  icon: SvgIconComponent;
   text: string;
 }
 interface ICardHeader {
   title: string;
   dotsMenu?: IDostMenu;
   button?: IButton;
-  onClick: Function;
+  onClick: (path: string) => void;
   className?: string;
 }
 const CardHeader: React.FC<ICardHeader> = ({ title, dotsMenu, button, onClick, className }): JSX.Element => {

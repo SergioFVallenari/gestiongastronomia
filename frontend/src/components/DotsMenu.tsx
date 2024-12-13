@@ -2,15 +2,16 @@ import React from 'react';
 import Icon from './elements/Icon.tsx';
 import { Dropdown } from 'react-bootstrap';
 import DropdownMenu from './DropdownMenu.tsx';
+import { SvgIconComponent } from '@mui/icons-material';
 
 interface IDostMenu {
   dots: string;
   dropdown: {
-    icon: string;
+    icon: SvgIconComponent;
     text: string;
     path: string; // Asegúrate de que 'path' esté presente
   }[];
-  onClick: Function;
+  onClick: (path: string) => void;
 }
 
 const DotsMenu: React.FC<IDostMenu> = ({ dots, dropdown, onClick }) => {

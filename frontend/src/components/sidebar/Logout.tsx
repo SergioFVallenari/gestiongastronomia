@@ -3,7 +3,9 @@ import { Box, Anchor } from '../elements';
 import { Logout as LogoutIcon } from '@mui/icons-material';
 // const { REACT_APP_FRONT_VERSION } = process.env;
 
-const iconMapping : { [key: string]: React.ElementType } = {
+import { SvgIconComponent } from '@mui/icons-material';
+
+const iconMapping : { [key: string]: SvgIconComponent } = {
 lock: LogoutIcon,
 };
 
