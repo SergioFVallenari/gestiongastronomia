@@ -65,7 +65,7 @@ const MateriaPrima: React.FC = (): JSX.Element => {
 
   //Render
   return (
-    <PageLayout label="Adm. MateriaPrima">
+    <PageLayout label="Adm. MateriaPrima" >
       <Tabs defaultActiveKey="materia_prima" id="fill-tab-example" className="mb-3" fill>
         <Tab eventKey="materia_prima" title="Grid Ingredientes">
           <Card>

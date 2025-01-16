@@ -39,6 +39,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'materia_prima':
                 btn = btnConsulta + btnModificar + btnBaja;
                 break;
+            case 'ventas':
+                btn = btnConsulta;
+                break;    
             default:
                 btn = '';
         }
@@ -87,7 +90,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
                     { data: 'fecha', title: 'Fecha de Venta', class: 'text-center' },
                     { data: 'importe_total', title: 'Importe Total', class: 'text-center' },
-                    { data: 'info', title: 'Información', class: 'text-center' },
+                    { data: 'ganancia', title: 'Ganancia', class: 'text-center' },
                 ]
             }
             break;
@@ -198,6 +201,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 break;
             case 'materia_prima':
                 url = `${VITE_API_URL_DONFAUSTINO}/materia_prima/get_materia_prima`;
+                break;
+            case 'ventas':
+                url = `${VITE_API_URL_DONFAUSTINO}/ventas/get_ventas`;
                 break;    
             default:
                 return '';
@@ -212,7 +218,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'ingresos':
                 return 'POST';
             case 'materia_prima':
-                return 'POST';    
+                return 'POST';
+            case 'ventas':
+                return 'POST';        
             default:
                 return 'POST';
         }

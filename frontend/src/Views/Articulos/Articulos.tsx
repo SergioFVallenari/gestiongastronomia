@@ -66,7 +66,7 @@ const Articulos: React.FC = (): JSX.Element => {
   //Render
   return (
     <PageLayout label="Adm. Articulos">
-      <Card>
+      <Card className="shadow-lg">
         <Card.Body>
           <div className="d-flex">
             <button className="btn btn-primary mb-3" onClick={() => manejo_acciones('',0, 'a')}>Agregar</button>

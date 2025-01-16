@@ -19,7 +19,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
             nombre: '',
-            sku: '',
+            sku: 'DF-',
             precio_costo: 0,
             precio_venta: 0,
             cantidad: 0,
@@ -74,6 +74,12 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         }
     }
+    const handleSkuChange = (e: React.FocusEvent<HTMLInputElement>) => {
+        const value = e.target.value.trim();
+        if (!value.startsWith('DF-')) {
+            setValue('sku', `DF-${value}`);
+        }
+    };
     return (
         <>
             <form className='row' onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +93,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Sku</label>
-                        <input type='text' className='form-control' {...register('sku', {required:'Obligatorio'})} disabled={accion !== 'a' && formDisabled} />
+                        <input type='text' className='form-control' {...register('sku', {required:'Obligatorio'})} disabled={accion !== 'a' && formDisabled}onBlur={handleSkuChange}/>
                         {errors.sku && <span className='text-danger'>{errors.sku.message}</span>}
                     </div>
                 </div>
