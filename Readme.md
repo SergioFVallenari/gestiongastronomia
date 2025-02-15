@@ -1,1 +1,1 @@
-Inicio
+Software de gestion de restaurantes
