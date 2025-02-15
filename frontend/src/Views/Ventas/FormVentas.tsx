@@ -155,6 +155,36 @@ const FormVentas: React.FC = () => {
     }
     setSelectedComandas(updatedSelection);
   };
+  const handleEliminarComanda = (index: number) => {
+    const comandaEliminar = comandas[index];
+    const updatedComandas = [...comandas];
+    updatedComandas.splice(index, 1);
+  
+    const newImporteTotal =
+      updatedComandas.reduce(
+        (total, comanda) => total + comanda.precio_venta * comanda.cantidad,
+        0
+      ) - discount;
+    const newGanancia =
+      updatedComandas.reduce(
+        (total, comanda) =>
+          total +
+          (Number(comanda.precio_venta) - Number(comanda.precio_costo)) *
+            comanda.cantidad,
+        0
+      ) - discount;
+  
+    setComandas(updatedComandas);
+    setValue("importeTotal", newImporteTotal);
+    setValue("ganancia", newGanancia);
+  
+    if (comandaEliminar.tipo === "Bebidas") {
+      setValue("articulo", ""); // 
+    } else if (comandaEliminar.tipo === "Carta") {
+      setValue("carta", ""); // Deseleccionar la Carta
+    }
+  };
+  
 
   return (
     <BoxMui className="row mt-2 mb-2">
@@ -263,23 +293,7 @@ const FormVentas: React.FC = () => {
               <td>
                 <Button
                   variant="danger"
-                  onClick={() => {
-                    const updatedComandas = [...comandas];
-                    updatedComandas.splice(index, 1);
-                    setComandas(updatedComandas);
-                    setValue(
-                      "importeTotal",
-                      getValues("importeTotal") -
-                        comanda.precio_venta * comanda.cantidad
-                    );
-                    setValue(
-                      "ganancia",
-                      getValues("ganancia") -
-                        (Number(comanda.precio_venta) -
-                          Number(comanda.precio_costo)) *
-                          comanda.cantidad
-                    );
-                  }}
+                  onClick={()=> handleEliminarComanda(index )}
                 >
                   X
                 </Button>

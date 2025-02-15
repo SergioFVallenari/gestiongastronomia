@@ -81,25 +81,23 @@ const categorias = [
 
 const colores = ["#FF6347", "#32CD32", "#FFD700", "#87CEEB", "#FF8C00"];
 
+// Tipos para las categorías y productos
+type Categoria = 'pizzas' | 'sandwiches' | 'entradas' | 'postres' | 'bebidas';
+type Producto = { name: string; ventas: number };
+
 const Dashboard: React.FC = (): JSX.Element => {
-  const [periodo, setPeriodo] = useState("mensual");
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);
+  const [periodo, setPeriodo] = useState<string>("mes");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<Categoria | null>(null);
 
   // Dependiendo del periodo, se seleccionan las ventas (comandas)
-  const data =
-    periodo === "mes"
-      ? ventasMensuales
-      : periodo === "semana"
-      ? ventasSemanales
-      : ventasDiarias;
+  const data = periodo === "mes" ? ventasMensuales : periodo === "semana" ? ventasSemanales : ventasDiarias;
 
   // Obtener los productos de la categoría seleccionada
-  const productosCategoria =
-    categoriaSeleccionada ? productos[categoriaSeleccionada.toLowerCase()] : [];
+  const productosCategoria: Producto[] = categoriaSeleccionada ? productos[categoriaSeleccionada] : [];
 
   const manejarClicCategoria = (data: any) => {
-    // Al hacer clic en una categoría, actualizamos el estado para mostrar los productos de esa categoría
-    setCategoriaSeleccionada(data.name);
+    const categoria: Categoria = data.name.toLowerCase() as Categoria; // Convertir el nombre en el tipo correcto
+    setCategoriaSeleccionada(categoria);
   };
 
   return (
@@ -114,7 +112,7 @@ const Dashboard: React.FC = (): JSX.Element => {
         </div>
 
         <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-          <BarChart width={800} height={300} data={data}>
+          <BarChart width={600} height={300} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
@@ -140,11 +138,8 @@ const Dashboard: React.FC = (): JSX.Element => {
                 label
                 onClick={manejarClicCategoria}
               >
-                {categorias.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={colores[index % colores.length]}
-                  />
+                {categorias.map((_entry, index) => (
+                  <Cell key={`cell-${index}`} fill={colores[index % colores.length]} />
                 ))}
               </Pie>
               <Tooltip />
@@ -153,19 +148,23 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
 
           {/* Gráfico de barras (Productos más vendidos) */}
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, maxWidth: "100%", overflowX: "auto", marginTop: "20px" }}>
             {categoriaSeleccionada ? (
               <>
                 <h3>Productos más Vendidos en {categoriaSeleccionada}</h3>
-                <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-                  <BarChart width={800} height={300} data={productosCategoria}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" tick={false}/>
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="ventas" fill="#8884d8" />
-                  </BarChart>
-                </div>
+                {productosCategoria.length > 0 ? (
+                  <div style={{ width: "100%", overflowX: "auto" }}>
+                    <BarChart width={600} height={300} data={productosCategoria}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" tick={false} />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="ventas" fill="#8884d8" />
+                    </BarChart>
+                  </div>
+                ) : (
+                  <h4>No hay productos disponibles para esta categoría.</h4>
+                )}
               </>
             ) : (
               <h3>Selecciona una categoría de la torta para ver los productos más vendidos.</h3>

@@ -319,7 +319,7 @@ const FormCarta: React.FC<iFormCarta> = ({
                     options={categoriaModulo}
                     getOptionLabel={(option) => option.label}
                     value={categoriaSeleccionada }
-                    onChange={(event, value) => {
+                    onChange={(_event, value) => {
                       setCategoriaSeleccionada(value || null);
                       setValue("categoria", value ? value.value : null, {
                         shouldValidate: true, // Para validar el campo automáticamente

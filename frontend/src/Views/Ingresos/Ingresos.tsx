@@ -79,7 +79,6 @@ const Ingresos: React.FC = (): JSX.Element => {
       (articulo) => articulo.sku === selectedArticulo
     );
     if (articuloSeleccionado) {
-      console.log(articuloSeleccionado, "articuloSeleccionado");
       setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
     } else {
       setValue("precio_modificado", 0); // Restablecer si no hay selección
@@ -177,7 +176,6 @@ const Ingresos: React.FC = (): JSX.Element => {
       (articulo) => articulo.sku === selectedArticulo
     );
     if (articuloSeleccionado && isChecked) {
-      console.log(articuloSeleccionado, "articuloSeleccionado");
       setValue("precio_modificado", articuloSeleccionado.precio_costo); // Establecer el precio de costo en el input
     } else {
       setValue("precio_modificado", 0); // Restablecer si no hay selección

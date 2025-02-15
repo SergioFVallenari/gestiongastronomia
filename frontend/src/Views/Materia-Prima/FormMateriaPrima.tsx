@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
-import { FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 interface FormArticulosProps {
     accion: string;
@@ -39,12 +39,13 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             chkArticuloCompuesto: false,
             ingredientes: [] as any[],
             cantidad_ingrediente: 0,
-            porciones: 0
+            porciones: 0,
+            chkPrecioUnidad: false,
         }
     });
 
     const isArticuloCompuesto = watch('chkArticuloCompuesto');
-
+    const isPrecioUnidad = watch('chkPrecioUnidad')
     useEffect(() => {
         api.post('/tabla/lista_modulos', { modulo: 'categorias_materia_prima' })
             .then(res => setCategorias(res.data.content));
@@ -79,7 +80,8 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 categoria_materia_prima: data.categoria_materia_prima,
                 peso_gramos: data.peso_gramos,
                 json_ingredientes: ingredientesFormatt,
-                es_compuesto: data.chkArticuloCompuesto ? 1 : 0
+                es_compuesto: data.chkArticuloCompuesto ? 1 : 0,
+                es_contable: data.chkPrecioUnidad ? 1 : 0
             }
             console.log(body, 'alta');
             // Alta de un nuevo artículo
@@ -184,7 +186,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <TextField
-                            label="Precio Costo (por kg)"
+                            label={`Precio costo (${isPrecioUnidad ? 'Por Unidad' : 'Por Kg'})`}
                             fullWidth
                             slotProps={{
                                 inputLabel: {
@@ -198,8 +200,14 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                             helperText={errors.precio_costo?.message}
                         />
                     </div>
+                    <div className='mb-3 justify-content-end'>
+                        <FormControlLabel 
+                        control={
+                        <Checkbox
+                            {...register('chkPrecioUnidad')}
+                        />} label={`Cambiar a precio por ${!isPrecioUnidad ? 'Unidad' : 'Kg'}`} />
+                    </div>
                 </div>
-
                 <div className='col-md-6'>
                     <div className='mb-3'>
                         <FormControl fullWidth error={!!errors.categoria_materia_prima}>

@@ -4,7 +4,7 @@ export default class MateriaPrima{
     async altaMateriaPrima(body:any){
         const formateo = await masajeo(body);
         console.log('este es el formateo', formateo)
-        const result = await spGeneral("donfaustino_insert_materia_prima(:xnombre, :xsku, :xprecio_costo, :xcantidad,:xcategoria_materia_prima,:xpeso_gramos,:xes_compuesto,:xjson_ingredientes)",formateo);
+        const result = await spGeneral("donfaustino_insert_materia_prima(:xnombre, :xsku, :xprecio_costo, :xcantidad,:xcategoria_materia_prima,:xpeso_gramos,:xes_compuesto,:xjson_ingredientes,:xes_contable)",formateo);
         return result;
     }
     async getMateriaPrima(){

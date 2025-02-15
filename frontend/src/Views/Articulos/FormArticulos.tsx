@@ -15,25 +15,29 @@ interface Categoria {
     id_valor_modulo: number;
     valor_modulo: string;
 }
-const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridArticulos }) => {
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSubmitSuccess, formDisabled, setRecargaGridArticulos }) => {
+    const { register, handleSubmit, setValue, formState: { errors },getValues } = useForm({
         defaultValues: {
             nombre: '',
             sku: 'DF-',
             precio_costo: 0,
             precio_venta: 0,
             cantidad: 0,
-            categoria_articulo:''
+            categoria_articulo: '',
+            categoria_nueva: ''
         }
     });
-
+    const [mostrarInputCategoria, setMostrarInputCategoria] = useState(false);
     const [categorias, setCategorias] = useState<Categoria[]>([]);
 
-    useEffect(() => {
-        api.post(`/tabla/lista_modulos`,{modulo:'categorias_articulos'})
+    const loadCategorias = () =>{
+        api.post(`/tabla/lista_modulos`, { modulo: 'categorias_articulos' })
         .then(res => {
             setCategorias(res.data.content);
         })
+    }
+    useEffect(() => {
+       loadCategorias()
         if (accion !== 'a' && idArticulo) {
             // Si es modificación o visualización, cargamos los datos del artículo
             api.get(`/articulos/get_articulo/${idArticulo}`)
@@ -49,7 +53,7 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
                 });
         }
     }, [accion, idArticulo, setValue]);
-    const onSubmit = async (data:unknown) => {
+    const onSubmit = async (data: unknown) => {
         if (accion === 'a') {
             // Alta de un nuevo artículo
             await api.post(`/articulos/alta_articulos`, data)
@@ -65,7 +69,6 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
             // Modificación de un artículo existente
             await api.put(`/articulos/modificar_articulo/${idArticulo}`, data)
                 .then(res => {
-                    console.log(res.data.content[0].msg)
                     if (res.status === 200) {
                         EnviarMensaje('success', res.data.content[0].msg);
                         onSubmitSuccess(); // Callback para recargar o cerrar modal
@@ -80,62 +83,98 @@ const FormArticulos:  React.FC<FormArticulosProps> = ({ accion, idArticulo, onSu
             setValue('sku', `DF-${value}`);
         }
     };
+    const agregarCategoria=async()=>{
+        const nuevaCategoria = getValues('categoria_nueva')
+        await api.post('/tabla/insert_categoria', { modulo: 'categorias_articulos', valor_modulo: nuevaCategoria })
+        setMostrarInputCategoria(false)
+        setValue('categoria_nueva','')
+        loadCategorias()
+    }
     return (
         <>
             <form className='row' onSubmit={handleSubmit(onSubmit)}>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Artículo</label>
-                        <input type='text' className='form-control' {...register('nombre', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled} />
+                        <input type='text' className='form-control' {...register('nombre', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
                         {errors.nombre && <span className='text-danger'>{errors.nombre.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Sku</label>
-                        <input type='text' className='form-control' {...register('sku', {required:'Obligatorio'})} disabled={accion !== 'a' && formDisabled}onBlur={handleSkuChange}/>
+                        <input type='text' className='form-control' {...register('sku', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} onBlur={handleSkuChange} />
                         {errors.sku && <span className='text-danger'>{errors.sku.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Precio Costo</label>
-                        <input type='text' className='form-control' {...register('precio_costo', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
+                        <input type='text' className='form-control' {...register('precio_costo', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
                         {errors.precio_costo && <span className='text-danger'>{errors.precio_costo.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Precio Venta</label>
-                        <input type='text' className='form-control' {...register('precio_venta', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}/>
+                        <input type='text' className='form-control' {...register('precio_venta', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
                         {errors.precio_venta && <span className='text-danger'>{errors.precio_venta.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Cantidad</label>
-                        <input type='text' className='form-control' {...register('cantidad', {required:'Obligatorio'})} disabled={ accion !== 'a' && formDisabled}/>
+                        <input type='text' className='form-control' {...register('cantidad', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} />
                         {errors.cantidad && <span className='text-danger'>{errors.cantidad.message}</span>}
                     </div>
                 </div>
                 <div className='col-md-4'>
                     <div className='mb-3'>
                         <label className='form-label'>Categoría</label>
-                        <select className='form-control' {...register('categoria_articulo', {required:'Obligatorio'})} disabled={accion === 'c' && formDisabled}>
+                        <select
+                            className='form-control'
+                            {...register('categoria_articulo', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled}
+                            onChange={(e) => {
+                                // Si se selecciona 'Otra categoría', mostrar el input
+                                if (e.target.value === 'otra') {
+                                    setMostrarInputCategoria(true); // Cambia esta variable de estado según lo necesites
+                                } else {
+                                    setMostrarInputCategoria(false);
+                                }
+                            }}
+                        >
                             <option value=''>Selecciona una categoría</option>
                             {categorias.map(categoria => (
-                                <option key={categoria.id_valor_modulo} value={categoria.id_valor_modulo}>{categoria.valor_modulo.toUpperCase()}</option>
+                                <option key={categoria.id_valor_modulo} value={categoria.id_valor_modulo}>
+                                    {categoria.valor_modulo.toUpperCase()}
+                                </option>
                             ))}
+                            <option value='otra'>Otra categoría</option> {/* Opción extra */}
                         </select>
                         {errors.categoria_articulo && <span className='text-danger'>{errors.categoria_articulo.message}</span>}
+
+                        {/* Si la opción 'Otra categoría' es seleccionada, mostrar un campo de entrada */}
+                        {mostrarInputCategoria && (
+                            <>
+                                <input
+                                    type="text"
+                                    className="form-control mt-2"
+                                    placeholder="Escribe una categoría personalizada"
+                                    {...register('categoria_nueva', { required: 'Debes ingresar una categoría personalizada' })}
+                                />
+                                <button className='btn btn-secondary m-2' onClick={agregarCategoria}>Agregar</button>
+                            </>
+                        )}
                     </div>
                 </div>
+
                 <hr></hr>
                 <div className='col-md-6'>
                     <button className='btn btn-primary m-2' type='submit' disabled={accion === 'c' && formDisabled}>
                         Guardar
                     </button>
-                    <button className='btn btn-danger' type='button' onClick={()=>onSubmitSuccess()}>
+                    <button className='btn btn-danger' type='button' onClick={() => onSubmitSuccess()}>
                         Cancelar
                     </button>
                 </div>
