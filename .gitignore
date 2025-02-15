@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+backend/.env
+backend/.env.production
+frontend/.env
+frontend/.env.production
+
