@@ -123,6 +123,7 @@ const FormVentas: React.FC = () => {
       importe_total: data.importeTotal - discount,
       ganancia: data.ganancia,
     });
+    PostGeneral("/ccorriente/insert_ccorriente",{ganancia: data.ganancia, importe_total: data.importeTotal - discount});
     setComandas([]);
     setDiscount(0);
     reset({

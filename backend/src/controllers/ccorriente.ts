@@ -19,3 +19,4 @@ router.post('/insert_ccorriente', async (req: Request, res: Response) => {
         });
     }
 });
+export default router;

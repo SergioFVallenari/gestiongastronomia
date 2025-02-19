@@ -6,6 +6,7 @@ import routeCarta from './carta.routes'
 import routeTabla from './tablamaestra.routes'
 import routeAutorizacion from './autorizacion.routes'
 import routeVentas from './ventas.routes'
+import routeCcorriente from './ccorriente.routes'
 import { verifyToken } from '../helpers'
 const app = Router()
 
@@ -15,6 +16,7 @@ app.use('/materia_prima', verifyToken,routeMateriaPrima)
 app.use('/carta', verifyToken,routeCarta)
 app.use('/tabla', verifyToken,routeTabla)
 app.use('/ventas', verifyToken,routeVentas)
+app.use('/ccorriente', verifyToken, routeCcorriente)
 
 app.use('/autorizacion', routeAutorizacion)
 
