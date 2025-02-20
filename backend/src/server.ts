@@ -1,6 +1,7 @@
 import express from "express";
 const morgan = require("morgan");
 import routes from "./routes/index";
+import swaggerDocs from "./swagger/swagger";
 // import cookieParser from "cookie-parser";
 const server = express();
 
@@ -31,7 +32,7 @@ server.use(express.json());
 
 // Middleware de enrutamiento
 server.use("/", routes);
-
+swaggerDocs(server, 0);
 // Middleware de manejo de errores
 server.use((err:any, req:any, res:any, next:any) => {
   console.error(err.stack);

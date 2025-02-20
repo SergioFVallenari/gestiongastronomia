@@ -1,5 +1,4 @@
 import {Request, Response, Router } from 'express'
-import axios from 'axios'
 import classArticulos from '../class/class_articulos'
 const {crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo} = new classArticulos()
 
