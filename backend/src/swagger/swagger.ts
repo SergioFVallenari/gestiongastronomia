@@ -1,9 +1,8 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 import swagerUi from 'swagger-ui-express';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const filename_ = __filename;
+import articulos from '../swagger_routes/articulos';
+const {altaArticulos} = articulos
 const dirname_ = __dirname;
 
 const options = {
@@ -18,7 +17,19 @@ const options = {
             {
                 url: 'http://localhost:8080'
             }
-        ]
+        ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            }
+        },
+        paths:{
+            "/articulos/alta_articulos":altaArticulos
+        }
     },
     apis: [path.join(dirname_, '../routes/*.ts')]
 };
