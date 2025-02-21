@@ -87,5 +87,16 @@ export default {
                 }
             }
         }
+    },
+    getArticuloById:{
+        get:{
+            tags:['Articulos'],
+            summary:'Obtener un articulo por su ID',
+            security: [  // ⬅️ Aplica el esquema de seguridad
+                {
+                    bearerAuth: []
+                }
+            ],
+        }
     }
 }
