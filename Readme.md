@@ -1,1 +1,1 @@
-Software de gestion de restaurantes
+App para gestion de restaurantes
