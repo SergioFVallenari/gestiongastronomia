@@ -2,7 +2,9 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swagerUi from 'swagger-ui-express';
 import path from 'path';
 import articulos from '../swagger_routes/articulos';
+import auth from '../swagger_routes/auth';
 const {altaArticulos, getArticuloById, getArticulos, bajaArticulos, modificarArticulo} = articulos
+const {login} = auth;
 const dirname_ = __dirname;
 
 const options = {
@@ -16,6 +18,9 @@ const options = {
         servers: [
             {
                 url: 'http://localhost:8080'
+            },
+            {
+                url: 'https://donfaustino-344037519946.southamerica-west1.run.app'
             }
         ],
         components: {
@@ -28,11 +33,14 @@ const options = {
             }
         },
         paths:{
+            //******Auth*****
+            "/autorizacion/login":login,
+            //******Articulos******
             "/articulos/alta_articulos":altaArticulos,
             "/articulos/get_articulos":getArticulos,
             "/articulos/get_articulo/{id}":getArticuloById,
             "/articulos/baja_articulos":bajaArticulos,
-            "/articulos/modificar_articulo/{id}":modificarArticulo
+            "/articulos/modificar_articulo/{id}":modificarArticulo,
         }
     },
     apis: [path.join(dirname_, '../routes/*.ts')]
