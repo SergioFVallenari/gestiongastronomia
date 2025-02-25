@@ -2,8 +2,10 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swagerUi from 'swagger-ui-express';
 import path from 'path';
 import articulos from '../swagger_routes/articulos';
+import carta from '../swagger_routes/carta';
 import auth from '../swagger_routes/auth';
 const {altaArticulos, getArticuloById, getArticulos, bajaArticulos, modificarArticulo} = articulos
+const {insertCarta} = carta;
 const {login} = auth;
 const dirname_ = __dirname;
 
@@ -41,6 +43,8 @@ const options = {
             "/articulos/get_articulo/{id}":getArticuloById,
             "/articulos/baja_articulos":bajaArticulos,
             "/articulos/modificar_articulo/{id}":modificarArticulo,
+            //******Carta******
+            "/carta/alta_carta":insertCarta
         }
     },
     apis: [path.join(dirname_, '../routes/*.ts')]
