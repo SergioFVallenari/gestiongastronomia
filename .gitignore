@@ -52,4 +52,5 @@ backend/.env
 backend/.env.production
 frontend/.env
 frontend/.env.production
-
+backend/config*.json  # Esto asegura que todos los archivos .json en backend/config/ sean ignorados
+backend/*.json        # Esto cubre archivos JSON en el directorio principal del backend
