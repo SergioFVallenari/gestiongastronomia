@@ -1,6 +1,6 @@
 import { Router, Response, Request } from 'express';
 import classCarta from '../class/class_carta';
-const { alta_carta, get_carta, get_carta_by_id,delete_carta } = new classCarta();
+const { alta_carta, get_carta, get_carta_by_id,delete_carta, update_carta } = new classCarta();
 
 const router = Router();
 
@@ -67,7 +67,7 @@ router.get('/get_carta_by_id/:id', async (req: Request, res: Response) => {
         )
     }
 });
-router.post('/delete_carta', async (req: Request, res: Response) => {
+router.delete('/delete_carta', async (req: Request, res: Response) => {
     const body = req.body;
     try {
         console.log(body);
@@ -89,5 +89,27 @@ router.post('/delete_carta', async (req: Request, res: Response) => {
         )
     }
 });
+router.put('/update_carta', async (req: Request, res: Response) => {
+    const body = req.body;
+    try {
+        console.log(body);
+        const response:any = await update_carta(body);
+        res.status(200).json(
+            {
+                info: true,
+                msg: "Carta actualizada",
+                content: response.msg
+            }
+        )
+    } catch (error) {
+        res.status(400).json(
+            {
+                info: false,
+                msg: "Error al actualizar la carta",
+                content: null
+            }
+        )
+    }
+})
 
 export default router;

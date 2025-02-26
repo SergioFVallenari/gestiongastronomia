@@ -5,7 +5,7 @@ import articulos from '../swagger_routes/articulos';
 import carta from '../swagger_routes/carta';
 import auth from '../swagger_routes/auth';
 const {altaArticulos, getArticuloById, getArticulos, bajaArticulos, modificarArticulo} = articulos
-const {insertCarta} = carta;
+const {insertCarta, getCartas,getCartaById, deleteCarta, modificarCarta} = carta;
 const {login} = auth;
 const dirname_ = __dirname;
 
@@ -44,7 +44,11 @@ const options = {
             "/articulos/baja_articulos":bajaArticulos,
             "/articulos/modificar_articulo/{id}":modificarArticulo,
             //******Carta******
-            "/carta/alta_carta":insertCarta
+            "/carta/alta_carta":insertCarta,
+            "/carta/get_carta":getCartas,
+            "/carta/get_carta_by_id/{id}":getCartaById,
+            "/carta/delete_carta":deleteCarta,
+            "/carta/update_carta":modificarCarta
         }
     },
     apis: [path.join(dirname_, '../routes/*.ts')]

@@ -21,4 +21,10 @@ export default class Carta{
         const result = await spGeneral("donfaustino_delete_carta(:xid)", formateo);
         return result;
     }
+    async update_carta(body:any){
+        const formateo = masajeo(body);
+        const result = await spGeneral("donfaustino_update_carta(:xnombre,:xingredientes_json,:xdescripcion,:xprecio_costo,:xprecio_venta,:xsku,:xganancia,:xcategoria,:xid_carta)", formateo);
+        return result;
+    }
+
 }

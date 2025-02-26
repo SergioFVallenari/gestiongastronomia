@@ -22,7 +22,7 @@ export const getCartaById = createAsyncThunk('/carta/get_carta_by_id', async (id
 
 export const deleteCarta = createAsyncThunk('/carta/delete_carta', async (body: any) => {
     try {
-        const response = await api.post('/carta/delete_carta', body);
+        const response = await api.delete('/carta/delete_carta', {data:body});
         return response
     } catch (error) {
         return error;

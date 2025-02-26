@@ -164,6 +164,31 @@ const FormCarta: React.FC<iFormCarta> = ({
           dispatch(getCarta());
         }
       });
+    } else if (accion === "m") {
+      const json_ingredientes = ingredientesSeleccionados.map(
+        (ingrediente) => (
+          console.log(ingrediente),
+          {
+          id: ingrediente.value,
+          nombre: ingrediente.label,
+          sku: ingrediente.sku,
+          valor_modulo: ingrediente.valor_modulo,
+          cantidad: ingrediente.cantidad,
+        }
+      )
+      );
+      const body = {
+        ...data,
+        ingredientes_json: JSON.stringify(json_ingredientes),
+        id_carta: idCarta,
+      };
+      api.put("/carta/update_carta", body).then((response) => {
+        if (response.data.info) {
+          EnviarMensaje("success", "Producto modificado");
+          onSubmitSuccess();
+          dispatch(getCarta());
+        }
+      });
     }
   };
 
