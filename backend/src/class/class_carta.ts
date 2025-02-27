@@ -3,7 +3,7 @@ import { masajeo, spGeneral } from "../helpers";
 export default class Carta{
     async alta_carta(body:any){
         const formateo = masajeo(body);
-        const result = await spGeneral("donfaustino_insert_carta(:xnombre,:xingredientes_json,:xdescripcion,:xprecio_costo,:xprecio_venta,:xganancia,:xsku,:xcategoria)", formateo);
+        const result = await spGeneral("donfaustino_insert_carta(:xnombre,:xingredientes_json,:xdescripcion,:xprecio_costo,:xprecio_venta,:xganancia,:xsku,:xcategoria,:ximagen)", formateo);
         return result;
     }
     async get_carta(){
@@ -23,7 +23,7 @@ export default class Carta{
     }
     async update_carta(body:any){
         const formateo = masajeo(body);
-        const result = await spGeneral("donfaustino_update_carta(:xnombre,:xingredientes_json,:xdescripcion,:xprecio_costo,:xprecio_venta,:xsku,:xganancia,:xcategoria,:xid_carta)", formateo);
+        const result = await spGeneral("donfaustino_update_carta(:xnombre,:xingredientes_json,:xdescripcion,:xprecio_costo,:xprecio_venta,:xsku,:xganancia,:xcategoria,:xid_carta,:ximagen)", formateo);
         return result;
     }
 

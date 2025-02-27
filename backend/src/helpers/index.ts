@@ -2,6 +2,9 @@ import db from "../db";
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import multer from 'multer';
+import { Storage } from '@google-cloud/storage';
+import path from 'path';
 dotenv.config();
 const secretKey = process.env.JWT_SECRET || 'fallback_secret_key';
 
@@ -38,3 +41,19 @@ export const masajeo = (objeto: any) => {
         res.status(403).json({ message: 'Invalid or expired token' });
     }
 };
+
+export const storage = new Storage({
+  keyFilename: path.join(__dirname, '../config/gcloud.json')
+});
+
+export const upload = (bucketName: string) => {
+  const bucket = storage.bucket(bucketName);
+  const multe = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 5 * 1024 * 1024, // no larger than 5mb
+    },
+  });
+
+  return multe;
+}

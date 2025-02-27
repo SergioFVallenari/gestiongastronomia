@@ -8,6 +8,7 @@ import routeAutorizacion from './autorizacion.routes'
 import routeVentas from './ventas.routes'
 import routeCcorriente from './ccorriente.routes'
 import { verifyToken } from '../helpers'
+import controllerUpload from '../controllers/upload'
 const app = Router()
 
 app.use('/articulos', verifyToken, routeArticulos)
@@ -17,6 +18,7 @@ app.use('/carta', verifyToken,routeCarta)
 app.use('/tabla', verifyToken,routeTabla)
 app.use('/ventas', verifyToken,routeVentas)
 app.use('/ccorriente', verifyToken, routeCcorriente)
+app.use('/upload',verifyToken, controllerUpload)
 
 app.use('/autorizacion', routeAutorizacion)
 

@@ -4,9 +4,11 @@ import path from 'path';
 import articulos from '../swagger_routes/articulos';
 import carta from '../swagger_routes/carta';
 import auth from '../swagger_routes/auth';
+import upload from '../swagger_routes/upload';
 const {altaArticulos, getArticuloById, getArticulos, bajaArticulos, modificarArticulo} = articulos
 const {insertCarta, getCartas,getCartaById, deleteCarta, modificarCarta} = carta;
 const {login} = auth;
+const {uploadFile} = upload;
 const dirname_ = __dirname;
 
 const options = {
@@ -48,7 +50,9 @@ const options = {
             "/carta/get_carta":getCartas,
             "/carta/get_carta_by_id/{id}":getCartaById,
             "/carta/delete_carta":deleteCarta,
-            "/carta/update_carta":modificarCarta
+            "/carta/update_carta":modificarCarta,
+            //******Upload******
+            "/upload/upload_file":uploadFile
         }
     },
     apis: [path.join(dirname_, '../routes/*.ts')]
