@@ -48,9 +48,20 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Backend environment variables
 backend/.env
 backend/.env.production
+backend/.env.*
+
+# Ignore all JSON files in config directory
+backend/src/config/*.json
+
+# Ignore other JSON files in the backend
+backend/*.json
+
+# Frontend environment variables
 frontend/.env
 frontend/.env.production
-backend/src/config/gcloud.json # Esto asegura que todos los archivos .json en backend/config/ sean ignorados
-backend/*.json        # Esto cubre archivos JSON en el directorio principal del backend
+frontend/.env.*
+
+# Add any other sensitive files or directories here as needed
