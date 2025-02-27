@@ -11,68 +11,68 @@ interface FileUploadComponentProps {
 }
 
 const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUploaded }) => {
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [uploadStatus, setUploadStatus] = useState<string | null>(null);
-    const [downloadLink, setDownloadLink] = useState<string | null>(null);
-  
-    // Definimos las restricciones para aceptar solo imágenes JPG, JPEG y PNG
-    const acceptedFileTypes = {
-      'image/jpeg': [],
-      'image/png': [],
-      'image/jpg': []
-    };
-  
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-      if (acceptedFiles.length > 0) {
-        setUploadedFile(acceptedFiles[0]);
-        setDownloadLink(null); // Resetea el enlace de descarga si se selecciona un nuevo archivo
-        setUploadStatus(null); // Limpia el estado de subida
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+  const [downloadLink, setDownloadLink] = useState<string | null>(null);
+
+  // Definimos las restricciones para aceptar solo imágenes JPG, JPEG y PNG
+  const acceptedFileTypes = {
+    'image/jpeg': [],
+    'image/png': [],
+    'image/jpg': [],
+  };
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      setUploadedFile(acceptedFiles[0]);
+      setDownloadLink(null); // Resetea el enlace de descarga si se selecciona un nuevo archivo
+      setUploadStatus(null); // Limpia el estado de subida
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept: acceptedFileTypes, // Se añade la restricción de tipos de archivo
+  });
+
+  const handleUpload = async () => {
+    if (!uploadedFile) {
+      setUploadStatus('No hay archivo seleccionado.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', uploadedFile);
+
+    try {
+      setUploadStatus('Subiendo...');
+
+      const response = await api.post(`${BASE_URL}/upload/upload_file`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data) {
+        const fileUrl = response.data.url;
+        setDownloadLink(fileUrl);
+        setUploadStatus('Archivo subido con éxito.');
+        setUploadedFile(null);
+        handleFileUploaded(fileUrl);
+      } else {
+        setUploadStatus('Error al subir el archivo.');
       }
-    }, []);
-  
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-      onDrop,
-      multiple: false,
-      accept: acceptedFileTypes, // Se añade la restricción de tipos de archivo
-    });
-  
-    const handleUpload = async () => {
-      if (!uploadedFile) {
-        setUploadStatus('No hay archivo seleccionado.');
-        return;
-      }
-  
-      const formData = new FormData();
-      formData.append('file', uploadedFile);
-  
-      try {
-        setUploadStatus('Subiendo...');
-  
-        const response = await api.post(`${BASE_URL}/upload/upload_file`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-  
-        if (response.data) {
-          const fileUrl = response.data.url;
-          setDownloadLink(fileUrl);
-          setUploadStatus('Archivo subido con éxito.');
-          setUploadedFile(null);
-          handleFileUploaded(fileUrl);
-        } else {
-          setUploadStatus('Error al subir el archivo.');
-        }
-      } catch (error: any) {
-        setUploadStatus(`Error: ${error.message}`);
-      }
-    };
-  
-    const handleDelete = () => {
-      setUploadedFile(null);
-      setDownloadLink(null);
-      setUploadStatus('Archivo eliminado.');
-    };
+    } catch (error: any) {
+      setUploadStatus(`Error: ${error.message}`);
+    }
+  };
+
+  const handleDelete = () => {
+    setUploadedFile(null);
+    setDownloadLink(null);
+    setUploadStatus('Archivo eliminado.');
+  };
 
   return (
     <Box sx={{ padding: 3, border: '1px dashed gray', borderRadius: 2 }}>
@@ -130,9 +130,8 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
       )}
 
       {downloadLink && (
-        <Box sx={{ marginTop: 2, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <img src={downloadLink} alt="Archivo subido" style={{ maxWidth: '50%', marginTop:
-          '1rem' }} />
+        <Box sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img src={downloadLink} alt="Imagen subida" style={{ width: '30%',filter: 'drop-shadow(1px 1px 5px #000000)' }} />
           <Link href={downloadLink} download target="_BLANK">
             Hacer clic para descargar el archivo
           </Link>

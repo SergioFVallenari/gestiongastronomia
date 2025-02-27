@@ -43,7 +43,7 @@ export const masajeo = (objeto: any) => {
 };
 
 export const storage = new Storage({
-  keyFilename: path.join(__dirname, '../config/gcloud.json')
+  keyFilename: path.join(__dirname, '../config/donfaustino-2ea495409af0.json')
 });
 
 export const upload = (bucketName: string) => {

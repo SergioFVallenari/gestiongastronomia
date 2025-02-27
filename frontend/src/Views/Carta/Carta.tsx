@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCarta, getCarta } from "../../store/actions/carta";
 import { AppDispatch } from "../../store/store";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { Loading } from "notiflix";
 
 const Carta: React.FC = () => {
@@ -89,7 +89,7 @@ const Carta: React.FC = () => {
             <Box className="row d-flex flex-wrap">
                 {/* Add Product Card */}
                 <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <Card style={{ width: '100%', borderRadius: 20, maxHeight: '100%' }} className="m-2">
+                    <Card style={{ width: '100%', borderRadius: 20, maxHeight: '100%',filter: 'drop-shadow(1px 1px 2px #000000)', }} className="m-2">
                         <Card.Img variant="top" src={imagen} />
                         <Card.Body className="d-flex flex-column justify-content-between">
                             <Card.Title>Agregar producto</Card.Title>
@@ -104,8 +104,21 @@ const Carta: React.FC = () => {
                 {/* Existing Products Cards */}
                 {carta?.map((item: any, index: any) => (
                     <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <Card style={{ width: '100%', maxHeight: '100%', borderRadius: 20 }} className="m-2">
-                            <Card.Img variant="top" src={imagen} />
+                        <Card style={{ width: '100%', maxHeight: '100%', borderRadius: 20, filter: 'drop-shadow(1px 1px 2px #000000)', }} className="m-2">
+                            <Card.Img
+                                variant="top"
+                                src={item?.imagen}
+                                style={{
+                                    padding:10,
+                                    borderRadius:20,
+                                    filter: 'drop-shadow(1px 1px 2px #000000)',
+                                    width: '100%',
+                                    height: '300px',  // Ajusta la altura deseada
+                                    objectFit: 'cover', // Para recortar la imagen sin deformarla
+                                    objectPosition: 'center' // Para centrar la imagen
+                                }}
+                            />
+                            <Divider style={{margin:2}}/>
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title>{item.nombre}</Card.Title>
                                 <Card.Text>
