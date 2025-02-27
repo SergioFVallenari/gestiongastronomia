@@ -20,6 +20,7 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
     'image/jpeg': [],
     'image/png': [],
     'image/jpg': [],
+    'image/webp': [],
   };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
