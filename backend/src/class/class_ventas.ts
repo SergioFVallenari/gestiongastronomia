@@ -3,7 +3,7 @@ import { masajeo, spGeneral } from "../helpers";
 export default class Ventas {
     async insertVenta(body: any) {
      const formateo = masajeo(body)
-     const result = await spGeneral("donfaustino_insert_ventas(:xjson_comanda, :xfecha_venta, :ximporte_total, :xganancia)", formateo)
+     const result = await spGeneral("donfaustino_insert_ventas(:xjson_comanda, :xfecha_venta, :ximporte_total, :xganancia,:xpropina)", formateo)
      return result
     }
     async manejoStock(body: any, idventa: string | number) {
@@ -30,8 +30,9 @@ export default class Ventas {
                     
                     if (ingrediente.valor_modulo == "Articulo Compuesto") {
                         let porciones;
-                        const body = masajeo({ id: ingrediente.id });
-                        const result: any = await spGeneral("donfaustino_get_materia_prima_by_id(:xid)", body);
+                        console.log('este es el ingrediente id',ingrediente)
+                        const body = masajeo({ sku: ingrediente?.sku });
+                        const result: any = await spGeneral("donfaustino_get_materia_prima_by_sku(:xsku)", body);
                         
                         if (result[0]?.json_ingredientes) {
                             const ingredientesParsed = JSON.parse(result[0].json_ingredientes);
@@ -64,6 +65,7 @@ export default class Ventas {
             } else {
                 // Procesamiento para elementos no tipo "Carta" (como Bebidas)
                 console.log('Elemento no es Carta, tipo:', element.tipo);
+                console.log('Elemento:', element);
                 const formateo = masajeo({
                     sku: element.sku,
                     cantidad: element.cantidad,

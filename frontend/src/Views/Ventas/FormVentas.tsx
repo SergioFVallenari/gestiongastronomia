@@ -5,6 +5,8 @@ import { Box as BoxMui } from "@mui/material";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { PostGeneral } from "../../helpers";
+import { EnviarMensaje } from "../herramientas/General/General";
+import { Loading } from "notiflix";
 
 const FormVentas: React.FC = () => {
   const dataCarta = useSelector((state: any) => state.carta.getCarta.data);
@@ -36,6 +38,7 @@ const FormVentas: React.FC = () => {
       fecha: new Date().toISOString().split("T")[0],
       importeTotal: 0,
       ganancia: 0,
+      importeReal: 0,
     },
   });
 
@@ -114,16 +117,28 @@ const FormVentas: React.FC = () => {
   };
 
   const handleGuardar = (data: any) => {
-    console.log("Comandas guardadas:", comandas);
-    console.log("Fecha:", data.fecha);
-    console.log("Importe Total:", data.importeTotal);
+    if(data.importeReal < data.importeTotal) {
+      EnviarMensaje("danger", "El importe con propina no puede ser menor al importe sin propina");
+      return;
+    }
+    Loading.pulse();
     PostGeneral("/ventas/insert_venta", {
       json_comanda: JSON.stringify(comandas),
       fecha_venta: data.fecha,
       importe_total: data.importeTotal - discount,
       ganancia: data.ganancia,
+      propina: data.importeReal > data.importeTotal ? data.importeReal - data.importeTotal : 0,
+    }).then((response) => {
+      console.log(response)
+      if (response.info) {
+        Loading.remove();
+        EnviarMensaje("success", "Venta guardada exitosamente");
+      } else {
+        Loading.remove()
+        EnviarMensaje("danger", "Error al guardar la venta");
+      }
     });
-    PostGeneral("/ccorriente/insert_ccorriente",{ganancia: data.ganancia, importe_total: data.importeTotal - discount});
+    // PostGeneral("/ccorriente/insert_ccorriente",{ganancia: data.ganancia, importe_total: data.importeTotal - discount});
     setComandas([]);
     setDiscount(0);
     reset({
@@ -133,6 +148,8 @@ const FormVentas: React.FC = () => {
       carta: "",
       fecha: new Date().toISOString().split("T")[0],
       importeTotal: 0,
+      importeReal:0,
+      ganancia:0
     });
   };
 
@@ -305,7 +322,7 @@ const FormVentas: React.FC = () => {
       </Table>
       <form onSubmit={handleSubmit(handleGuardar)}>
         <Row className="mb-3">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <label>Fecha</label>
             <input
               type="date"
@@ -313,17 +330,28 @@ const FormVentas: React.FC = () => {
               {...register("fecha", { required: true })}
             />
           </div>
-          <div className="col-md-4">
-            <label>Importe Total</label>
+          <div className="col-md-3">
+            <label>Importe sin propina</label>
             <input
               type="number"
               className="form-control"
               step="0.01"
               min="0"
               {...register("importeTotal", { required: true })}
+              disabled
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
+            <label>Importe con propina</label>
+            <input
+              type="number"
+              className="form-control"
+              step="0.01"
+              min="0"
+              {...register("importeReal", { required: true })}
+            />
+          </div>
+          <div className="col-md-3">
             <label>Ganancia</label>
             <input
               type="number"
