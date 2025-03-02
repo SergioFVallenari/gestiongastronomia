@@ -10,7 +10,8 @@
   },
   "include": [
     "*.ts",        // Incluye archivos TypeScript en la raíz
-    "src/**/*.ts"  // Incluye archivos TypeScript dentro de `src`
+    "src/**/*.ts",  // Incluye archivos TypeScript dentro de `src`
+    "src/**/*.json"
   ],
   "exclude": [
     "node_modules"
