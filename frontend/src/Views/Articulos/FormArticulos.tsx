@@ -64,6 +64,10 @@ const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSub
                         EnviarMensaje('success', res.data.content[0].msg);
                         onSubmitSuccess(); // Callback para recargar o cerrar modal
                     }
+                })
+                .catch(err => {
+                    DonFaustinoLoad.DonFaustinoLoad(false);
+                    EnviarMensaje('danger', err.response.data.msg);
                 });
         } else if (accion === 'm' && idArticulo) {
             // Modificación de un artículo existente
@@ -85,6 +89,11 @@ const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSub
     };
     const agregarCategoria=async()=>{
         const nuevaCategoria = getValues('categoria_nueva')
+        console.log(nuevaCategoria, 'este es el valor de la nueva categoria')
+        if (nuevaCategoria.trim() === '') {
+            EnviarMensaje('danger', 'El campo de categoría personalizada no puede estar vacío.');
+            return;
+        }
         await api.post('/tabla/insert_categoria', { modulo: 'categorias_articulos', valor_modulo: nuevaCategoria })
         setMostrarInputCategoria(false)
         setValue('categoria_nueva','')
@@ -163,7 +172,7 @@ const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSub
                                     placeholder="Escribe una categoría personalizada"
                                     {...register('categoria_nueva', { required: 'Debes ingresar una categoría personalizada' })}
                                 />
-                                <button className='btn btn-secondary m-2' onClick={agregarCategoria}>Agregar</button>
+                                <button className='btn btn-secondary m-2' onClick={agregarCategoria} type='button'>Agregar</button>
                             </>
                         )}
                     </div>

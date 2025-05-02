@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import api from '../../helpers';
 import DonFaustinoLoad, { EnviarMensaje } from '../herramientas/General/General';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface FormArticulosProps {
     accion: string;
@@ -28,7 +29,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
     const [ingredienteSeleccionado, setIngredienteSeleccionado] = useState<any | null>(null);
     const [nuevaCategoria, setNuevaCategoria] = useState<string>('');
 
-    const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm({
+    const { control,register, handleSubmit, setValue, formState: { errors }, watch, getValues } = useForm({
         defaultValues: {
             nombre: '',
             sku: '',
@@ -47,24 +48,31 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
     const isArticuloCompuesto = watch('chkArticuloCompuesto');
     const isPrecioUnidad = watch('chkPrecioUnidad')
     useEffect(() => {
-        api.post('/tabla/lista_modulos', { modulo: 'categorias_materia_prima' })
-            .then(res => setCategorias(res.data.content));
+        getListaModulos()
 
         if (accion !== 'a' && idArticulo) {
             api.get(`/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
-                    console.log(typeof articulo.categoria_materia_prima);
                     setValue('nombre', articulo.nombre);
                     setValue('sku', articulo.sku);
                     setValue('precio_costo', articulo.precio_costo);
+                    setValue('categoria_materia_prima', articulo.categoria_materia_prima);
                     setValue('cantidad', articulo.stock);
                     setValue('peso_gramos', articulo.peso_gramos);
-                    setValue('chkArticuloCompuesto', articulo.es_compuesto === 1 ? true : false);
+                    setValue('chkArticuloCompuesto', articulo.es_compuesto == 1 ? true : false);
                     setIngredientes(JSON.parse(articulo.json_ingredientes));
+                    setValue('ingredientes', JSON.parse(articulo.json_ingredientes));
                 });
         }
     }, []);
+    console.log(getValues(), 'getValues()')
+    const getListaModulos = () =>{
+        api.post(`/tabla/lista_modulos`, { modulo: 'categorias_materia_prima' })
+        .then(res => {
+            setCategorias(res.data.content);
+        })
+    }
 
     const onSubmit = async (data: any) => {
         if (accion === 'a') {
@@ -93,9 +101,27 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         EnviarMensaje('success', res.data.content[0].msg);
                         onSubmitSuccess(); // Callback para recargar o cerrar modal
                     }
+                })
+                .catch(err => {
+                    DonFaustinoLoad.DonFaustinoLoad(false);
+                    EnviarMensaje('danger', err.response.data.msg);
                 });
         } else if (accion === 'm' && idArticulo) {
-            await api.put(`/materia_prima/modificar_materia_prima/${idArticulo}`, data)
+            if (!isArticuloCompuesto) {
+                data.ingredientes = [];
+            }
+    
+            const ingredientesFormatt = JSON.stringify(data.ingredientes);
+            const body = {
+                nombre: data.nombre,
+                precio_costo: data.precio_costo,
+                categoria_materia_prima: data.categoria_materia_prima,
+                peso_gramos: data.peso_gramos,
+                ingredientes: ingredientesFormatt,
+            };
+    
+            console.log(body, 'modificación');
+            await api.put(`/materia_prima/modificar_materia_prima/${idArticulo}`, body)
                 .then(res => {
                     if (res.status === 200) {
                         EnviarMensaje('success', res.data.content[0].msg);
@@ -114,6 +140,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 nombre: ingredienteExistente?.nombre,
                 sku: ingredienteExistente?.sku,
                 precio_costo: ingredienteExistente?.precio_costo,
+                categoria: ingredienteExistente?.categoria_materia_prima,
                 cantidad: watch('cantidad_ingrediente'), // en gramos
                 porciones: watch('porciones')
             };
@@ -131,6 +158,32 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             });
         }
     };
+    const eliminarIngrediente = (index: number) => {
+        setIngredientes(prevIngredientes => {
+            const updatedIngredientes = [...prevIngredientes];
+            updatedIngredientes.splice(index, 1); // Elimina el ingrediente en la posición index
+            setValue('ingredientes', updatedIngredientes);
+
+            // Calcula el nuevo precio total de costo considerando el precio por kilo y cantidad en gramos
+            const nuevoPrecioCosto = updatedIngredientes.reduce((acc, item) =>
+                acc + (Math.round(item.precio_costo * (item.cantidad / 1000) / item.porciones)), 0 // convierte gramos a kilos
+            );
+            setValue('precio_costo', nuevoPrecioCosto);
+
+            return updatedIngredientes;
+        });
+    }
+    const recalcularPrecioCosto = () => {
+        const ingredientesRec = ingredientes
+        const ingredientesJson = JSON.stringify(ingredientesRec);
+        api.post('/materia_prima/calcular_precio_costo?metodo=materia_prima', { json_ingredientes: ingredientesJson })
+            .then(res => {
+                if (res.data.info == true) {
+                    setValue('precio_costo', res.data.content[0].costo_total);
+                }
+            });
+
+    }
 
     const addCategoria = () => {
         if (nuevaCategoria) {
@@ -138,9 +191,16 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 .then(res => {
                     setCategorias(prevCategorias => [...prevCategorias, res.data.content[0]]);
                     setValue('categoria_materia_prima', res.data.content[0].id_valor_modulo);
+                    getListaModulos();
                 });
         }
     }
+    const handleSkuChange = (e: React.FocusEvent<HTMLInputElement>) => {
+        const value = e.target.value.trim();
+        if (!value.startsWith('DF-')) {
+            setValue('sku', `DF-${value}`);
+        }
+    };
 
     return (
         <>
@@ -179,6 +239,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                             disabled={accion !== 'a' && formDisabled}
                             error={!!errors.sku}
                             helperText={errors.sku?.message}
+                            onBlur={handleSkuChange} 
                         />
                     </div>
                 </div>
@@ -201,31 +262,56 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         />
                     </div>
                     <div className='mb-3 justify-content-end'>
-                        <FormControlLabel 
-                        control={
-                        <Checkbox
-                            {...register('chkPrecioUnidad')}
-                        />} label={`Cambiar a precio por ${!isPrecioUnidad ? 'Unidad' : 'Kg'}`} />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    {...register('chkPrecioUnidad')}
+                                />} label={`Cambiar a precio por ${!isPrecioUnidad ? 'Unidad' : 'Kg'}`} />
+                        {
+                            isArticuloCompuesto && accion != 'a' && (
+                                <>
+                                    <Button
+                                        className='btn btn-primary'
+                                        variant="contained"
+                                        type="button"
+                                        disabled={accion === 'c' && formDisabled}
+                                        title="Recalcular costo"
+                                        onClick={recalcularPrecioCosto}
+                                    >
+                                        <i className="bi bi-calculator"></i>
+                                    </Button>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
                 <div className='col-md-6'>
                     <div className='mb-3'>
-                        <FormControl fullWidth error={!!errors.categoria_materia_prima}>
-                            <InputLabel>Categoría</InputLabel>
-                            <Select
-                                label="Categoría"
-                                {...register('categoria_materia_prima', { required: 'Obligatorio' })}
-                                disabled={accion === 'c' && formDisabled}
-                            >
-                                <MenuItem value="">Seleccione una categoría</MenuItem>
-                                {categorias?.map((categoria, index) => (
-                                    <MenuItem key={index} value={categoria.id_valor_modulo.toString()}>
-                                        {categoria?.valor_modulo?.toUpperCase()}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.categoria_materia_prima && <FormHelperText>{errors.categoria_materia_prima.message}</FormHelperText>}
-                        </FormControl>
+                        <Controller
+                            name="categoria_materia_prima"
+                            control={control}
+                            rules={{ required: 'Obligatorio' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth error={!!errors.categoria_materia_prima}>
+                                    <InputLabel>Categoría</InputLabel>
+                                    <Select
+                                        label="Categoría"
+                                        {...field}
+                                        disabled={accion === 'c' && formDisabled}
+                                    >
+                                        <MenuItem value="">Seleccione una categoría</MenuItem>
+                                        {categorias?.map((categoria, index) => (
+                                            <MenuItem key={index} value={categoria?.id_valor_modulo?.toString()}>
+                                                {categoria?.valor_modulo?.toUpperCase()}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    {errors.categoria_materia_prima && (
+                                        <FormHelperText>{errors.categoria_materia_prima.message}</FormHelperText>
+                                    )}
+                                </FormControl>
+                            )}
+                        />
 
                         <TextField
                             label="Agregar nueva categoría"
@@ -245,6 +331,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                             variant="contained"
                             color="warning"
                             onClick={addCategoria}
+                            type='button'
                             sx={{ mt: 2 }}
                             hidden={accion === 'c' && formDisabled}
                         >
@@ -272,6 +359,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         control={
                             <Switch
                                 {...register('chkArticuloCompuesto')}
+                                checked={isArticuloCompuesto}
                                 disabled={accion === 'c' && formDisabled}
                             />
                         }
@@ -345,6 +433,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                                     <tr>
                                         <th>Ingrediente</th>
                                         <th>Cantidad</th>
+                                        <th className='text-center'>*</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -352,6 +441,14 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                                         <tr key={index}>
                                             <td>{ingrediente.nombre}</td>
                                             <td>{ingrediente.cantidad} g</td>
+                                            <td className='text-center'>
+                                                <Button
+                                                    variant='contained'
+                                                    color='error'
+                                                    size='small'
+                                                    onClick={() => eliminarIngrediente(index)} disabled={accion === 'c' && formDisabled}>
+                                                    X
+                                                </Button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -371,10 +468,11 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                         Guardar
                     </Button>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         color="error"
                         sx={{ m: 2 }}
                         type="button"
+                        onClick={onSubmitSuccess}
                     >
                         Cancelar
                     </Button>

@@ -383,7 +383,7 @@ export default {
         },
     },
     modificarCarta: {
-        put: {
+        post: {
             tags: ['Carta'],
             summary: 'Actualizar carta',
             description: 'Actualiza una carta en la base de datos',

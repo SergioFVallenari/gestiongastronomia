@@ -120,7 +120,7 @@ const Carta: React.FC = () => {
                             />
                             <Divider style={{margin:2}}/>
                             <Card.Body className="d-flex flex-column justify-content-between">
-                                <Card.Title>{item.nombre}</Card.Title>
+                                <Card.Title className="text-center">{item.nombre}</Card.Title>
                                 <Card.Text>
                                     $ {item.precio_venta}
                                 </Card.Text>

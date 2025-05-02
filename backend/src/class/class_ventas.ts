@@ -3,7 +3,7 @@ import { masajeo, spGeneral } from "../helpers";
 export default class Ventas {
     async insertVenta(body: any) {
      const formateo = masajeo(body)
-     const result = await spGeneral("donfaustino_insert_ventas(:xjson_comanda, :xfecha_venta, :ximporte_total, :xganancia,:xpropina)", formateo)
+     const result = await spGeneral("donfaustino_insert_ventas(:xjson_comanda, :xfecha_venta, :ximporte_total, :xganancia,:xpropina,:xid)", formateo)
      return result
     }
     async manejoStock(body: any, idventa: string | number) {

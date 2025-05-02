@@ -166,7 +166,10 @@ const FormCarta: React.FC<iFormCarta> = ({
           onSubmitSuccess();
           dispatch(getCarta());
         }
-      });
+      })
+      .catch((error) => {
+        EnviarMensaje("danger", error.response.data.msg);
+      })
     } else if (accion === "m") {
       const json_ingredientes = ingredientesSeleccionados.map(
         (ingrediente) => (
@@ -185,7 +188,7 @@ const FormCarta: React.FC<iFormCarta> = ({
         ingredientes_json: JSON.stringify(json_ingredientes),
         id_carta: idCarta,
       };
-      api.put("/carta/update_carta", body).then((response) => {
+      api.post("/carta/modificar_carta", body).then((response) => {
         if (response.data.info) {
           EnviarMensaje("success", "Producto modificado");
           onSubmitSuccess();
@@ -208,8 +211,7 @@ const FormCarta: React.FC<iFormCarta> = ({
         valor_modulo: ingrediente.ingrediente.valor_modulo,
       }));
     }
-    api
-      .post("/materia_prima/calcular_precio_costo", {
+    api.post("/materia_prima/calcular_precio_costo?metodo=carta", {
         json_ingredientes: JSON.stringify(json_ingredientes),
       })
       .then((res) => {
@@ -463,7 +465,7 @@ const FormCarta: React.FC<iFormCarta> = ({
             <Divider style={{ margin: 2 }} />
             {
               accion === "m" || accion === "c" ?
-                <Image src={getValues("imagen")} alt="Imagen del producto" style={{ filter: 'drop-shadow(1px 1px 5px #000000)' }} fluid className='p-2' />
+                <Image src={getValues("imagen")} alt="Imagen del producto" style={{ filter: 'drop-shadow(1px 1px 5px #000000)', width:'60%', height:'auto'  }} fluid className='p-2' />
                 : null
             }
           </Tab>

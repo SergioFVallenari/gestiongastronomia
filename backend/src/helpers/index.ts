@@ -57,3 +57,9 @@ export const upload = (bucketName: string) => {
 
   return multe;
 }
+
+export const skuVerify = async (sku: string) => {
+  const skuList = await spGeneral("donfaustino_get_sku_list()", []);
+  const skuExists = skuList.some((item: any) => item.sku === sku);
+  return skuExists;
+}

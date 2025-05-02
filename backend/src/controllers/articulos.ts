@@ -1,5 +1,6 @@
 import {Request, Response, Router } from 'express'
 import classArticulos from '../class/class_articulos'
+import { skuVerify } from '../helpers';
 const {crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo} = new classArticulos()
 
 const app = Router()
@@ -7,6 +8,10 @@ const app = Router()
 app.post('/alta_articulos', async (req: Request, res: Response) => {
     const body = req.body
     try {
+        const haySku = await skuVerify(body.sku)
+        if (haySku) {
+            throw new Error('El SKU ya existe')
+        }
         const response = await crearArticulo(body)
         res.status(200).json(
             {
@@ -15,8 +20,11 @@ app.post('/alta_articulos', async (req: Request, res: Response) => {
                 content: response
             }
         )
-    } catch (error) {
-        
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 
 });

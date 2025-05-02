@@ -27,12 +27,20 @@ export default class MateriaPrima{
     }
     async modificaMateriaPrima(body:any){
         const formateo = await masajeo(body);
-        const result = await spGeneral("donfaustino_update_materia_prima(:xid, :xnombre,:xprecio_costo,:xcategoria_materia_prima,:xpeso_gramos)",formateo);
+        const result = await spGeneral("donfaustino_update_materia_prima(:xid, :xnombre,:xprecio_costo,:xcategoria_materia_prima,:xpeso_gramos,:xjson_ingredientes)",formateo);
         return result;
     }
-    async calcularCosto(body:any){
+    async calcularCosto(body:any, metodo:string){
         const formateo = await masajeo(body);
-        const result = await spGeneral("donfaustino_calcular_precio_costo(:xjson_ingredientes)",formateo);
-        return result;
+        switch (metodo) {
+            case 'materia_prima':
+                return await spGeneral("donfaustino_calcular_precio_ingrediente(:xjson_ingredientes)",formateo);
+                break;
+            case 'carta':
+                return await spGeneral("donfaustino_calcular_precio_costo(:xjson_ingredientes)",formateo);
+            break;
+            default: 
+            return;
+        }
     }
 }

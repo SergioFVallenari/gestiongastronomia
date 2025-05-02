@@ -50,7 +50,7 @@ const options = {
             "/carta/get_carta":getCartas,
             "/carta/get_carta_by_id/{id}":getCartaById,
             "/carta/delete_carta":deleteCarta,
-            "/carta/update_carta":modificarCarta,
+            "/carta/modificar_carta":modificarCarta,
             //******Upload******
             "/upload/upload_file":uploadFile
         }
