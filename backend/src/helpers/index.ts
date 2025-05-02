@@ -35,15 +35,24 @@ export const masajeo = (objeto: any) => {
     try {
         const decoded = jwt.verify(token, secretKey);  // Verifica el token con la clave secreta
         if (decoded) {
+            req.query.token = token;
           next();  // Llama a `next()` para permitir el acceso a la siguiente función o ruta
         }
     } catch (error) {
         res.status(403).json({ message: 'Invalid or expired token' });
     }
 };
+export const decodeToken = (token: string) => {
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    return decoded;
+  } catch (error) {
+    return null;
+  }
+}
 
 export const storage = new Storage({
-  keyFilename: path.join(__dirname, '../config/donfaustino-2ea495409af0.json')
+  keyFilename: path.join(__dirname, '../config/donfaustino-5039d47db9f6.json')
 });
 
 export const upload = (bucketName: string) => {
