@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { Image, Tab, Tabs } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 // import Select from 'react-select';
 import api from "../../helpers";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { getCarta, getCartaById } from "../../store/actions/carta";
-import { Autocomplete, Box, Chip, TextField } from "@mui/material";
+import { Autocomplete, Box, Chip, Divider, TextField } from "@mui/material";
 import { EnviarMensaje } from "../herramientas/General/General";
+import FileUploadComponent from "../../components/upload/Upload";
 
 interface iFormCarta {
   formDisabled?: boolean;
@@ -39,6 +40,7 @@ const FormCarta: React.FC<iFormCarta> = ({
       ganancia: 0,
       sku: "",
       categoria: "",
+      imagen: ""
     },
   });
   const [categoriaModulo, setCategoriaModulo] = useState<any[]>([]);
@@ -80,6 +82,7 @@ const FormCarta: React.FC<iFormCarta> = ({
           setValue("precio_venta", cartaData.precio_venta);
           setValue("descripcion", cartaData.descripcion);
           setValue("sku", cartaData.sku);
+          setValue("imagen", cartaData.imagen);
 
           const ingredientesData = JSON.parse(cartaData.ingredientes_json).map(
             (ingrediente: any) => ({
@@ -101,7 +104,7 @@ const FormCarta: React.FC<iFormCarta> = ({
           } else {
             setCategoriaSeleccionada(null);
           }
-          
+
         } catch (error) {
           console.error("Error al obtener la carta:", error);
         }
@@ -163,6 +166,34 @@ const FormCarta: React.FC<iFormCarta> = ({
           onSubmitSuccess();
           dispatch(getCarta());
         }
+      })
+      .catch((error) => {
+        EnviarMensaje("danger", error.response.data.msg);
+      })
+    } else if (accion === "m") {
+      const json_ingredientes = ingredientesSeleccionados.map(
+        (ingrediente) => (
+          console.log(ingrediente),
+          {
+            id: ingrediente.value,
+            nombre: ingrediente.label,
+            sku: ingrediente.sku,
+            valor_modulo: ingrediente.valor_modulo,
+            cantidad: ingrediente.cantidad,
+          }
+        )
+      );
+      const body = {
+        ...data,
+        ingredientes_json: JSON.stringify(json_ingredientes),
+        id_carta: idCarta,
+      };
+      api.post("/carta/modificar_carta", body).then((response) => {
+        if (response.data.info) {
+          EnviarMensaje("success", "Producto modificado");
+          onSubmitSuccess();
+          dispatch(getCarta());
+        }
       });
     }
   };
@@ -180,8 +211,7 @@ const FormCarta: React.FC<iFormCarta> = ({
         valor_modulo: ingrediente.ingrediente.valor_modulo,
       }));
     }
-    api
-      .post("/materia_prima/calcular_precio_costo", {
+    api.post("/materia_prima/calcular_precio_costo?metodo=carta", {
         json_ingredientes: JSON.stringify(json_ingredientes),
       })
       .then((res) => {
@@ -197,7 +227,9 @@ const FormCarta: React.FC<iFormCarta> = ({
       setValue("ganancia", ganancia); // Actualizar el valor en el formulario
     }
   }, [precioCosto, precioVenta, setValue]);
-
+  const handleUpload = (e: any) => {
+    setValue("imagen", e);
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -318,7 +350,7 @@ const FormCarta: React.FC<iFormCarta> = ({
                   <Autocomplete
                     options={categoriaModulo}
                     getOptionLabel={(option) => option.label}
-                    value={categoriaSeleccionada }
+                    value={categoriaSeleccionada}
                     onChange={(_event, value) => {
                       setCategoriaSeleccionada(value || null);
                       setValue("categoria", value ? value.value : null, {
@@ -424,6 +456,18 @@ const FormCarta: React.FC<iFormCarta> = ({
                 </div>
               </div>
             ))}
+          </Tab>
+          <Tab eventKey="imagen" title="Imagen">
+            <Divider style={{ margin: 2 }} />
+            {
+              accion !== 'c' && <FileUploadComponent handleFileUploaded={handleUpload} />
+            }
+            <Divider style={{ margin: 2 }} />
+            {
+              accion === "m" || accion === "c" ?
+                <Image src={getValues("imagen")} alt="Imagen del producto" style={{ filter: 'drop-shadow(1px 1px 5px #000000)', width:'60%', height:'auto'  }} fluid className='p-2' />
+                : null
+            }
           </Tab>
         </Tabs>
         <div className="col-md-4">

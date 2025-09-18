@@ -9,4 +9,5 @@ gcloud run deploy donfaustino \
     --image=southamerica-west1-docker.pkg.dev/donfaustino/donfaustino/donfaustinoar:latest \
     --region=southamerica-west1 \
     --platform=managed \
-    --allow-unauthenticated
+    --allow-unauthenticated \
+    --port=8080

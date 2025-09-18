@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express'
 import MateriaPrima from '../class/class_materia_prima';
+import { skuVerify } from '../helpers';
 const { altaMateriaPrima, getMateriaPrima, getMateriaPrimaById, listaIngredientes, bajaMateriaPrima, modificaMateriaPrima,calcularCosto } = new MateriaPrima()
 const app = Router()
 
@@ -7,6 +8,10 @@ app.post('/alta_materia_prima', async (req: Request, res: Response) => {
     const body = req.body
     try {
         console.log(body)
+        const haySku = await skuVerify(body.sku)
+        if (haySku) {
+            throw new Error('El SKU ya existe')
+        }
         const response = await altaMateriaPrima(body)
         res.status(200).json(
             {
@@ -15,8 +20,11 @@ app.post('/alta_materia_prima', async (req: Request, res: Response) => {
                 content: response
             }
         )
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 });
 app.post('/get_materia_prima', async (req: Request, res: Response) => {
@@ -86,8 +94,10 @@ app.put('/modificar_materia_prima/:id', async (req: Request, res: Response) => {
             nombre: body.nombre,
             precio_costo: body.precio_costo,
             categoria_materia_prima: Number(body.categoria_materia_prima),
-            peso_gramos: body.peso_gramos
+            peso_gramos: body.peso_gramos,
+            json_ingredientes: body.ingredientes,
         }
+        console.log(bodySp, 'este es el bodySp')    
         const response = await modificaMateriaPrima(bodySp)
         res.status(200).json(
             {
@@ -100,11 +110,12 @@ app.put('/modificar_materia_prima/:id', async (req: Request, res: Response) => {
     }
 });
 app.post('/calcular_precio_costo', async (req: Request, res: Response) => {
+    const { metodo } = req.query
     try {
         const json_ingredientes = {
             json_ingredientes: req.body.json_ingredientes
         }
-        const response = await calcularCosto(json_ingredientes)
+        const response = await calcularCosto(json_ingredientes, metodo as string)
         res.status(200).json(
             {
                 info: true,

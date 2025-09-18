@@ -15,7 +15,7 @@ const Sidebar = (): JSX.Element => {
     localStorage.clear();
   }
   return (
-    <Section as='aside' className={`mc-sidebar thin-scrolling ${drawer ? 'active' : ''}`}>
+    <Section as='aside' className={`mc-sidebar thin-scrolling shadow ${drawer ? 'active' : ''}`}>
       <MultipleMenu data={data?.navs} />
       <Logout data={data?.button} onClick={cerrarSesion} href={'/'}/>
     </Section>

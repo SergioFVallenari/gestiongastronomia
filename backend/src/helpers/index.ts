@@ -2,6 +2,9 @@ import db from "../db";
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import multer from 'multer';
+import { Storage } from '@google-cloud/storage';
+import path from 'path';
 dotenv.config();
 const secretKey = process.env.JWT_SECRET || 'fallback_secret_key';
 
@@ -32,9 +35,40 @@ export const masajeo = (objeto: any) => {
     try {
         const decoded = jwt.verify(token, secretKey);  // Verifica el token con la clave secreta
         if (decoded) {
+            req.query.token = token;
           next();  // Llama a `next()` para permitir el acceso a la siguiente función o ruta
         }
     } catch (error) {
         res.status(403).json({ message: 'Invalid or expired token' });
     }
 };
+export const decodeToken = (token: string) => {
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    return decoded;
+  } catch (error) {
+    return null;
+  }
+}
+
+export const storage = new Storage({
+  keyFilename: path.join(__dirname, '../config/donfaustino-5039d47db9f6.json')
+});
+
+export const upload = (bucketName: string) => {
+  const bucket = storage.bucket(bucketName);
+  const multe = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 5 * 1024 * 1024, // no larger than 5mb
+    },
+  });
+
+  return multe;
+}
+
+export const skuVerify = async (sku: string) => {
+  const skuList = await spGeneral("donfaustino_get_sku_list()", []);
+  const skuExists = skuList.some((item: any) => item.sku === sku);
+  return skuExists;
+}

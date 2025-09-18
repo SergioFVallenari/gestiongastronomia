@@ -1,11 +1,13 @@
 import { Request, Response, Router } from "express";
 const app = Router();
 import classVentas from '../class/class_ventas'
+import { decodeToken } from "../helpers";
 const  {insertVenta, manejoStock,getVentas} = new classVentas()
 
 app.post('/insert_venta', async (req: Request, res: Response) => {
     const body = req.body
     try {
+        body.id = 1;
         const response:any = await insertVenta(body)
         await manejoStock(body, response[0]?.idventa)
         res.status(200).json({
