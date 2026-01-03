@@ -9,6 +9,7 @@ import { deleteCarta, getCarta } from "../../store/actions/carta";
 import { AppDispatch } from "../../store/store";
 import { Box, Divider, Typography } from "@mui/material";
 import { Loading } from "notiflix";
+import { InfoCircle, Pencil, Trash } from "tabler-icons-react";
 
 const Carta: React.FC = () => {
     const [titulo, setTitulo] = useState<string>('Agregar');
@@ -28,7 +29,6 @@ const Carta: React.FC = () => {
     const handleCloseBaja = () => setmodalArticulosBaja({ show: false, id: 0, accion: 'b' });
     const handleClose = () => setmodalArticulos({ show: false, id: 0, accion: 'a' });
     const ModalShow = (id: number, accion: string) => setmodalArticulos({ show: true, id: id, accion: accion });
-
     const dispatch = useDispatch<AppDispatch>();
     const dataCarta = useSelector((state: any) => state.carta.getCarta.data);
     const carta = dataCarta?.data?.content;
@@ -65,10 +65,7 @@ const Carta: React.FC = () => {
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            dispatch(getCarta());
-        }
-        fetchData();
+        dispatch(getCarta());
     }, [dispatch]);
 
     const handleDeleteCarta = async (id: number) => {
@@ -89,7 +86,7 @@ const Carta: React.FC = () => {
             <Box className="row d-flex flex-wrap">
                 {/* Add Product Card */}
                 <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <Card style={{ width: '100%', borderRadius: 20, maxHeight: '100%',filter: 'drop-shadow(1px 1px 2px #000000)', }} className="m-2">
+                    <Card style={{ width: '100%', borderRadius: 20, maxHeight: '100%', filter: 'drop-shadow(1px 1px 2px #000000)', }} className="m-2">
                         <Card.Img variant="top" src={imagen} />
                         <Card.Body className="d-flex flex-column justify-content-between">
                             <Card.Title>Agregar producto</Card.Title>
@@ -109,8 +106,8 @@ const Carta: React.FC = () => {
                                 variant="top"
                                 src={item?.imagen}
                                 style={{
-                                    padding:10,
-                                    borderRadius:20,
+                                    padding: 10,
+                                    borderRadius: 20,
                                     filter: 'drop-shadow(1px 1px 2px #000000)',
                                     width: '100%',
                                     height: '300px',  // Ajusta la altura deseada
@@ -118,7 +115,7 @@ const Carta: React.FC = () => {
                                     objectPosition: 'center' // Para centrar la imagen
                                 }}
                             />
-                            <Divider style={{margin:2}}/>
+                            <Divider style={{ margin: 2 }} />
                             <Card.Body className="d-flex flex-column justify-content-between">
                                 <Card.Title className="text-center">{item.nombre}</Card.Title>
                                 <Card.Text>
@@ -132,9 +129,9 @@ const Carta: React.FC = () => {
                                     {item.descripcion}
                                 </Card.Text>
                                 <ButtonGroup size="sm" className="w-100">
-                                    <Button variant="info" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'c')}>Consultar</Button>
-                                    <Button variant="primary" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'm')}>Modificar</Button>
-                                    <Button variant="danger" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'b')}>Eliminar</Button>
+                                    <Button variant="success" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'c')}><InfoCircle /></Button>
+                                    <Button variant="danger" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'm')}><Pencil /></Button>
+                                    <Button variant="primary" className="w-100" onClick={() => manejo_acciones('', item.idcarta, 'b')}><Trash /></Button>
                                 </ButtonGroup>
                             </Card.Body>
                         </Card>

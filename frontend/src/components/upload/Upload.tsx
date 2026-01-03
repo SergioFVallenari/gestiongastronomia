@@ -1,20 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Box, Button, Typography, Link, IconButton, CircularProgress } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import api from '../../helpers';
+import { Spinner, Image, CloseButton } from 'react-bootstrap';
 
-const BASE_URL = import.meta.env.VITE_API_URL_DONFAUSTINO;
+import { Notify } from 'notiflix';
+import api from '../../helpers';
 
 interface FileUploadComponentProps {
   handleFileUploaded: (fileUrl: string) => void;
+  imagenPerfil?: string | null
+  hidden?: boolean;
 }
 
-const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUploaded }) => {
+const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUploaded, hidden = false }) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
-  const [downloadLink, setDownloadLink] = useState<string | null>(null);
-
+  const [imagen, setImagen] = useState<string | null>(null);
+  const [disabledButton, setDisabledButton] = useState<boolean>(true);
   // Definimos las restricciones para aceptar solo imágenes JPG, JPEG y PNG
   const acceptedFileTypes = {
     'image/jpeg': [],
@@ -26,8 +27,9 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       setUploadedFile(acceptedFiles[0]);
-      setDownloadLink(null); // Resetea el enlace de descarga si se selecciona un nuevo archivo
+      setImagen(null); // Resetea el enlace de descarga si se selecciona un nuevo archivo
       setUploadStatus(null); // Limpia el estado de subida
+      setDisabledButton(false); // Habilita el botón de subir
     }
   }, []);
 
@@ -36,116 +38,103 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
     multiple: false,
     accept: acceptedFileTypes, // Se añade la restricción de tipos de archivo
   });
-
-  const handleUpload = async () => {
-    if (!uploadedFile) {
-      setUploadStatus('No hay archivo seleccionado.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', uploadedFile);
-
+  const uploadFile = async (formData:any)=>{
+    setUploadStatus('Subiendo...');
     try {
-      setUploadStatus('Subiendo...');
-
-      const response = await api.post(`${BASE_URL}/upload/upload_file`, formData, {
+      
+      const response = await api.post(`/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       if (response.data) {
         const fileUrl = response.data.url;
-        setDownloadLink(fileUrl);
+        setImagen(fileUrl);
         setUploadStatus('Archivo subido con éxito.');
         setUploadedFile(null);
         handleFileUploaded(fileUrl);
+        setDisabledButton(false);
       } else {
         setUploadStatus('Error al subir el archivo.');
       }
     } catch (error: any) {
       setUploadStatus(`Error: ${error.message}`);
     }
-  };
+  }
+  useEffect(() => {
+
+    if (uploadedFile) {
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+      uploadFile(formData);
+    }
+  }, [uploadedFile])
+
 
   const handleDelete = () => {
     setUploadedFile(null);
-    setDownloadLink(null);
-    setUploadStatus('Archivo eliminado.');
+    setImagen(null);
+    setDisabledButton(true);
+    Notify.success('Archivo eliminado con éxito');
   };
 
   return (
-    <Box sx={{ padding: 3, border: '1px dashed gray', borderRadius: 2 }}>
-      <Box
+    <div className="p-3 border border-2 border-dashed rounded" style={{ borderColor: 'gray' }}>
+      <div
         {...getRootProps()}
-        sx={{
-          padding: 3,
-          border: '2px dashed #007bff',
-          borderRadius: 1,
-          textAlign: 'center',
-          cursor: 'pointer',
-        }}
+        className="p-4 border border-2 border-primary rounded text-center"
+        style={{ cursor: 'pointer' }}
+        hidden={hidden}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <Typography variant="body1">Suelta el archivo aquí...</Typography>
+          <p>Suelta el archivo aquí...</p>
         ) : (
-          <Typography variant="body1">Arrastra y suelta un archivo aquí, o haz clic para seleccionarlo</Typography>
+          <p>Arrastra y suelta un archivo aquí, o haz clic para seleccionarlo</p>
         )}
-      </Box>
+      </div>
 
-      {uploadedFile && (
-        <Box sx={{ marginTop: 2 }}>
-          <Typography variant="body2">Archivo seleccionado: {uploadedFile.name}</Typography>
-          <IconButton
-            color="secondary"
-            onClick={handleDelete}
-            sx={{ marginLeft: 1 }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      )}
+      {/* {uploadedFile && (
+        <div className="mt-3 d-flex align-items-center">
+          <small className="me-2">Archivo seleccionado: {uploadedFile.name}</small>
+          <CloseButton onClick={handleDelete} />
+        </div>
+      )} */}
 
-      <Button
+      {/* <Button
         onClick={handleUpload}
-        variant="contained"
-        color="primary"
-        sx={{ marginTop: 2 }}
+        variant="primary"
+        className="mt-3"
         disabled={!uploadedFile}
       >
         Importar
-      </Button>
-
-      {uploadStatus && (
-        <Typography variant="body2" sx={{ marginTop: 2 }}>
-          {uploadStatus}
-        </Typography>
-      )}
+      </Button> */}
 
       {uploadStatus === 'Subiendo...' && (
-        <Box sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}>
-          <CircularProgress />
-        </Box>
+        <div className="mt-3 d-flex justify-content-center">
+          <Spinner animation="border" />
+        </div>
       )}
 
-      {downloadLink && (
-        <Box sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <img src={downloadLink} alt="Imagen subida" style={{ width: '30%',filter: 'drop-shadow(1px 1px 5px #000000)' }} />
-          <Link href={downloadLink} download target="_BLANK">
-            Hacer clic para descargar el archivo
-          </Link>
-          <IconButton
-            color="secondary"
-            onClick={handleDelete}
-            sx={{ marginLeft: 1 }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
+      {imagen && (
+        <div className="mt-4 d-flex justify-content-center">
+          <div className="position-relative d-inline-block border border-2 rounded" style={{ width: '150px' }}>
+            <CloseButton
+              onClick={handleDelete}
+              className="position-absolute top-0 end-0 m-2 zindex-1"
+              disabled={disabledButton}
+            />
+            <Image
+              src={imagen}
+              alt="Imagen subida"
+              thumbnail
+              style={{ width: '100%', filter: 'drop-shadow(1px 1px 5px #000000)' }}
+            />
+          </div>
+        </div>
+
       )}
-    </Box>
+    </div>
   );
 };
 

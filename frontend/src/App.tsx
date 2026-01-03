@@ -15,30 +15,33 @@ import Carta from './Views/Carta/Carta';
 import Login from './pages/Login/Login';
 import ProtectedRoute from './pages/componentes/ProtectedRoute';
 import RedirectToAppropriatePage from './pages/componentes/Redireccion';
+import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = (): JSX.Element => {
   return (
     <ThemeProvider>
       <LoaderProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Ruta para redirigir al login o dashboard según autenticación */}
-            <Route path='/' element={<RedirectToAppropriatePage />} />
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Ruta para redirigir al login o dashboard según autenticación */}
+              <Route path='/' element={<RedirectToAppropriatePage />} />
 
-            {/* Ruta de login */}
-            <Route path='/login' element={<Login />} />
-            
-            {/* Rutas protegidas */}
-            <Route element={<ProtectedRoute />}>
-              <Route path='/dashboard' element={<Dashboard />} />
-              <Route path='/articulos' element={<Articulos />} />
-              <Route path='/ingredientes' element={<MateriaPrima />} />
-              <Route path='/compras' element={<Ingresos />} />
-              <Route path='/ventas' element={<Ventas />} />
-              <Route path='/carta' element={<Carta />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+              {/* Ruta de login */}
+              <Route path='/login' element={<Login />} />
+
+              {/* Rutas protegidas */}
+              <Route element={<ProtectedRoute />}>
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/articulos' element={<Articulos />} />
+                <Route path='/ingredientes' element={<MateriaPrima />} />
+                <Route path='/compras' element={<Ingresos />} />
+                <Route path='/ventas' element={<Ventas />} />
+                <Route path='/carta' element={<Carta />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
       </LoaderProvider>
     </ThemeProvider>
   );

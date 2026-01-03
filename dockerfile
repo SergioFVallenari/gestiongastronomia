@@ -1,19 +1,30 @@
-# Usa una imagen de Node.js como base
-FROM node:18
+# Stage 1: build frontend
+FROM node:20-slim AS frontend-builder
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci --prefer-offline --no-audit
+COPY frontend/ ./
+RUN npm run build:prod
 
-# Crea un directorio de trabajo
+# Stage 2: backend + frontend
+FROM node:20-slim
 WORKDIR /app
 
-# Copia los archivos del proyecto
-COPY backend/ .
+# Copiar backend package.json y node_modules
+COPY backend/package*.json ./
+RUN npm ci --only=production --prefer-offline --no-audit
 
-# Instala las dependencias
-RUN npm install
+# Copiar backend completo y compilar TS
+COPY backend/ ./
+RUN npm run build:prod   
+# genera dist/
 
-RUN npm run build;
+# Copiar frontend construido a /app/public
+COPY --from=frontend-builder /app/frontend/dist ./public
 
-# Expone el puerto en el que tu app escucha (ajusta según tu app)
-EXPOSE 8080
+# Puerto Cloud Run
+ENV PORT=4000
+EXPOSE 4000
 
-# Comando para iniciar la app
-CMD ["npm", "run", "start"]
+# CMD
+CMD ["npm", "start"]

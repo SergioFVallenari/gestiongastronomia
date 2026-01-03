@@ -6,6 +6,7 @@ export const getArticulos = createAsyncThunk('/articulos/get_articulos', async (
         const response = await api.post('/articulos/get_articulos');
         return response
     } catch (error) {
+        console.log(error);
         return error;
     }
 });

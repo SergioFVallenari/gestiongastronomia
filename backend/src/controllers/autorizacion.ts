@@ -1,6 +1,5 @@
 import { Router, Response, Request } from 'express';
 import Autorizacion from '../class/class_autorizacion';
-const { login } = new Autorizacion();
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
@@ -8,7 +7,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key';
 
-const router = Router()
+const router = Router();
+
+const { login } = new Autorizacion();
 
 router.post('/login', async (req: Request, res: Response) => {
     const { username, password } = req.body;

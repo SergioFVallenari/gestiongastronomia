@@ -1,6 +1,6 @@
 import PageLayout from "../../layouts/PageLayout";
 import React, { useState } from "react";
-import { Card } from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 import {
   BarChart,
   Bar,
@@ -99,80 +99,95 @@ const Dashboard: React.FC = (): JSX.Element => {
     const categoria: Categoria = data.name.toLowerCase() as Categoria; // Convertir el nombre en el tipo correcto
     setCategoriaSeleccionada(categoria);
   };
-
+  const itsTrue = false;
   return (
-    <PageLayout label="Dashboard">
-      {/* Gráfico de Ventas por Período (Barras) y Distribución de Categorías (Torta) lado a lado */}
-      <Card className="p-3 m-2 shadow">
-        <h3>Ventas Totales por {periodo}</h3>
-        <div>
-          <button onClick={() => setPeriodo("mes")}>Mensual</button>
-          <button onClick={() => setPeriodo("semana")}>Semanal</button>
-          <button onClick={() => setPeriodo("dia")}>Diario</button>
-        </div>
+    <>
+      <PageLayout label="Dashboard">
+        <Container>
+          {
+            !itsTrue ? <Card className="p-3 m-2 shadow">
+              <Alert variant="success">
+                <Alert.Heading className="text-center">Próximamente...</Alert.Heading>
+                <p className="text-center">
+                  Estamos trabajando arduamente para traerte estadísticas detalladas sobre las ventas, categorías y productos más vendidos. ¡Mantente atento a las próximas actualizaciones!
+                </p>
+              </Alert>
+            </Card> : <>
+            <Card className="p-3 m-2 shadow">
+              <h3>Ventas Totales por {periodo}</h3>
+              <div>
+                <button onClick={() => setPeriodo("mes")}>Mensual</button>
+                <button onClick={() => setPeriodo("semana")}>Semanal</button>
+                <button onClick={() => setPeriodo("dia")}>Diario</button>
+              </div>
 
-        <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-          <BarChart width={600} height={300} data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="ventas" fill="#8884d8" />
-          </BarChart>
-        </div>
-      </Card>
-      <Card className="p-3 m-2 shadow">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          {/* Gráfico de torta (Distribución por categorías) */}
-          <div style={{ flex: 1, marginRight: "20px" }}>
-            <h3>Distribución de Ventas por Categoría</h3>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={categorias}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                fill="#8884d8"
-                label
-                onClick={manejarClicCategoria}
-              >
-                {categorias.map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colores[index % colores.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
+              <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
+                <BarChart width={600} height={300} data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="ventas" fill="#8884d8" />
+                </BarChart>
+              </div>
+            </Card>
+            <Card className="p-3 m-2 shadow">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                {/* Gráfico de torta (Distribución por categorías) */}
+                <div style={{ flex: 1, marginRight: "20px" }}>
+                  <h3>Distribución de Ventas por Categoría</h3>
+                  <PieChart width={400} height={400}>
+                    <Pie
+                      data={categorias}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      fill="#8884d8"
+                      label
+                      onClick={manejarClicCategoria}
+                    >
+                      {categorias.map((_entry, index) => (
+                        <Cell key={`cell-${index}`} fill={colores[index % colores.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </div>
 
-          {/* Gráfico de barras (Productos más vendidos) */}
-          <div style={{ flex: 1, maxWidth: "100%", overflowX: "auto", marginTop: "20px" }}>
-            {categoriaSeleccionada ? (
-              <>
-                <h3>Productos más Vendidos en {categoriaSeleccionada}</h3>
-                {productosCategoria.length > 0 ? (
-                  <div style={{ width: "100%", overflowX: "auto" }}>
-                    <BarChart width={600} height={300} data={productosCategoria}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" tick={false} />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="ventas" fill="#8884d8" />
-                    </BarChart>
-                  </div>
-                ) : (
-                  <h4>No hay productos disponibles para esta categoría.</h4>
-                )}
-              </>
-            ) : (
-              <h3>Selecciona una categoría de la torta para ver los productos más vendidos.</h3>
-            )}
-          </div>
-        </div>
-      </Card>
-    </PageLayout>
+                {/* Gráfico de barras (Productos más vendidos) */}
+                <div style={{ flex: 1, maxWidth: "100%", overflowX: "auto", marginTop: "20px" }}>
+                  {categoriaSeleccionada ? (
+                    <>
+                      <h3>Productos más Vendidos en {categoriaSeleccionada}</h3>
+                      {productosCategoria.length > 0 ? (
+                        <div style={{ width: "100%", overflowX: "auto" }}>
+                          <BarChart width={600} height={300} data={productosCategoria}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={false} />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="ventas" fill="#8884d8" />
+                          </BarChart>
+                        </div>
+                      ) : (
+                        <h4>No hay productos disponibles para esta categoría.</h4>
+                      )}
+                    </>
+                  ) : (
+                    <h3>Selecciona una categoría de la torta para ver los productos más vendidos.</h3>
+                  )}
+                </div>
+              </div>
+            </Card>
+          </>
+          }
+        </Container>
+      </PageLayout>
+    </>
+
   );
 };
 

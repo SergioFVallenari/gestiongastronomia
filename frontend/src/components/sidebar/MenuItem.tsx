@@ -39,7 +39,7 @@ interface IMenuItem {
 const MenuItem: React.FC<IMenuItem> = ({ item }) => {
   const location = useLocation();
   const activar = location.pathname.split('/')[1].toLowerCase();
-  const Icon = iconMapping[item.icon]; // Mapea el ícono
+  const Icon = iconMapping[item.icon];
 
   function changeText(text: string) {
     switch (text) {
@@ -54,24 +54,24 @@ const MenuItem: React.FC<IMenuItem> = ({ item }) => {
 
   return (
     <Item className={`mc-sidebar-menu-item ${activar === changeText(item.text) ? 'active' : ''}`}>
-      {item.submenu ? (
-        <List className='mc-sidebar-dropdown-list'>
-          {item.submenu.map((submenuItem, index) => (
-            <>
+      {item.submenu && item.submenu.length > 0 ? (
+        <>
+          <span className="mc-sidebar-menu-btn">
+            {Icon && <Icon fontSize="small" className="mc-sidebar-menu-icon" />}
+            <span>{item.text}</span>
+          </span>
+          <List className='mc-sidebar-dropdown-list'>
+            {item.submenu.map((submenuItem, index) => (
               <Item key={index} className='mc-sidebar-dropdown-item'>
                 <Anchor href={submenuItem.href} className='mc-sidebar-dropdown-link'>
                   {submenuItem.text}
                 </Anchor>
               </Item>
-            </>
-          ))}
-        </List>
+            ))}
+          </List>
+        </>
       ) : (
-        <Anchor
-          hidden={item.hide}
-          href={item.href}
-          className='mc-sidebar-menu-btn'
-        >
+        <Anchor hidden={item.hide} href={item.href} className='mc-sidebar-menu-btn'>
           {Icon && <Icon fontSize="small" className="mc-sidebar-menu-icon" />}
           <span>{item.text}</span>
         </Anchor>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface IItem {
-  className: string;
+  className?: string;
   children: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLLIElement>;
 }

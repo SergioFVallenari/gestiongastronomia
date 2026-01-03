@@ -5,6 +5,9 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import { Storage } from '@google-cloud/storage';
 import path from 'path';
+import { bucket } from "../lib/firebase";
+import { v4 as uuid } from "uuid";
+import sharp from "sharp";
 dotenv.config();
 const secretKey = process.env.JWT_SECRET || 'fallback_secret_key';
 
@@ -52,20 +55,41 @@ export const decodeToken = (token: string) => {
 }
 
 export const storage = new Storage({
-  keyFilename: path.join(__dirname, '../config/donfaustino-5039d47db9f6.json')
+  keyFilename: path.join(__dirname, '../config/donfaustino-f89de133183f.json')
 });
 
-export const upload = (bucketName: string) => {
-  const bucket = storage.bucket(bucketName);
-  const multe = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-      fileSize: 5 * 1024 * 1024, // no larger than 5mb
+export const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
+const uniqueName = (original: string) => {
+  const ext = path.extname(original);
+  const base = path.basename(original, ext).replace(/\s+/g, "_");
+  return `${base}_${Date.now()}${ext}`;
+};
+
+export const uploadToFirebase = async (file: Express.Multer.File): Promise<string> => {
+  if (!file) throw new Error("No file uploaded");
+  const webP = await sharp(file.buffer).webp({ quality: 80 }).toBuffer();
+  const dest = `uploads/${uniqueName(file.originalname)}`;
+  const gcsFile = bucket.file(dest);
+  const token = uuid();
+
+  await gcsFile.save(webP, {
+    contentType: file.mimetype,
+    resumable: false,
+    metadata: {
+      cacheControl: "public, max-age=3600",
+      metadata: {
+        firebaseStorageDownloadTokens: token,
+      },
     },
   });
 
-  return multe;
-}
+  const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(dest)}?alt=media&token=${token}`;
+  return publicUrl;
+};
 
 export const skuVerify = async (sku: string) => {
   const skuList = await spGeneral("donfaustino_get_sku_list()", []);

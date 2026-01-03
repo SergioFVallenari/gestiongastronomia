@@ -1,11 +1,6 @@
 import {Request, Response, Router } from 'express'
-<<<<<<< HEAD
-import axios from 'axios'
-import classArticulos from '../class/class_articulos'
-=======
 import classArticulos from '../class/class_articulos'
 import { skuVerify } from '../helpers';
->>>>>>> origin/main
 const {crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo} = new classArticulos()
 
 const app = Router()
@@ -13,13 +8,10 @@ const app = Router()
 app.post('/alta_articulos', async (req: Request, res: Response) => {
     const body = req.body
     try {
-<<<<<<< HEAD
-=======
         const haySku = await skuVerify(body.sku)
         if (haySku) {
             throw new Error('El SKU ya existe')
         }
->>>>>>> origin/main
         const response = await crearArticulo(body)
         res.status(200).json(
             {
@@ -28,16 +20,11 @@ app.post('/alta_articulos', async (req: Request, res: Response) => {
                 content: response
             }
         )
-<<<<<<< HEAD
-    } catch (error) {
-        
-=======
     } catch (error:any) {
         res.status(409).json({
             info: false,
             msg: error.message || 'Ocurrió un error',
         });
->>>>>>> origin/main
     }
 
 });

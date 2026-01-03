@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Tab, Tabs } from "react-bootstrap";
+import { Container, Image, Tab, Tabs } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 // import Select from 'react-select';
 import api from "../../helpers";
@@ -403,10 +403,13 @@ const FormCarta: React.FC<iFormCarta> = ({
                 <Autocomplete
                   sx={{ mt: 2 }}
                   multiple
-                  options={ingredientes}
+                  options={ingredientes.filter((ingrediente) => 
+                    !ingredientesSeleccionados.some((seleccionado) => 
+                      seleccionado.value === ingrediente.value || seleccionado.id === ingrediente.value
+                    )
+                  )}
                   value={ingredientesSeleccionados}
                   getOptionLabel={(option) => option.label} // Maneja tanto `label` como `nombre`
-                  filterSelectedOptions
                   disabled={formDisabled}
                   onChange={handleAutocompleteChange}
                   renderTags={(value, getTagProps) =>
@@ -444,7 +447,7 @@ const FormCarta: React.FC<iFormCarta> = ({
                     disabled
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-2">
                   <TextField
                     type="number"
                     className="form-control"
@@ -454,10 +457,20 @@ const FormCarta: React.FC<iFormCarta> = ({
                     disabled={formDisabled}
                   />
                 </div>
+                <div className="col-md-2 d-flex align-items-center">
+                  <Chip 
+                    label="gramos" 
+                    variant="outlined" 
+                    size="small"
+                    color="primary"
+                  />
+                </div>
               </div>
             ))}
           </Tab>
           <Tab eventKey="imagen" title="Imagen">
+            <Container className="d-flex flex-column align-items-center">
+
             <Divider style={{ margin: 2 }} />
             {
               accion !== 'c' && <FileUploadComponent handleFileUploaded={handleUpload} />
@@ -465,9 +478,10 @@ const FormCarta: React.FC<iFormCarta> = ({
             <Divider style={{ margin: 2 }} />
             {
               accion === "m" || accion === "c" ?
-                <Image src={getValues("imagen")} alt="Imagen del producto" style={{ filter: 'drop-shadow(1px 1px 5px #000000)', width:'60%', height:'auto'  }} fluid className='p-2' />
-                : null
+              <Image src={getValues("imagen")} alt="Imagen del producto" style={{ filter: 'drop-shadow(1px 1px 5px #000000)', width:'40%', height:'auto'  }} fluid className='p-2' />
+              : null
             }
+            </Container>
           </Tab>
         </Tabs>
         <div className="col-md-4">

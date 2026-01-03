@@ -27,15 +27,6 @@ export default class MateriaPrima{
     }
     async modificaMateriaPrima(body:any){
         const formateo = await masajeo(body);
-<<<<<<< HEAD
-        const result = await spGeneral("donfaustino_update_materia_prima(:xid, :xnombre,:xprecio_costo,:xcategoria_materia_prima,:xpeso_gramos)",formateo);
-        return result;
-    }
-    async calcularCosto(body:any){
-        const formateo = await masajeo(body);
-        const result = await spGeneral("donfaustino_calcular_precio_costo(:xjson_ingredientes)",formateo);
-        return result;
-=======
         const result = await spGeneral("donfaustino_update_materia_prima(:xid, :xnombre,:xprecio_costo,:xcategoria_materia_prima,:xpeso_gramos,:xjson_ingredientes)",formateo);
         return result;
     }
@@ -51,6 +42,5 @@ export default class MateriaPrima{
             default: 
             return;
         }
->>>>>>> origin/main
     }
 }

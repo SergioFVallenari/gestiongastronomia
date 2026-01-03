@@ -54,7 +54,7 @@ const FormVentas: React.FC = () => {
       (art: any) => art.sku === watchedFields[0]
     );
     if (articuloSeleccionado && watchedFields[2] > 0) {
-      console.log("Articulo seleccionado:", articuloSeleccionado);
+
       setComandas((prev) => [
         ...prev,
         {
@@ -74,6 +74,11 @@ const FormVentas: React.FC = () => {
           articuloSeleccionado.precio_venta * watchedFields[2]
       );
       setValue(
+        "importeReal",
+        getValues("importeReal") +
+          articuloSeleccionado.precio_venta * watchedFields[2]
+      )
+      setValue(
         "ganancia",
         getValues("ganancia") +
           (Number(articuloSeleccionado.precio_venta) -
@@ -88,7 +93,7 @@ const FormVentas: React.FC = () => {
       (crt: any) => crt.sku === watchedFields[1]
     );
     if (cartaSeleccionada && watchedFields[3] > 0) {
-      console.log("Carta seleccionada:", cartaSeleccionada);
+
       setComandas((prev) => [
         ...prev,
         {
@@ -108,6 +113,11 @@ const FormVentas: React.FC = () => {
         getValues("importeTotal") +
           cartaSeleccionada.precio_venta * watchedFields[3]
       );
+      setValue(
+        "importeReal",
+        getValues("importeReal") +
+          cartaSeleccionada.precio_venta * watchedFields[3]
+      )
       setValue(
         "ganancia",
         getValues("ganancia") +
@@ -129,7 +139,6 @@ const FormVentas: React.FC = () => {
       ganancia: data.ganancia,
       propina: data.importeReal > data.importeTotal ? data.importeReal - data.importeTotal : 0,
     }).then((response) => {
-      console.log(response)
       if (response.info) {
         Loading.remove();
         EnviarMensaje("success", "Venta guardada exitosamente");
@@ -202,7 +211,9 @@ const FormVentas: React.FC = () => {
       setValue("carta", ""); // Deseleccionar la Carta
     }
   };
-  
+  const articuloOptions = articulos?.map((a:any)=>({ label: a.nombre, value: a.sku })) ?? [];
+const cartaOptions    = carta?.map((c:any)=>({ label: c.nombre,  value: c.sku })) ?? [];
+
 
   return (
     <BoxMui className="row mt-2 mb-2">
@@ -216,6 +227,7 @@ const FormVentas: React.FC = () => {
                 label: articulo.nombre,
                 value: articulo.sku,
               }))}
+              value={articuloOptions.find((o:any) => o.value === watch("articulo")) || null}
               onChange={(e: any) => setValue("articulo", e ? e.value : "")}
               isSearchable
               isClearable
@@ -251,6 +263,7 @@ const FormVentas: React.FC = () => {
                 label: articulo.nombre,
                 value: articulo.sku,
               }))}
+              value={cartaOptions.find((o:any) => o.value === watch("carta")) || null}
               onChange={(e: any) => setValue("carta", e ? e.value : "")}
               isSearchable
               isClearable

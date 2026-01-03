@@ -15,7 +15,9 @@ import FormIngresos from "./FormIngresos";
 import { EnviarMensaje } from "../herramientas/General/General";
 import api from "../../helpers";
 
+
 const Ingresos: React.FC = (): JSX.Element => {
+
   const {
     register,
     handleSubmit,
@@ -242,9 +244,8 @@ const Ingresos: React.FC = (): JSX.Element => {
                             message: "El valor mínimo es 0.01",
                           },
                         })}
-                        className={`form-control ${
-                          errors.cantidad ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.cantidad ? "is-invalid" : ""
+                          }`}
                         aria-describedby="cantidad-tooltip"
                       />
                     </div>
@@ -257,15 +258,15 @@ const Ingresos: React.FC = (): JSX.Element => {
                 </div>
 
                 <div className="col-md-3">
-                  <Form>
-                    <Form.Check
-                      id="checkPrecio"
-                      type="switch"
-                      label="Modificar Precio?"
-                      {...register("checkPrecio")}
-                      onChange={handleCheckPrecio}
-                    />
-                  </Form>
+
+                  <Form.Check
+                    id="checkPrecio"
+                    type="switch"
+                    label="Modificar Precio?"
+                    {...register("checkPrecio")}
+                    onChange={handleCheckPrecio}
+                  />
+
                   <div>
                     <input
                       type="number"

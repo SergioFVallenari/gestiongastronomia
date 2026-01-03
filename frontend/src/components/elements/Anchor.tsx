@@ -34,7 +34,7 @@ const Anchor: React.FC<IAnchor> = ({ hidden, onClick, className, target, href, i
       </Link>
       {
         text !== 'cerrar sesión' &&
-      <Divider sx={{m:2}} component='li'/>
+      <Divider sx={{m:2}} component='div'/>
       }
     </div>
   );

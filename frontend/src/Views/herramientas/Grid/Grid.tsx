@@ -41,13 +41,13 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 break;
             case 'ventas':
                 btn = btnConsulta;
-                break;    
+                break;
             default:
                 btn = '';
         }
-        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" + 
-        "<button title='" + data + "' class='btn-default p-0 btn-sm dropdown-toggle btn-grid' type='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-         + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
+        return "<div class='dropdown pb-1 pt-1 ps-3 pe-3'>" +
+            "<button title='" + data + "' class='btn-default p-0 btn-sm dropdown-toggle btn-grid' type='button' data-bs-toggle='dropdown' aria-expanded='false'>"
+            + "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-gear' viewBox='0 0 16 16'>" + "<path d='M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z'/>" + "<path d='M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z'/>" + '</svg>' + '</button>' + "<ul class='dropdown-menu'>" + btn + '</ul>' + '</div>';
     }
     const getColumnsByOrigen = (origen: string) => {
         let columns: any = [];
@@ -74,7 +74,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 break;
             }
             case 'materia_prima': {
-                columns=[
+                columns = [
                     { data: 'id', title: '', searcheable: false, width: '1%', class: 'text-center' },
                     { data: 'nombre', title: 'Nombre', class: 'text-center' },
                     { data: 'sku', title: 'SKU', class: 'text-center' },
@@ -83,7 +83,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     // { data: 'peso', title: 'Cantidad Disponible', class: 'text-center' },
                     { data: 'fecha_mod', title: 'Ultima Modificación', class: 'text-center' },
                 ]
-            break;
+                break;
             }
             case 'ventas': {
                 columns = [
@@ -93,7 +93,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     { data: 'ganancia', title: 'Ganancia', class: 'text-center' },
                 ]
             }
-            break;
+                break;
             default:
                 columns = [];
         }
@@ -127,10 +127,10 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                                     data = JSON.parse(data);
                                 } catch (error) {
                                     console.error('Error parsing JSON:', error);
-                                    return ''; 
+                                    return '';
                                 }
                             }
-            
+
 
                             if (!Array.isArray(data)) {
                                 console.warn('Expected an array but got:', data);
@@ -143,42 +143,42 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                                     cantidad: articulo.cantidad,
                                 };
                             });
-            
+
                             const jsonString = JSON.stringify(formateo);
-                            
+
                             const maxLength = 50
-            
+
                             const formattedString = jsonString.replace(/\\/g, '').replace(/"/g, '');
-            
-                            return formattedString.length > maxLength 
-                                ? formattedString.substring(0, maxLength) + '...' 
+
+                            return formattedString.length > maxLength
+                                ? formattedString.substring(0, maxLength) + '...'
                                 : formattedString;
                         },
                     },
                 ];
-                case 'materia_prima':
-                   return [
-                        {
-                            targets: [0],
-                            render: function (data: any, _type: any, full: any) {
-                                return getButtonOpciones(data, origen, full);
+            case 'materia_prima':
+                return [
+                    {
+                        targets: [0],
+                        render: function (data: any, _type: any, full: any) {
+                            return getButtonOpciones(data, origen, full);
 
-                            },
                         },
-                        {
-                            targets: [3],
-                            render: function(data:any, _type:any, _full:any){
-                                return '$ ' + data
-                            }
-                        },
-                        {
-                            targets:[4],
-                            render: function (data:any,_type:any,_full:any){
-                                return data + 'kg'
-                            }
+                    },
+                    {
+                        targets: [3],
+                        render: function (data: any, _type: any, _full: any) {
+                            return '$ ' + data
                         }
-                        
-                    ]
+                    },
+                    {
+                        targets: [4],
+                        render: function (data: any, _type: any, _full: any) {
+                            return data + 'kg'
+                        }
+                    }
+
+                ]
             default:
                 return [
                     {
@@ -204,7 +204,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 break;
             case 'ventas':
                 url = `${VITE_API_URL_DONFAUSTINO}/ventas/get_ventas`;
-                break;    
+                break;
             default:
                 return '';
         }
@@ -220,7 +220,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'materia_prima':
                 return 'POST';
             case 'ventas':
-                return 'POST';        
+                return 'POST';
             default:
                 return 'POST';
         }
@@ -242,7 +242,7 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
             case 'articulos':
                 return [1, 2, 3, 4, 5, 6];
             case 'materia_prima':
-                return [1, 2, 3, 4, 5];    
+                return [1, 2, 3, 4, 5];
             default:
                 return [];
         }
@@ -267,9 +267,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                 text: 'Exportar',
                 className: 'btn btn-primary rounded-pill',
                 buttons: [
-                    { extend: 'excel', title:'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
-                    { extend: 'pdfHtml5',title:'DonFaustino ' + origen ,orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
-                    { extend: 'csv',title:'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
+                    { extend: 'excel', title: 'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
+                    { extend: 'pdfHtml5', title: 'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen), grouped_array_index: [groupColumn] } },
+                    { extend: 'csv', title: 'DonFaustino ' + origen, orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
                     { extend: 'print', orientation: getExportOrientation(origen), exportOptions: { columns: getColumnasExportar(origen) } },
                 ],
             },
@@ -315,9 +315,8 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
         return JSON.stringify(data);
     };
 
-
     const tableOp: React.RefObject<HTMLTableElement> = useRef(null);
-    useEffect(() => { 
+    useEffect(() => {
         if (tableOp.current) {
 
             $(tableOp.current).DataTable({
@@ -335,9 +334,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     dataSrc: function (json: any) {
                         if (json && json.content) {
                             dispatch(setDataForGrid({ origen: origen, data: json.content }));
-                            return json.content; // Retorna los datos en el formato que DataTables espera
+                            return json.content;
                         }
-                        return []; // Si no hay datos, retornar un array vacío
+                        return [];
                     },
                     data: function () {
                         return getDataOrigen(origen);

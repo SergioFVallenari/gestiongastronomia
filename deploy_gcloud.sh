@@ -10,4 +10,4 @@ gcloud run deploy donfaustino \
     --region=southamerica-west1 \
     --platform=managed \
     --allow-unauthenticated \
-    --port=8080
+    --port=4000
