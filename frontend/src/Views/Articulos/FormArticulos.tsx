@@ -2,6 +2,13 @@ import { useForm } from 'react-hook-form';
 import DonFaustinoLoad, { EnviarMensaje } from '../herramientas/General/General';
 import { useEffect, useState } from 'react';
 import api from '../../helpers';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface FormArticulosProps {
     accion: string; // 'a' para alta, 'm' para modificar, 'v' para visualizar (consulta)
@@ -101,78 +108,150 @@ const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSub
     }
     return (
         <>
-            <form className='row' onSubmit={handleSubmit(onSubmit)}>
+            <form className='row mt-3' onSubmit={handleSubmit(onSubmit)}>
                 <div className='col-md-4'>
                     <div className='mb-3'>
-                        <label className='form-label'>Artículo</label>
-                        <input type='text' className='form-control' {...register('nombre', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
-                        {errors.nombre && <span className='text-danger'>{errors.nombre.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Sku</label>
-                        <input type='text' className='form-control' {...register('sku', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} onBlur={handleSkuChange} />
-                        {errors.sku && <span className='text-danger'>{errors.sku.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Precio Costo</label>
-                        <input type='text' className='form-control' {...register('precio_costo', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
-                        {errors.precio_costo && <span className='text-danger'>{errors.precio_costo.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Precio Venta</label>
-                        <input type='text' className='form-control' {...register('precio_venta', { required: 'Obligatorio' })} disabled={accion === 'c' && formDisabled} />
-                        {errors.precio_venta && <span className='text-danger'>{errors.precio_venta.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Cantidad</label>
-                        <input type='text' className='form-control' {...register('cantidad', { required: 'Obligatorio' })} disabled={accion !== 'a' && formDisabled} />
-                        {errors.cantidad && <span className='text-danger'>{errors.cantidad.message}</span>}
-                    </div>
-                </div>
-                <div className='col-md-4'>
-                    <div className='mb-3'>
-                        <label className='form-label'>Categoría</label>
-                        <select
-                            className='form-control'
-                            {...register('categoria_articulo', { required: 'Obligatorio' })}
-                            disabled={accion === 'c' && formDisabled}
-                            onChange={(e) => {
-                                // Si se selecciona 'Otra categoría', mostrar el input
-                                if (e.target.value === 'otra') {
-                                    setMostrarInputCategoria(true); // Cambia esta variable de estado según lo necesites
-                                } else {
-                                    setMostrarInputCategoria(false);
-                                }
+                        <TextField
+                            label="Artículo"
+                            fullWidth
+                            variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
                             }}
-                        >
-                            <option value=''>Selecciona una categoría</option>
-                            {categorias.map(categoria => (
-                                <option key={categoria.id_valor_modulo} value={categoria.id_valor_modulo}>
-                                    {categoria.valor_modulo.toUpperCase()}
-                                </option>
-                            ))}
-                            <option value='otra'>Otra categoría</option> {/* Opción extra */}
-                        </select>
-                        {errors.categoria_articulo && <span className='text-danger'>{errors.categoria_articulo.message}</span>}
+                            {...register('nombre', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled}
+                            error={!!errors.nombre}
+                            helperText={errors.nombre?.message}
+                        />
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <TextField
+                            label="Sku"
+                            fullWidth
+                            variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
+                            {...register('sku', { required: 'Obligatorio' })}
+                            disabled={accion !== 'a' && formDisabled}
+                            onBlur={handleSkuChange}
+                            error={!!errors.sku}
+                            helperText={errors.sku?.message}
+                        />
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <TextField
+                            label="Precio Costo"
+                            type="number"
+                            fullWidth
+                            variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
+                            {...register('precio_costo', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled}
+                            error={!!errors.precio_costo}
+                            helperText={errors.precio_costo?.message}
+                        />
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <TextField
+                            label="Precio Venta"
+                            type="number"
+                            fullWidth
+                            variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
+                            {...register('precio_venta', { required: 'Obligatorio' })}
+                            disabled={accion === 'c' && formDisabled}
+                            error={!!errors.precio_venta}
+                            helperText={errors.precio_venta?.message}
+                        />
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <TextField
+                            label="Cantidad"
+                            type="number"
+                            fullWidth
+                            variant="outlined"
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: true,
+                                },
+                            }}
+                            {...register('cantidad', { required: 'Obligatorio' })}
+                            disabled={accion !== 'a' && formDisabled}
+                            error={!!errors.cantidad}
+                            helperText={errors.cantidad?.message}
+                        />
+                    </div>
+                </div>
+                <div className='col-md-4'>
+                    <div className='mb-3'>
+                        <FormControl fullWidth variant="outlined" error={!!errors.categoria_articulo}>
+                            <InputLabel>Categoría</InputLabel>
+                            <Select
+                                label="Categoría"
+                                {...register('categoria_articulo', { required: 'Obligatorio' })}
+                                disabled={accion === 'c' && formDisabled}
+                                onChange={(e) => {
+                                    // Si se selecciona 'Otra categoría', mostrar el input
+                                    if (e.target.value === 'otra') {
+                                        setMostrarInputCategoria(true);
+                                    } else {
+                                        setMostrarInputCategoria(false);
+                                    }
+                                }}
+                                defaultValue=""
+                            >
+                                <MenuItem value="">Selecciona una categoría</MenuItem>
+                                {categorias.map(categoria => (
+                                    <MenuItem key={categoria.id_valor_modulo} value={categoria.id_valor_modulo}>
+                                        {categoria.valor_modulo.toUpperCase()}
+                                    </MenuItem>
+                                ))}
+                                <MenuItem value="otra">Otra categoría</MenuItem>
+                            </Select>
+                            {errors.categoria_articulo && <FormHelperText>{errors.categoria_articulo.message}</FormHelperText>}
+                        </FormControl>
 
                         {/* Si la opción 'Otra categoría' es seleccionada, mostrar un campo de entrada */}
                         {mostrarInputCategoria && (
                             <>
-                                <input
-                                    type="text"
-                                    className="form-control mt-2"
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
                                     placeholder="Escribe una categoría personalizada"
                                     {...register('categoria_nueva', { required: 'Debes ingresar una categoría personalizada' })}
+                                    error={!!errors.categoria_nueva}
+                                    helperText={errors.categoria_nueva?.message}
+                                    sx={{ mt: 2 }}
                                 />
-                                <button className='btn btn-secondary m-2' onClick={agregarCategoria} type='button'>Agregar</button>
+                                <Button 
+                                    variant="outlined" 
+                                    onClick={agregarCategoria} 
+                                    type="button"
+                                    sx={{ mt: 2, ml: 2 }}
+                                >
+                                    Agregar
+                                </Button>
                             </>
                         )}
                     </div>
@@ -180,12 +259,24 @@ const FormArticulos: React.FC<FormArticulosProps> = ({ accion, idArticulo, onSub
 
                 <hr></hr>
                 <div className='col-md-6'>
-                    <button className='btn btn-primary m-2' type='submit' disabled={accion === 'c' && formDisabled}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        type="submit" 
+                        disabled={accion === 'c' && formDisabled}
+                        sx={{ m: 2 }}
+                    >
                         Guardar
-                    </button>
-                    <button className='btn btn-danger' type='button' onClick={() => onSubmitSuccess()}>
+                    </Button>
+                    <Button 
+                        variant="outlined" 
+                        color="error" 
+                        type="button" 
+                        onClick={() => onSubmitSuccess()}
+                        sx={{ m: 2 }}
+                    >
                         Cancelar
-                    </button>
+                    </Button>
                 </div>
             </form>
         </>

@@ -43,4 +43,17 @@ export default class MateriaPrima{
             return;
         }
     }
+    async modificarMasivo(data:any){
+        let result = [];
+        for(const articulo of data){
+            if(!articulo.sku || !articulo.cantidad_disponible || !articulo.precio_costo){
+                result.push({error: `${!articulo.sku ? 'SKU' : !articulo.cantidad_disponible ? 'Cantidad' : 'Precio Costo'} vacío para artículo ${articulo.nombre}`});
+                continue;
+            };
+            const formateado = await masajeo({sku:articulo.sku, precio_costo: articulo.precio_costo, cantidad: articulo.cantidad_disponible.replace(/\s+|kg/gi, '')});
+            await spGeneral("donfaustino_modificar_masivo_ingredientes(:xsku, :xprecio_costo, :xcantidad)", formateado);
+            result.push({success: `Artículo ${articulo.nombre} modificado correctamente`});
+        }
+        return result;
+    }
 }

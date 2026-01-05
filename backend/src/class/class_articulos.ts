@@ -28,4 +28,19 @@ export default class Articulos{
         const result = await spGeneral("donfaustino_update_articulos(:xid, :xnombre, :xprecio_costo, :xprecio_venta, :xcategoria_articulo)",formateado);
         return result;
     }
+
+    async modificarMasivo(data:any){
+        console.log(data,'dataaa');
+        let result = [];
+        for(const articulo of data){
+            if(!articulo.sku){
+                result.push({error: `SKU vacío para artículo ${articulo.nombre}`});
+                continue;
+            };
+            const formateado = await masajeo({sku:articulo.sku, precio_costo: articulo.precio_costo, precio_venta: articulo.precio_venta});
+            await spGeneral("donfaustino_modificar_masivo(:xsku, :xprecio_costo, :xprecio_venta)", formateado);
+            result.push({success: `Artículo ${articulo.nombre} modificado correctamente`});
+        }
+        return result;
+    }
 }

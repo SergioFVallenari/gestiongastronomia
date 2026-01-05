@@ -251,7 +251,7 @@ const cartaOptions    = carta?.map((c:any)=>({ label: c.nombre,  value: c.sku })
               onClick={handleAddArticulo}
               disabled={watchedFields[0] === "" || watchedFields[2] <= 0}
             >
-              Add
+              +
             </Button>
           </div>
         </Row>
@@ -288,7 +288,7 @@ const cartaOptions    = carta?.map((c:any)=>({ label: c.nombre,  value: c.sku })
               onClick={handleAddCarta}
               disabled={watchedFields[1] === "" || watchedFields[3] <= 0}
             >
-              Add
+              +
             </Button>
           </div>
           <div className="col-md-6">

@@ -1,10 +1,13 @@
-import { Card, Tab, Tabs } from "react-bootstrap";
+import { Button, Card, Tab, Tabs } from "react-bootstrap";
 import PageLayout from "../../layouts/PageLayout";
 import Grid from "../herramientas/Grid/Grid";
 import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
 import api from "../../helpers";
 import { useState } from "react";
 import FormMateriaPrima from "./FormMateriaPrima";
+import ImportarIngredientes from "./ImportarIngredientes";
+import $ from 'jquery';
+
 
 const MateriaPrima: React.FC = (): JSX.Element => {
   //Estados
@@ -20,6 +23,11 @@ const MateriaPrima: React.FC = (): JSX.Element => {
   //   id: 0,
   //   accion: 'a',
   // });
+  const [modalImportar, setmodalImportar] = useState({
+    show: false,
+    id: 0,
+    accion: 'i',
+  });
   const [recargaGridMateriaPrima, setRecargaGridMateriaPrima] = useState<string>('');
   const [titulo, setTitulo] = useState<string>('MateriaPrima');
 
@@ -31,6 +39,10 @@ const MateriaPrima: React.FC = (): JSX.Element => {
   const ModalBajaShow = (id: number, accion: string) => setmodalBaja({ show: true, id: id, accion: accion });
   const ModalClose = () => setmodalMateriaPrima({ show: false, id: 0, accion: 'a' });
   const ModalShow = (id: number, accion: string) => setmodalMateriaPrima({ show: true, id: id, accion: accion });
+
+  const ModalImportarShow = (id: number, accion: string) => setmodalImportar({ show: true, id: id, accion: accion });
+  const ModalCloseImportar = () => setmodalImportar({ show: false, id: 0, accion: 'i' });
+
   const manejo_acciones = (_origen: string, registro: number, accion: string) => {
     switch (accion) {
       case 'a': {
@@ -55,12 +67,65 @@ const MateriaPrima: React.FC = (): JSX.Element => {
         setFormDisabled(true);
         break;
       }
+      case 'i': {
+        ModalImportarShow(registro, accion);
+        setTitulo('Importar/Modificar');
+        setFormDisabled(false);
+        break;
+      }
       default:
         break;
     }
   }
   const handleDelete = (id: number | string) => {
     api.put(`/materia_prima/baja_materia_prima`, { id: id })
+  }
+   const handleDownloadTemplate = () => {
+    try {
+      if ($.fn.DataTable.isDataTable('#tabla_materia_prima')) {
+        const table = $('#tabla_materia_prima').DataTable();
+        
+        const config = {
+          extend: 'excel',
+          title: 'DonFaustino materia_prima',
+          filename: 'template_materia_prima',
+          exportOptions: {
+            columns: [1, 2, 3, 4],
+            orthogonal: 'export',
+            format: {
+              body: function (data: any, column: number) {
+                if (column === 3 || column === 4) { 
+                  if (typeof data === 'string' && (data.includes('kg') || data.includes('unidades') || data.includes('litros'))) {
+                    const numbers = data.toString().replace(/[^\d.,]/g, '');
+                    return numbers || '0';
+                  }
+                }
+                return data;
+              }
+            },
+            rows: function (idx: number) {
+              const rowData = table.row(idx).data();
+              return rowData.es_compuesto == 0;
+            },
+          }
+        };
+        
+        const tableAny = table as any;
+        if (tableAny.button) {
+          tableAny.button().add(0, config);
+          tableAny.button(0).trigger();
+        } else {
+          const exportButton = $('.buttons-excel').first();
+          if (exportButton.length > 0) {
+            exportButton.get(0)?.click();
+          }
+        }
+      } else {
+        console.warn('DataTable no está inicializada');
+      }
+    } catch (error) {
+      console.error('Error al descargar template:', error);
+    }
   }
 
   //Render
@@ -71,7 +136,8 @@ const MateriaPrima: React.FC = (): JSX.Element => {
           <Card>
             <Card.Body>
               <div className="d-flex">
-                <button className="btn btn-primary mb-3" onClick={() => manejo_acciones('', 0, 'a')}>Agregar</button>
+                <Button className="btn btn-primary mb-3 me-2" onClick={() => manejo_acciones('', 0, 'a')}>Agregar</Button>
+                <Button className="btn btn-success mb-3" onClick={() => manejo_acciones('', 0, 'i')}>Importar</Button>
               </div>
               {Grid(manejo_acciones, 'materia_prima', recargaGridMateriaPrima, setRecargaGridMateriaPrima)}
               <ModalDinamico id="modal_materia_prima" manejador={modalMateriaPrima} modalTitulo={titulo} handleClose={ModalClose} sizeModal="xl">
@@ -152,8 +218,10 @@ const MateriaPrima: React.FC = (): JSX.Element => {
             </Card.Body>
           </Card>
         </Tab>
-
       </Tabs>
+      <ModalDinamico id="modal_importar_articulos" manejador={modalImportar} modalTitulo={titulo} handleClose={ModalCloseImportar} sizeModal="lg">
+        <ImportarIngredientes onDownloadTemplate={handleDownloadTemplate} />
+      </ModalDinamico>
     </PageLayout>
   )
 }

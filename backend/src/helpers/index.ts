@@ -8,6 +8,7 @@ import path from 'path';
 import { bucket } from "../lib/firebase";
 import { v4 as uuid } from "uuid";
 import sharp from "sharp";
+import crypto from "crypto";
 dotenv.config();
 const secretKey = process.env.JWT_SECRET || 'fallback_secret_key';
 
@@ -69,25 +70,76 @@ const uniqueName = (original: string) => {
   return `${base}_${Date.now()}${ext}`;
 };
 
+const generateFileHash = (buffer: Buffer): string => {
+  return crypto.createHash('md5').update(buffer).digest('hex');
+};
+
+const checkIfFileExists = async (hash: string): Promise<string | null> => {
+  try {
+    // Busca archivos con el hash en los metadatos
+    const [files] = await bucket.getFiles({
+      prefix: 'uploads/'
+    });
+    
+    for (const file of files) {
+      const [metadata] = await file.getMetadata();
+      if (metadata.metadata?.fileHash === hash) {
+        // Archivo encontrado, devolver la URL
+        const token = metadata.metadata.firebaseStorageDownloadTokens;
+        return `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(file.name)}?alt=media&token=${token}`;
+      }
+    }
+    
+    return null; // Archivo no encontrado
+  } catch (error) {
+    console.error('Error checking file existence:', error);
+    return null;
+  }
+};
+
 export const uploadToFirebase = async (file: Express.Multer.File): Promise<string> => {
   if (!file) throw new Error("No file uploaded");
-  const webP = await sharp(file.buffer).webp({ quality: 80 }).toBuffer();
-  const dest = `uploads/${uniqueName(file.originalname)}`;
+  
+  let processedBuffer = file.buffer;
+  let contentType = file.mimetype;
+  
+  // Solo procesar con Sharp si es una imagen
+  if (file.mimetype.startsWith('image/')) {
+    processedBuffer = await sharp(file.buffer).webp({ quality: 80 }).toBuffer();
+    contentType = 'image/webp';
+  }
+  
+  // Generar hash del archivo procesado
+  const fileHash = generateFileHash(processedBuffer);
+  
+  // Verificar si el archivo ya existe
+  const existingUrl = await checkIfFileExists(fileHash);
+  if (existingUrl) {
+    console.log(`Archivo ya existe, devolviendo URL existente: ${existingUrl}`);
+    return existingUrl;
+  }
+  
+  // El archivo no existe, subirlo
+  const dest = `uploads/${fileHash}_${uniqueName(file.originalname)}`;
   const gcsFile = bucket.file(dest);
   const token = uuid();
 
-  await gcsFile.save(webP, {
-    contentType: file.mimetype,
+  await gcsFile.save(processedBuffer, {
+    contentType: contentType,
     resumable: false,
     metadata: {
       cacheControl: "public, max-age=3600",
       metadata: {
         firebaseStorageDownloadTokens: token,
+        fileHash: fileHash, // Guardar el hash en los metadatos
+        originalName: file.originalname,
+        uploadDate: new Date().toISOString(),
       },
     },
   });
 
   const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(dest)}?alt=media&token=${token}`;
+  console.log(`Nuevo archivo subido: ${publicUrl}`);
   return publicUrl;
 };
 

@@ -14,7 +14,7 @@ import ModalDinamico from "../herramientas/ModalDinamico/ModalDinamico";
 import FormIngresos from "./FormIngresos";
 import { EnviarMensaje } from "../herramientas/General/General";
 import api from "../../helpers";
-
+import Select from "react-select";
 
 const Ingresos: React.FC = (): JSX.Element => {
 
@@ -37,6 +37,7 @@ const Ingresos: React.FC = (): JSX.Element => {
   const [ingresos, setIngresos] = useState<any[]>([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [costoTotal, setCostoTotal] = useState(0);
+  const [selectedArticulo, setSelectedArticulo] = useState<any>(null);
   const [modalIngresos, setModalIngresos] = useState({
     show: false,
     id: 0,
@@ -116,6 +117,7 @@ const Ingresos: React.FC = (): JSX.Element => {
       setValue("cantidad", 0);
       setValue("checkPrecio", false);
       setValue("precio_modificado", 0);
+      setSelectedArticulo(null);
     }
   };
 
@@ -148,6 +150,7 @@ const Ingresos: React.FC = (): JSX.Element => {
           setIngresos([]);
           setButtonDisabled(true);
           setCostoTotal(0);
+          setSelectedArticulo(null);
         }
       });
     SetRefresh(new Date().toString());
@@ -201,17 +204,39 @@ const Ingresos: React.FC = (): JSX.Element => {
               <form className="row mt-3" onSubmit={handleSubmit(onSubmit)}>
                 <div className="col-md-6">
                   <label>Selecciona un artículo</label>
-                  <select
-                    {...register("articulo", { required: true })}
-                    className="form-select"
-                  >
-                    <option value="">Seleccione un artículo</option>
-                    {articulos.map((articulo, index) => (
-                      <option key={index} value={articulo.sku}>
-                        {articulo.sku} - {articulo.nombre}
-                      </option>
-                    ))}
-                  </select>
+                  <Select
+                    options={articulos.map((articulo) => ({
+                      value: articulo.sku,
+                      label: `${articulo.sku} - ${articulo.nombre}`,
+                    }))}
+                    onChange={(selectedOption) => {
+                      console.log("Select onChange triggered:", selectedOption);
+                      setValue("articulo", selectedOption?.value || "");
+                      setSelectedArticulo(selectedOption);
+                    }}
+                    value={selectedArticulo}
+                    isDisabled={formDisabled}
+                    isSearchable={true}
+                    placeholder="Seleccione un artículo..."
+                    noOptionsMessage={() => "No hay opciones disponibles"}
+                    isClearable={true}
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        cursor: 'pointer',
+                        zIndex: 1,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        zIndex: 1,
+                      }),
+                      menuPortal: (provided) => ({
+                        ...provided,
+                        zIndex: 1,
+                      }),
+                    }}
+                    menuPortalTarget={document.body}
+                  />
                   {errors.articulo && (
                     <span className="text-danger">
                       Debes seleccionar un artículo

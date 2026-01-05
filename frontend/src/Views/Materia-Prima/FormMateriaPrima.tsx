@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { FormControlLabel } from '@mui/material';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface FormArticulosProps {
@@ -29,10 +29,10 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
     const [ingredienteSeleccionado, setIngredienteSeleccionado] = useState<any | null>(null);
     const [nuevaCategoria, setNuevaCategoria] = useState<string>('');
 
-    const { control,register, handleSubmit, setValue, formState: { errors }, watch, getValues } = useForm({
+    const { control,register, handleSubmit, setValue, formState: { errors }, watch, getValues, reset } = useForm({
         defaultValues: {
             nombre: '',
-            sku: '',
+            sku: 'DF-',
             precio_costo: 0,
             cantidad: 0,
             categoria_materia_prima: '',
@@ -54,18 +54,30 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             api.get(`/materia_prima/get_materia_prima/${idArticulo}`)
                 .then(res => {
                     const articulo = res?.data?.content[0];
-                    setValue('nombre', articulo.nombre);
-                    setValue('sku', articulo.sku);
-                    setValue('precio_costo', articulo.precio_costo);
-                    setValue('categoria_materia_prima', articulo.categoria_materia_prima);
-                    setValue('cantidad', articulo.stock);
-                    setValue('peso_gramos', articulo.peso_gramos);
-                    setValue('chkArticuloCompuesto', articulo.es_compuesto == 1 ? true : false);
+                    reset({
+                        nombre: articulo.nombre,
+                        sku: articulo.sku,
+                        precio_costo: articulo.precio_costo,
+                        cantidad: articulo.cantidad,
+                        categoria_materia_prima: articulo.categoria_materia_prima.toString(),
+                        peso_gramos: articulo.peso_gramos,
+                        chkArticuloCompuesto: articulo.es_compuesto === 1,
+                        ingredientes: JSON.parse(articulo.json_ingredientes),
+                        chkPrecioUnidad: articulo.es_contable === 1,
+                    });
                     setIngredientes(JSON.parse(articulo.json_ingredientes));
-                    setValue('ingredientes', JSON.parse(articulo.json_ingredientes));
+                    
                 });
         }
     }, []);
+
+    // Inicializar SKU con DF- para nuevos artículos
+    useEffect(() => {
+        if (accion === 'a') {
+            setValue('sku', 'DF-');
+        }
+    }, [accion, setValue]);
+
     console.log(getValues(), 'getValues()')
     const getListaModulos = () =>{
         api.post(`/tabla/lista_modulos`, { modulo: 'categorias_materia_prima' })
@@ -81,8 +93,8 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
             }
             const ingredientesFormatt = JSON.stringify(data.ingredientes);
             const body = {
-                nombre: data.nombre,
-                sku: data.sku,
+                nombre: data.nombre.trim(),
+                sku: data.sku.trim(),
                 precio_costo: data.precio_costo,
                 cantidad: data.cantidad,
                 categoria_materia_prima: data.categoria_materia_prima,
@@ -113,7 +125,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
     
             const ingredientesFormatt = JSON.stringify(data.ingredientes);
             const body = {
-                nombre: data.nombre,
+                nombre: data.nombre.trim(),
                 precio_costo: data.precio_costo,
                 categoria_materia_prima: data.categoria_materia_prima,
                 peso_gramos: data.peso_gramos,
@@ -187,7 +199,7 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
 
     const addCategoria = () => {
         if (nuevaCategoria) {
-            api.post('/tabla/insert_categoria', { modulo: 'categorias_materia_prima', valor_modulo: nuevaCategoria })
+            api.post('/tabla/insert_categoria', { modulo: 'categorias_materia_prima', valor_modulo: nuevaCategoria.trim() })
                 .then(res => {
                     setCategorias(prevCategorias => [...prevCategorias, res.data.content[0]]);
                     setValue('categoria_materia_prima', res.data.content[0].id_valor_modulo);
@@ -195,11 +207,26 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                 });
         }
     }
-    const handleSkuChange = (e: React.FocusEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim();
-        if (!value.startsWith('DF-')) {
-            setValue('sku', `DF-${value}`);
+    const handleSkuChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
+        
+        // Si el usuario borra todo, mantener DF-
+        if (value === '') {
+            setValue('sku', 'DF-');
+            return;
         }
+        
+        // Si el usuario intenta escribir algo que no comienza con DF-, agregarlo
+        if (!value.startsWith('DF-')) {
+            value = `DF-${value}`;
+        }
+        
+        // Si el usuario trata de borrar el prefijo DF-, restaurarlo
+        if (value.length < 3 || !value.startsWith('DF-')) {
+            value = 'DF-' + value.replace(/^DF-*/, '');
+        }
+        
+        setValue('sku', value);
     };
 
     return (
@@ -235,11 +262,22 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                                 },
                             }}
                             variant="outlined"
-                            {...register('sku', { required: 'Obligatorio' })}
+                            {...register('sku', { 
+                                required: 'Obligatorio',
+                                validate: (value) => {
+                                    if (!value.startsWith('DF-')) {
+                                        return 'El SKU debe comenzar con DF-';
+                                    }
+                                    if (value.length <= 3) {
+                                        return 'El SKU debe tener contenido después de DF-';
+                                    }
+                                    return true;
+                                }
+                            })}
                             disabled={accion !== 'a' && formDisabled}
                             error={!!errors.sku}
                             helperText={errors.sku?.message}
-                            onBlur={handleSkuChange} 
+                            onChange={handleSkuChange}
                         />
                     </div>
                 </div>
@@ -264,8 +302,10 @@ const FormMateriaPrima: React.FC<FormArticulosProps> = ({ accion, idArticulo, on
                     <div className='mb-3 justify-content-end'>
                         <FormControlLabel
                             control={
-                                <Checkbox
+                                <Switch
                                     {...register('chkPrecioUnidad')}
+                                    checked={isPrecioUnidad}
+                                    disabled={accion === 'c' && formDisabled}
                                 />} label={`Cambiar a precio por ${!isPrecioUnidad ? 'Unidad' : 'Kg'}`} />
                         {
                             isArticuloCompuesto && accion != 'a' && (

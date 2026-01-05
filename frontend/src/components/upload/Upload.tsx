@@ -16,17 +16,24 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
   const [imagen, setImagen] = useState<string | null>(null);
   const [disabledButton, setDisabledButton] = useState<boolean>(true);
-  // Definimos las restricciones para aceptar solo imágenes JPG, JPEG y PNG
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [fileType, setFileType] = useState<string | null>(null);
+  // Definimos las restricciones para aceptar solo imágenes JPG, JPEG y PNG y xls, xlsx
   const acceptedFileTypes = {
     'image/jpeg': [],
     'image/png': [],
     'image/jpg': [],
     'image/webp': [],
+    'application/vnd.ms-excel': [],
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
   };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
-      setUploadedFile(acceptedFiles[0]);
+      const file = acceptedFiles[0];
+      setUploadedFile(file);
+      setFileName(file.name);
+      setFileType(file.type);
       setImagen(null); // Resetea el enlace de descarga si se selecciona un nuevo archivo
       setUploadStatus(null); // Limpia el estado de subida
       setDisabledButton(false); // Habilita el botón de subir
@@ -49,7 +56,11 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
       });
       if (response.data) {
         const fileUrl = response.data.url;
-        setImagen(fileUrl);
+        // Solo guardar como imagen si es un archivo de imagen
+        const isImage = fileType?.startsWith('image/');
+        if (isImage) {
+          setImagen(fileUrl);
+        }
         setUploadStatus('Archivo subido con éxito.');
         setUploadedFile(null);
         handleFileUploaded(fileUrl);
@@ -74,8 +85,15 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
   const handleDelete = () => {
     setUploadedFile(null);
     setImagen(null);
+    setFileName(null);
+    setFileType(null);
     setDisabledButton(true);
     Notify.success('Archivo eliminado con éxito');
+  };
+
+  const isExcelFile = () => {
+    return fileType === 'application/vnd.ms-excel' || 
+           fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
   };
 
   return (
@@ -116,23 +134,38 @@ const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ handleFileUpl
         </div>
       )}
 
-      {imagen && (
+      {(imagen || (uploadStatus === 'Archivo subido con éxito.' && fileName)) && (
         <div className="mt-4 d-flex justify-content-center">
-          <div className="position-relative d-inline-block border border-2 rounded" style={{ width: '150px' }}>
+          <div className="position-relative d-inline-block border border-2 rounded" style={{ width: '150px', minHeight: '100px' }}>
             <CloseButton
               onClick={handleDelete}
               className="position-absolute top-0 end-0 m-2 zindex-1"
               disabled={disabledButton}
             />
-            <Image
-              src={imagen}
-              alt="Imagen subida"
-              thumbnail
-              style={{ width: '100%', filter: 'drop-shadow(1px 1px 5px #000000)' }}
-            />
+            {imagen && !isExcelFile() ? (
+              <Image
+                src={imagen}
+                alt="Imagen subida"
+                thumbnail
+                style={{ width: '100%', filter: 'drop-shadow(1px 1px 5px #000000)' }}
+              />
+            ) : (
+              <div className="d-flex flex-column align-items-center justify-content-center h-100 p-3">
+                <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="4" width="20" height="24" rx="1" fill="#107C41"/>
+                  <rect x="6" y="8" width="16" height="16" fill="#185C37"/>
+                  <path d="M9 12L11 14L13 12H15L12 15.5L15 19H13L11 17L9 19H7L10 15.5L7 12H9Z" fill="white"/>
+                  <rect x="24" y="4" width="4" height="6" fill="#33C481"/>
+                  <rect x="24" y="12" width="4" height="6" fill="#107C41"/>
+                  <rect x="24" y="20" width="4" height="8" fill="#185C37"/>
+                </svg>
+                <small className="text-center mt-2" style={{ fontSize: '10px', wordBreak: 'break-word', maxWidth: '120px' }}>
+                  {fileName}
+                </small>
+              </div>
+            )}
           </div>
         </div>
-
       )}
     </div>
   );

@@ -174,6 +174,9 @@ const Grid = (manejo_acciones: Function, origen: string, gridCarga: any, recarga
                     {
                         targets: [4],
                         render: function (data: any, _type: any, _full: any) {
+                            if(_full.es_contable){
+                                return Number(data) + ' unidades'
+                            }
                             return data + 'kg'
                         }
                     }
