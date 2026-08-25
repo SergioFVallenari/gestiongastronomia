@@ -49,6 +49,8 @@ Thumbs.db
 *.wmv
 
 # Backend environment variables
+.env
+.env.*
 backend/.env
 backend/.env.*
 # Ignore all JSON files in config directory
