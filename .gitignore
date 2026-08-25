@@ -50,9 +50,7 @@ Thumbs.db
 
 # Backend environment variables
 backend/.env
-backend/.env.production
 backend/.env.*
-
 # Ignore all JSON files in config directory
 backend/src/config/*.json
 

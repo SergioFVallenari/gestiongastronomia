@@ -4,7 +4,8 @@ import { skuVerify } from '../helpers';
 import axios from 'axios';
 import xlsx from 'xlsx';
 import fs from 'fs';
-const { crearArticulo, getArticulos, bajaArticulo, getArticuloById, modificarArticulo, modificarMasivo } = new classArticulos()
+import { getArticuloById, getArticulos } from '../services/articulos.service';
+const { crearArticulo, bajaArticulo, modificarArticulo, modificarMasivo } = new classArticulos()
 
 const app = Router()
 
@@ -31,32 +32,46 @@ app.post('/alta_articulos', async (req: Request, res: Response) => {
     }
 
 });
-app.post('/get_articulos', async (req: Request, res: Response) => {
+export const getArticulosController = async (req: Request, res: Response) => {
     try {
-        const response = await getArticulos()
-        res.status(200).json(
-            {
-                info: true,
-                msg: "Articulos",
-                content: response
-            })
+        const response = await getArticulos();
+
+        res.status(200).json({
+            info: true,
+            msg: "Articulos",
+            content: response
+        });
+
     } catch (error) {
 
+        console.error(error);
+
+        res.status(500).json({
+            info: false,
+            msg: "Error al obtener los artículos",
+            content: []
+        });
+
     }
-});
-app.get('/get_articulo/:id', async (req: Request, res: Response) => {
+};
+export const getArticuloByIdController = async (req: Request, res: Response) => {
     const { id } = req.params
     try {
         const response = await getArticuloById(Number(id))
         res.status(200).json({
             info: true,
             msg: "Articulo",
-            content: response
+            content: [response]
         })
     } catch (error) {
-
+        console.error(error);
+        res.status(500).json({
+            info: false,
+            msg: "Error al obtener el artículo",
+            content: null
+        });
     }
-});
+}
 app.delete('/baja_articulos', async (req: Request, res: Response) => {
     const { id } = req.body
     try {
@@ -98,16 +113,16 @@ app.post('/modificarArticulosMasivo', async (req: Request, res: Response) => {
         const workbook = xlsx.read(response.data, { type: "buffer" });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        
+
         // Obtener todos los datos como matriz
         const rawData = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
-        
+
         // La primera fila contiene los headers (nombres de columnas)
         const headers = rawData[1] as string[]; // Fila 2 (índice 1) son los headers
-        
+
         // Comenzar desde la fila 3 (índice 2) que son los datos
         const dataRows = rawData.slice(2) as any[][];
-        
+
         // Mapear cada fila de datos con los headers
         const mappedData = dataRows.map((row) => {
             const obj: any = {};
@@ -119,11 +134,11 @@ app.post('/modificarArticulosMasivo', async (req: Request, res: Response) => {
             return obj;
         });
         let responseMasivo
-        if (accion == '2'){
+        if (accion == '2') {
             responseMasivo = await modificarMasivo(mappedData);
         }
-        
-        
+
+
         res.status(200).json({
             info: true,
             msg: "Datos procesados correctamente",
@@ -146,16 +161,16 @@ app.post('/modificarArticulosMasivo', async (req: Request, res: Response) => {
 //         const workbook = xlsx.readFile(filePath);
 //         const sheetName = workbook.SheetNames[0];
 //         const worksheet = workbook.Sheets[sheetName];
-        
+
 //         // Obtener todos los datos como matriz
 //         const rawData = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
-        
+
 //         // La primera fila contiene los headers (nombres de columnas)
 //         const headers = rawData[1] as string[]; // Fila 2 (índice 1) son los headers
-        
+
 //         // Comenzar desde la fila 3 (índice 2) que son los datos
 //         const dataRows = rawData.slice(2);
-        
+
 //         // Mapear cada fila de datos con los headers
 //         const mappedData = dataRows.map((row: any[]) => {
 //             const obj: any = {};
@@ -166,15 +181,15 @@ app.post('/modificarArticulosMasivo', async (req: Request, res: Response) => {
 //             });
 //             return obj;
 //         });
-        
+
 //         // Filtrar filas vacías
 //         const filteredData = mappedData.filter(obj => 
 //             Object.values(obj).some(value => value !== null && value !== undefined && value !== '')
 //         );
-        
+
 //         console.log('Headers:', headers);
 //         console.log('Datos mapeados:', filteredData);
-        
+
 //         res.status(200).json({
 //             info: true,
 //             msg: "Archivo local procesado correctamente",

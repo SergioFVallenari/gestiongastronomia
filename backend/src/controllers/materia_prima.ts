@@ -3,15 +3,17 @@ import MateriaPrima from '../class/class_materia_prima';
 import { skuVerify } from '../helpers';
 import axios from 'axios';
 import xlsx from 'xlsx';
-const { altaMateriaPrima, getMateriaPrima,modificarMasivo, getMateriaPrimaById, listaIngredientes, bajaMateriaPrima, modificaMateriaPrima,calcularCosto } = new MateriaPrima()
+import { altaMateriaPrima, getMateriaPrima, getMateriaPrimaById } from '../services/materiaPrima.service';
+import { checkSku } from '../services/general.service';
+const { modificarMasivo, listaIngredientes, bajaMateriaPrima, modificaMateriaPrima,calcularCosto } = new MateriaPrima()
 const app = Router()
 
 app.post('/alta_materia_prima', async (req: Request, res: Response) => {
     const body = req.body
     try {
         console.log(body)
-        const haySku = await skuVerify(body.sku)
-        if (haySku) {
+        const haySku = await checkSku(body.sku)
+        if (haySku.exists) {
             throw new Error('El SKU ya existe')
         }
         const response = await altaMateriaPrima(body)
@@ -39,8 +41,11 @@ app.post('/get_materia_prima', async (req: Request, res: Response) => {
                 content: response
             }
         )
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 });
 app.get('/get_materia_prima/:id', async (req: Request, res: Response) => {
@@ -51,11 +56,14 @@ app.get('/get_materia_prima/:id', async (req: Request, res: Response) => {
             {
                 info: true,
                 msg: "Materia Prima obtenida",
-                content: response
+                content: [response]
             }
         )
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 });
 app.get('/lista_ingredientes', async (req: Request, res: Response) => {
@@ -68,8 +76,11 @@ app.get('/lista_ingredientes', async (req: Request, res: Response) => {
                 content: response
             }
         )
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 });
 app.put('/baja_materia_prima', async (req: Request, res: Response) => {
@@ -83,8 +94,11 @@ app.put('/baja_materia_prima', async (req: Request, res: Response) => {
                 content: response
             }
         )
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(409).json({
+            info: false,
+            msg: error.message || 'Ocurrió un error',
+        });
     }
 });
 app.put('/modificar_materia_prima/:id', async (req: Request, res: Response) => {

@@ -6,7 +6,7 @@ dotenv.config({ path: envFile });
 
 import server from "./src/server";
 import conn from "./src/db";
-
+import "./src/associations";
 const PORT = parseInt(process.env.PORT as string, 10) || 8080;
 
 conn.db.authenticate()
