@@ -49,19 +49,15 @@ Thumbs.db
 *.wmv
 
 # Backend environment variables
+# Environment variables
 .env
 .env.*
-backend/.env
-backend/.env.*
+**/.env
+**/.env.*
 # Ignore all JSON files in config directory
 backend/src/config/*.json
 
 # Ignore other JSON files in the backend
 backend/*.json
-
-# Frontend environment variables
-frontend/.env
-frontend/.env.production
-frontend/.env.*
 
 # Add any other sensitive files or directories here as needed
